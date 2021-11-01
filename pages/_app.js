@@ -12,7 +12,7 @@ import { Provider } from "next-auth/client"
 // import Footer from "../components/Footer"
 import Layout from "../components/layout/Layout"
 import { StyledEngineProvider } from "@mui/material/styles"
-import "bootstrap/dist/css/bootstrap.min.css"
+// import "bootstrap/dist/css/bootstrap.min.css"
 
 function MyApp({ Component, pageProps }) {
   React.useEffect(() => {
