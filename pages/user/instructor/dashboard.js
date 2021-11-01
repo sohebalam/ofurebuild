@@ -1,22 +1,22 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
-import InstructorRoute from "../../../components/route/Instructor"
+// import InstructorRoute from "../../../components/route/Instructor"
 import { Avatar, Grid, Tooltip, Typography } from "@material-ui/core"
 import Link from "next/link"
 import { CheckCircleOutlined } from "@material-ui/icons"
 import CancelIcon from "@material-ui/icons/Cancel"
 import { useSelector } from "react-redux"
 import { wrapper } from "../../../redux/store"
-import { loadCourses } from "../../../redux/actions/lessonActions"
+// import { loadCourses } from "../../../redux/actions/lessonActions"
 import { getSession } from "next-auth/client"
 const InstructorIndex = () => {
-  const coursesLoad = useSelector((state) => state.coursesLoad)
-  const { loading, error, courses } = coursesLoad
+  // const coursesLoad = useSelector((state) => state.coursesLoad)
+  // const { loading, error, courses } = coursesLoad
 
   return (
-    <InstructorRoute>
+    <>
       <h1 className="jumbotron text-center square">Instructor Dashboard</h1>
-      {courses &&
+      {/* {courses &&
         courses.map((course) => (
           <Grid container key={course._id}>
             <Grid item xs={3}>
@@ -53,18 +53,18 @@ const InstructorIndex = () => {
               )}
             </Grid>
           </Grid>
-        ))}
-    </InstructorRoute>
+        ))} */}
+    </>
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ req }) => {
-      // const session = await getSession({ req })
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) =>
+//     async ({ req }) => {
+//       // const session = await getSession({ req })
 
-      await store.dispatch(loadCourses(req.headers.cookie, req))
-    }
-)
+//       await store.dispatch(loadCourses(req.headers.cookie, req))
+//     }
+// )
 
 export default InstructorIndex

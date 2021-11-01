@@ -28,14 +28,10 @@ const userSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      // required: true,
-      // minLength: [6, "Your password must be at least 6 characters"],
+
       select: false,
     },
-    //   role: {
-    //     type: String,
-    //     default: "user",
-    //   },
+
     createdAt: {
       type: Date,
       default: Date.now,

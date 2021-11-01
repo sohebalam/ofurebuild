@@ -21,7 +21,7 @@ import { UPDATE_PROFILE_RESET } from "../../redux/constants/userTypes"
 import { getSession } from "next-auth/client"
 
 import { Box } from "@material-ui/core"
-import UserNav from "../../components/layout/UserNav"
+// import UserNav from "../../components/layout/UserNav"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -115,9 +115,7 @@ const Profile = () => {
         dbUser && (
           <Grid container>
             <Grid item sm={4}>
-              <Box mt="0.5rem">
-                <UserNav />
-              </Box>
+              <Box mt="0.5rem">{/* <UserNav /> */}</Box>
             </Grid>
 
             <Grid item sm={4}>
@@ -176,7 +174,7 @@ const Profile = () => {
                           type="password"
                           id="password"
                           autoComplete="current-password"
-                          value={user?.password || ""}
+                          // value={user?.password || ""}
                           onChange={onChange}
                         />
                       </Grid>

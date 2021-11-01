@@ -334,6 +334,8 @@ export const AccountStatus = async (req, res) => {
     console.log(req.user._id)
 
     const user = await User.findById(req.user._id).exec()
+
+    console.log(user)
     const account = await stripe.accounts.retrieve(user.stripe_account_id)
     // console.log("ACCOUNT => ", account)
     if (!account.charges_enabled) {
