@@ -1,21 +1,21 @@
 import { combineReducers } from "redux"
 // import { fileGetReducer, FileGetReducer } from "./reducers/fileReducers"
-// import {
-//   courseEditReducer,
-//   courseLoadReducer,
-//   coursePublishedReducer,
-//   coursesLoadReducer,
-//   createCourseReducer,
-//   deleteImageReducer,
-//   enrollmentCheckReducer,
-//   freeEnrollReducer,
-//   lessonsListReducer,
-//   lessonsPostReducer,
-//   paidEnrollReducer,
-//   selectVideoReducer,
-//   singleCourseReducer,
-//   uploadImageReducer,
-// } from "./reducers/lessonReducers"
+import {
+  courseEditReducer,
+  courseLoadReducer,
+  coursePublishedReducer,
+  coursesLoadReducer,
+  createCourseReducer,
+  deleteImageReducer,
+  enrollmentCheckReducer,
+  freeEnrollReducer,
+  lessonsListReducer,
+  lessonsPostReducer,
+  paidEnrollReducer,
+  selectVideoReducer,
+  singleCourseReducer,
+  uploadImageReducer,
+} from "./reducers/lessonReducers"
 import {
   forgotPasswordReducer,
   newInstructorReducer,
@@ -39,7 +39,7 @@ const reducer = combineReducers({
   //lessons
   //   selectVideo: selectVideoReducer,
   //   createCourse: createCourseReducer,
-  //   uploadImage: uploadImageReducer,
+  uploadImage: uploadImageReducer,
   //   deleteImage: deleteImageReducer,
   //   coursesLoad: coursesLoadReducer,
   //   coursePublished: coursePublishedReducer,

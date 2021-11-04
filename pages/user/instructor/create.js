@@ -26,10 +26,10 @@ const CourseCreate = () => {
   const [uploadButtonText, setUploadButtonText] = useState("Upload Image")
   const dispatch = useDispatch()
 
-  // const uploadImage = useSelector((state) => state.uploadImage)
-  // const { loading, error, image } = uploadImage
+  const uploadImage = useSelector((state) => state.uploadImage)
+  const { loading, error, image } = uploadImage
 
-  // useEffect(() => {}, [image, uploadImage])
+  useEffect(() => {}, [image, uploadImage])
 
   // router
   const router = useRouter()
@@ -62,6 +62,8 @@ const CourseCreate = () => {
           0,
           async (uri) => {
             try {
+              // console.log("uri", uri, file)
+              // return
               dispatch(imageUpload(uri))
 
               setValues({ ...values, loading: false })
@@ -99,6 +101,8 @@ const CourseCreate = () => {
     e.preventDefault()
 
     try {
+      console.log(image, values)
+
       dispatch(courseCreate(image, values))
       console.log("Great! Now you can start adding lessons")
       router.push("/user/instructor/dashboard")
