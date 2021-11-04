@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
-import InstructorRoute from "../../../components/route/Instructor"
+import InstructorRoute from "../../../components/routes/InstuctorRoute"
 import CourseCreateForm from "../../../components/forms/CourseCreate"
 import Resizer from "react-image-file-resizer"
 import { useRouter } from "next/router"
@@ -26,10 +26,10 @@ const CourseCreate = () => {
   const [uploadButtonText, setUploadButtonText] = useState("Upload Image")
   const dispatch = useDispatch()
 
-  const uploadImage = useSelector((state) => state.uploadImage)
-  const { loading, error, image } = uploadImage
+  // const uploadImage = useSelector((state) => state.uploadImage)
+  // const { loading, error, image } = uploadImage
 
-  useEffect(() => {}, [image, uploadImage])
+  // useEffect(() => {}, [image, uploadImage])
 
   // router
   const router = useRouter()
@@ -76,13 +76,13 @@ const CourseCreate = () => {
     })
 
   const handleImageRemove = async () => {
-    // console.log("image remove", image.Bucket)
+    console.log("image remove", image.Bucket)
 
-    // window.confirm("Are you sure you want to delete")
+    window.confirm("Are you sure you want to delete")
     try {
       // console.log("image", image)
       setValues({ ...values, loading: true })
-      // const res = await axios.post("/api/course/delete", { image })
+      const res = await axios.post("/api/course/delete", { image })
       dispatch(imageDelete(image))
       // setImage({})
       // setPreview("")

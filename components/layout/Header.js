@@ -71,6 +71,8 @@ function Header() {
     }
     if (dbUser?.email) {
       setSocialUser(false)
+    } else if (dbUser?.isPassword === false) {
+      setSocialUser(true)
     }
   }, [session])
 

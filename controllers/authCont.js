@@ -54,10 +54,23 @@ export const registerUser = catchAsyncErrors(async (req, res) => {
 export const currentUserProfile = catchAsyncErrors(async (req, res) => {
   if (req.user.id) {
     const dbUser = await User.findOne({ socialId: req.user.id })
+
+    if (dbUser.password === "" || dbUser.password === undefined) {
+      dbUser.isPassword = false
+    }
+
+    dbUser.password = undefined
+
+    console.log(dbUser)
     res.status(200).send(dbUser)
+    // console.log(dbUser)
   } else {
     const dbUser = await User.findById(req.user._id)
-
+    if (dbUser.password === "" || dbUser.password === undefined) {
+      dbUser.isPassword = false
+    }
+    dbUser.password = undefined
+    // console.log(dbUser)
     res.status(200).send(dbUser)
   }
 })
@@ -68,7 +81,7 @@ export const updateProfile = async (req, res) => {
   if (req.user.id) {
     const user = await User.findOne({ socialId: req.user.id })
 
-    console.log(user)
+    // console.log(user)
 
     if (user) {
       user.name = req.body.name

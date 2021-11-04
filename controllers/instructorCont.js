@@ -98,12 +98,21 @@ export const getAccountStatus = async (req, res) => {
 
 export const currentInstructor = async (req, res) => {
   try {
+    if (req.user.id) {
+      let user = await User.findById(req.user.id).select("-password").exec()
+      if (!user.role.includes("instructor")) {
+        return res.sendStatus(403)
+      } else {
+        res.send(user)
+      }
+    }
+
     let user = await User.findById(req.user._id).select("-password").exec()
     // console.log("CURRENT INSTRUCTOR => ", user);
-    if (!user.role.includes("Instructor")) {
+    if (!user.role.includes("instructor")) {
       return res.sendStatus(403)
     } else {
-      res.json({ ok: true })
+      res.send(user)
     }
   } catch (err) {
     console.log(err)
