@@ -1,4 +1,5 @@
 import { combineReducers } from "redux"
+import { getImageReducer } from "./reducers/imageReducers"
 // import { fileGetReducer, FileGetReducer } from "./reducers/fileReducers"
 import {
   courseEditReducer,
@@ -54,6 +55,7 @@ const reducer = combineReducers({
 
   //   //files
   //   fileGet: fileGetReducer,
+  getImage: getImageReducer,
 })
 
 export default reducer

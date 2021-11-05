@@ -7,28 +7,43 @@ import Course from "../models/courseModel"
 export const isAuthenticated = catchAsyncErrors(async (req, res, next) => {
   const session = await getSession({ req })
 
-  // console.log(session)
-
   if (!session) {
     return next(new ErrorHandler("Login first to access this resource", 401))
   }
-  req.user = session.user
+
+  if (session.user.id) {
+    const suser = await User.findOne({ socialId: session.user.id })
+
+    const ObjectId = suser._id
+
+    const user = await User.findById({ _id: ObjectId.toString() }).exec()
+
+    req.user = user
+  }
+
+  if (session.user._id) {
+    req.user = session.user
+  }
   // console.log(req.user._id)
   next()
 })
 
 export const isInstructor = catchAsyncErrors(async (req, res, next) => {
-  // console.log(req.user._id)
   const user = await User.findById(req.user._id).exec()
-  // console.log(user)
+
+  isUserInstructor(user)
+
+  next()
+})
+
+const isUserInstructor = (user) => {
   if (!user.role.includes("instructor")) {
     console.log("not instructor")
     return res.status(403)
   } else {
     console.log("yes")
-    next()
   }
-})
+}
 
 export const isEnrolled = async (req, res, next) => {
   try {

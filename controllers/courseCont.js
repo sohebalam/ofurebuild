@@ -5,53 +5,22 @@ import slugify from "slugify"
 import { readFileSync } from "fs"
 import User from "../models/userModel"
 import cloudinary from "../utils/cloudinary"
-// import Completed from "../models/completeModel"
-
+import NextCors from "nextjs-cors"
+import next from "next"
+import { parseCookies, setCookie, destroyCookie } from "nookies"
+import { getSession } from "next-auth/client"
 // import YTList from "../models/ytListModel"
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
 
-const awsConfig = {
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION,
-  apiVersion: process.env.AWS_API_VERSION,
-}
+// const awsConfig = {
+//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+//   region: process.env.AWS_REGION,
+//   apiVersion: process.env.AWS_API_VERSION,
+// }
 
 // const S3 = new AWS.S3(awsConfig)
-
-export const uploadImage = async (req, res) => {
-  // console.log(req.body.image)
-
-  // return
-
-  const fileStr = req.body.image
-  const result = await cloudinary.uploader.upload(fileStr, {
-    folder: "ofu",
-  })
-  console.log(result)
-
-  //   console.log(result)
-
-  let imagesLinks = []
-
-  imagesLinks.push({
-    public_id: result.public_id,
-    url: result.secure_url,
-  })
-
-  console.log("imageLinks", imagesLinks)
-  req.body.images = imagesLinks
-
-  console.log(req.body.images)
-
-  const course = await Course.create(req.body)
-
-  res.status(200).json({
-    success: true,
-    course,
-  })
-}
 
 export const removeImage = async (req, res) => {
   // const { ETag } = req.body.image
@@ -83,32 +52,79 @@ export const removeImage = async (req, res) => {
   }
 }
 
-export const create = async (req, res) => {
-  console.log(req.method)
+export const uploadImage = async (req, res) => {
+  // console.log(req.body.image)
 
-  // console.log("CREATE COURSE", req.body.price)
-  console.log(req.body)
+  // return
+
+  const fileStr = req.body.image
+  const result = await cloudinary.uploader.upload(fileStr, {
+    folder: "ofu",
+  })
+  // console.log(result)
+
+  //   console.log(result)
+
+  let imagesLinks = []
+
+  imagesLinks.push({
+    public_id: result.public_id,
+    url: result.secure_url,
+  })
+
+  req.body.images = imagesLinks
+
+  // console.log(req.body.images)
+
+  const course = await Course.create(req.body)
+
+  console.log(course)
+
+  res.status(200).json({
+    success: true,
+    course,
+  })
+}
+
+export const create = async (req, res) => {
+  // console.log(req.body.image)
+
   if (req.body.paid === true && req.body.price === 0) {
     req.body.price = 9.99
   }
 
-  try {
-    const alreadyExist = await Course.findOne({
-      slug: slugify(req.body.title.toLowerCase()),
-    })
-    if (alreadyExist) return res.status(400).send("Title is taken")
+  const fileStr = req.body.image
+  const result = await cloudinary.uploader.upload(fileStr, {
+    folder: "ofu",
+  })
+  const alreadyExist = await Course.findOne({
+    slug: slugify(req.body.title.toLowerCase()),
+  })
+  if (alreadyExist) return res.status(400).send("Title is taken")
 
-    const course = await new Course({
-      slug: slugify(req.body.title),
-      instructor: req.user._id,
-      ...req.body,
-    }).save()
+  let imagesLinks = []
 
-    res.status(200).json(course)
-  } catch (err) {
-    console.log(err)
-    return res.status(400).send("Course create failed. Try again.")
-  }
+  imagesLinks.push({
+    public_id: result.public_id,
+    url: result.secure_url,
+  })
+
+  req.body.images = imagesLinks
+
+  // console.log(req.body.images)
+
+  const course = await new Course({
+    slug: slugify(req.body.title),
+    instructor: req.user._id,
+    ...req.body,
+  }).save()
+
+  console.log(course)
+
+  res.status(200).json({
+    success: true,
+    course,
+  })
 }
 
 export const instructorCourses = async (req, res) => {

@@ -61,7 +61,6 @@ export const currentUserProfile = catchAsyncErrors(async (req, res) => {
 
     dbUser.password = undefined
 
-    console.log(dbUser)
     res.status(200).send(dbUser)
     // console.log(dbUser)
   } else {

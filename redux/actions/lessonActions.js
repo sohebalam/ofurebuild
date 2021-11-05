@@ -320,6 +320,10 @@ export const imageDelete = (image) => async (dispatch) => {
 }
 
 export const imageUpload = (uri) => async (dispatch) => {
+  console.log(uri)
+
+  return
+
   try {
     dispatch({ type: UPLOAD_IMAGE_REQUEST })
 
@@ -371,10 +375,27 @@ export const courseCreate = (image, values) => async (dispatch) => {
     strNum = strNum.toString().replace("£", "")
     values.price = parseFloat(strNum)
 
-    const { data } = await axios.post("/api/course/course", {
-      ...values,
-      image,
-    })
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+
+    const { data } = await axios.post(
+      "/api/course/mid/course",
+      {
+        image,
+        ...values,
+      },
+      config
+    )
+    // const { data } = await axios.put(
+    //   "/api/course/mid/course",
+    //   {
+
+    //   },
+    //   config
+    // )
 
     dispatch({
       type: CREATE_COURSE_SUCCESS,

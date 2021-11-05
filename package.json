@@ -28,6 +28,7 @@
     "next-connect": "^0.11.0",
     "next-redux-wrapper": "^7.0.5",
     "nextjs-cors": "^2.0.0",
+    "nookies": "^2.5.2",
     "query-string": "^7.0.1",
     "react": "17.0.2",
     "react-beautiful-dnd": "^13.1.0",

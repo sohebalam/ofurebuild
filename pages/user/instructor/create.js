@@ -10,6 +10,7 @@ import {
   imageDelete,
   imageUpload,
 } from "../../../redux/actions/lessonActions"
+import { loadImages } from "../../../redux/actions/imageActions"
 import { useDispatch, useSelector } from "react-redux"
 const CourseCreate = () => {
   // state
@@ -26,10 +27,17 @@ const CourseCreate = () => {
   const [uploadButtonText, setUploadButtonText] = useState("Upload Image")
   const dispatch = useDispatch()
 
+  const [files, setFiles] = useState({})
+
   const uploadImage = useSelector((state) => state.uploadImage)
   const { loading, error, image } = uploadImage
 
-  useEffect(() => {}, [image, uploadImage])
+  const getImage = useSelector((state) => state.getImage)
+  const { loading: imageLoading, error: errorGetImage, imageArray } = getImage
+
+  useEffect(() => {
+    dispatch(loadImages())
+  }, [image, uploadImage])
 
   // router
   const router = useRouter()
@@ -62,9 +70,9 @@ const CourseCreate = () => {
           0,
           async (uri) => {
             try {
-              // console.log("uri", uri, file)
-              // return
-              dispatch(imageUpload(uri))
+              // dispatch(imageUpload(uri))
+
+              setFiles(uri)
 
               setValues({ ...values, loading: false })
             } catch (err) {
@@ -77,33 +85,35 @@ const CourseCreate = () => {
       }
     })
 
-  const handleImageRemove = async () => {
-    console.log("image remove", image.Bucket)
+  const handleImageRemove = async (image) => {
+    console.log(image)
+    // console.log("image remove", image.Bucket)
 
-    window.confirm("Are you sure you want to delete")
-    try {
-      // console.log("image", image)
-      setValues({ ...values, loading: true })
-      const res = await axios.post("/api/course/delete", { image })
-      dispatch(imageDelete(image))
-      // setImage({})
-      // setPreview("")
-      setUploadButtonText("Upload Image")
-      setValues({ ...values, loading: false })
-    } catch (err) {
-      console.log(err)
-      setValues({ ...values, loading: false })
-      console.log("upload failed. Try later")
-    }
+    // window.confirm("Are you sure you want to delete")
+    // try {
+    //   // console.log("image", image)
+    //   setValues({ ...values, loading: true })
+    //   const res = await axios.post("/api/course/delete", { image })
+    //   dispatch(imageDelete(image))
+    //   // setImage({})
+    //   // setPreview("")
+    //   setUploadButtonText("Upload Image")
+    //   setValues({ ...values, loading: false })
+    // } catch (err) {
+    //   console.log(err)
+    //   setValues({ ...values, loading: false })
+    //   console.log("upload failed. Try later")
+    // }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    console.log(files)
 
     try {
-      console.log(image, values)
+      console.log(files, values)
 
-      dispatch(courseCreate(image, values))
+      dispatch(courseCreate(files, values))
       console.log("Great! Now you can start adding lessons")
       router.push("/user/instructor/dashboard")
     } catch (error) {
@@ -127,6 +137,7 @@ const CourseCreate = () => {
             loading={loading}
             handleImageRemove={handleImageRemove}
             onDropzoneAreaChange={onDropzoneAreaChange}
+            handleSubmit={handleSubmit}
           />
         </div>
       </Box>
