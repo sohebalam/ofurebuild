@@ -5,52 +5,8 @@ import slugify from "slugify"
 import { readFileSync } from "fs"
 import User from "../models/userModel"
 import cloudinary from "../utils/cloudinary"
-import NextCors from "nextjs-cors"
-import next from "next"
-import { parseCookies, setCookie, destroyCookie } from "nookies"
-import { getSession } from "next-auth/client"
-// import YTList from "../models/ytListModel"
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
-
-// const awsConfig = {
-//   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-//   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-//   region: process.env.AWS_REGION,
-//   apiVersion: process.env.AWS_API_VERSION,
-// }
-
-// const S3 = new AWS.S3(awsConfig)
-
-export const removeImage = async (req, res) => {
-  // const { ETag } = req.body.image
-
-  try {
-    const { image } = req.body
-
-    // console.log(req.body)
-
-    // const courses = await Course.findOne(image.ETag)
-
-    // console.log(courses)
-
-    const params = {
-      Bucket: image.Bucket,
-      Key: image.Key,
-    }
-
-    // send remove request to s3
-    S3.deleteObject(params, (err, data) => {
-      if (err) {
-        console.log(err)
-        return res.status(400)
-      }
-      res.send({ ok: true, image })
-    })
-  } catch (err) {
-    console.log(err)
-  }
-}
 
 export const uploadImage = async (req, res) => {
   // console.log(req.body.image)
@@ -87,8 +43,6 @@ export const uploadImage = async (req, res) => {
 }
 
 export const create = async (req, res) => {
-  // console.log(req.body.image)
-
   if (req.body.paid === true && req.body.price === 0) {
     req.body.price = 9.99
   }
@@ -111,15 +65,11 @@ export const create = async (req, res) => {
 
   req.body.images = imagesLinks
 
-  // console.log(req.body.images)
-
   const course = await new Course({
     slug: slugify(req.body.title),
     instructor: req.user._id,
     ...req.body,
   }).save()
-
-  console.log(course)
 
   res.status(200).json({
     success: true,
@@ -158,7 +108,7 @@ export const readCourse = async (req, res) => {
 
     const data = await response?.json()
 
-    console.log(data)
+    // console.log(data)
 
     res.send(data)
   } catch (error) {

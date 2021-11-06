@@ -1,6 +1,6 @@
 import { combineReducers } from "redux"
 import { getImageReducer } from "./reducers/imageReducers"
-// import { fileGetReducer, FileGetReducer } from "./reducers/fileReducers"
+import { fileGetReducer, FileGetReducer } from "./reducers/fileReducers"
 import {
   courseEditReducer,
   courseLoadReducer,
@@ -42,19 +42,19 @@ const reducer = combineReducers({
   //   createCourse: createCourseReducer,
   uploadImage: uploadImageReducer,
   //   deleteImage: deleteImageReducer,
-  //   coursesLoad: coursesLoadReducer,
+  coursesLoad: coursesLoadReducer,
   //   coursePublished: coursePublishedReducer,
-  //   courseLoad: courseLoadReducer,
-  //   singleCourse: singleCourseReducer,
+  // courseLoad: courseLoadReducer,
+  singleCourse: singleCourseReducer,
   //   paidEnroll: paidEnrollReducer,
   //   enrollmentCheck: enrollmentCheckReducer,
   //   freeEnroll: freeEnrollReducer,
   //   courseEdit: courseEditReducer,
-  //   lessonsList: lessonsListReducer,
+  lessonsList: lessonsListReducer,
   //   lessonsPost: lessonsPostReducer,
 
   //   //files
-  //   fileGet: fileGetReducer,
+  fileGet: fileGetReducer,
   getImage: getImageReducer,
 })
 
