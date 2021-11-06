@@ -14,21 +14,22 @@ const DragList = ({ slug }) => {
   const lessonsList = useSelector((state) => state.lessonsList)
   const { loading, error, lessons } = lessonsList
 
-  const { files, videos, lessons: dblessons } = lessons
+  if (lessons) {
+    const { files, videos, lessons: dblessons } = lessons
 
-  // if (dblessons.length === 0) {
-  const listLessons = [...files, ...videos]
-
-  useEffect(() => {
-    if (dblessons.length > 0) {
-      setData(dblessons)
+    if (files || videos) {
+      const listLessons = [...files, ...videos]
     }
+    useEffect(() => {
+      if (dblessons?.length > 0) {
+        setData(dblessons)
+      }
 
-    if (listLessons.length > dblessons.length) {
-      setData(listLessons)
-    }
-  }, [dblessons])
-
+      if (listLessons?.length > dblessons?.length) {
+        setData(listLessons)
+      }
+    }, [dblessons])
+  }
   const reorder = (data, startIndex, endIndex) => {
     const result = Array.from(data)
     const [removed] = result.splice(startIndex, 1)

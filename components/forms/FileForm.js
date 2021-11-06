@@ -13,7 +13,6 @@ import { makeStyles } from "@material-ui/core/styles"
 
 import { createFile } from "../../redux/actions/fileActions"
 import { Alert } from "@material-ui/lab"
-import slugify from "slugify"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -75,7 +74,6 @@ const CoursesForm = ({ slug }) => {
     }
     fileReader.readAsDataURL(uploadedFile)
     setIsPreviewAvailable(uploadedFile.name.match(/\.(jpeg|jpg|png|pdf|docx)$/))
-    // dropRef.current.style.border = "2px dashed #e9ebeb"
   }
 
   // const fileCreate = useSelector((state) => state.fileCreate)
@@ -93,19 +91,21 @@ const CoursesForm = ({ slug }) => {
 
   const handleOnSubmit = async (event) => {
     event.preventDefault()
-    console.log(productData)
     console.log("slug", slug)
 
     try {
       const { title, description } = productData
       if (title.trim() !== "" && description.trim() !== "") {
         if (file) {
+          // console.log(file)
           const formData = new FormData()
           formData.append("file", file)
           formData.append("title", title)
           formData.append("description", description)
 
           setErrorMsg("")
+          // console.log(formData)
+
           dispatch(createFile(formData, slug))
 
           // props.history.push("/list")

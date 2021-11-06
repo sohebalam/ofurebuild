@@ -7,7 +7,7 @@ import { readFileSync } from "fs"
 import formidable from "formidable"
 import fs from "fs"
 
-import YTList from "../models/lessonModel"
+import YTList from "../models/courseModel"
 
 export const getFiles = async (req, res) => {
   const { slug } = req.query
@@ -20,6 +20,8 @@ export const getFiles = async (req, res) => {
 
 export const fileSave = async (req, res) => {
   const slug = req.query.slug
+
+  console.log(req.method)
   const ytList = await YTList.findOne({
     slug: slug,
   })
@@ -33,12 +35,13 @@ export const fileSave = async (req, res) => {
   const form = new formidable.IncomingForm()
   form.parse(req, async function (err, fields, files) {
     // const { slug } = req.query
-    // console.log(req.query.slug)
+    console.log(req.query.slug)
+    console.log(files.file)
 
     const slug = req.query.slug
-    // console.log("newslug", slug)
+    console.log("newslug", slug)
     await saveFile(files.file, fields, slug)
-    // console.log("anotherslug", slug)
+    console.log("anotherslug", slug)
     // return res.status(201).json({ message: "uploaded file" })
   })
   return
@@ -46,13 +49,12 @@ export const fileSave = async (req, res) => {
 
 const saveFile = async (file, fields, slug) => {
   const { title, description } = fields
-  console.log("sdssda", file.file)
-  return
+  console.log("sdssda", slug)
   // console.log(file.path, file.type, title, description)
 
-  const data = fs.readFileSync(file.path)
-  fs.writeFileSync(`./public/files/${file.name}`, data)
-  await fs.unlinkSync(file.path)
+  const data = fs.readFileSync(file.filepath)
+  fs.writeFileSync(`./public/files/${file.originalFilename}`, data)
+  await fs.unlinkSync(file.filepath)
 
   try {
     // console.log(file.path, file.type, title, description)
@@ -63,10 +65,10 @@ const saveFile = async (file, fields, slug) => {
         files: {
           media: "file",
           title,
-          name: file.name,
+          name: file.originalFilename,
           description,
-          file_path: file.path,
-          file_mimetype: file.type,
+          file_path: file.filepath,
+          file_mimetype: file.mimetype,
         },
       },
     })
@@ -107,24 +109,26 @@ export const youtube = async (req, res) => {
     )
 
     if (!response) {
-      return res.status(400).send("lessons not found")
+      return res.status(400).send("no lessons")
     }
 
     const data = await response?.json()
 
-    const videos = data?.items?.map((item) => ({
-      media: "video",
-      playlistId: item.snippet.playlistId,
-      videoId: item.snippet.resourceId.videoId,
-      thumbnailUrl: item.snippet.thumbnails.medium.url,
-      title: item.snippet.title,
-      description: item.snippet.description,
-      channelTitle: item.snippet.channelTitle,
-    }))
+    const videos =
+      data &&
+      data.items?.map((item) => ({
+        media: "video",
+        playlistId: item.snippet.playlistId,
+        videoId: item.snippet.resourceId.videoId,
+        thumbnailUrl: item.snippet.thumbnails.medium.url,
+        title: item.snippet.title,
+        description: item.snippet.description,
+        channelTitle: item.snippet.channelTitle,
+      }))
 
     const ytCount = await YTList.find()
 
-    if (ytCount[0]?.videos.length < 1) {
+    if (ytCount[0]?.videos?.length < 1) {
       return await YTList.findOneAndUpdate({
         slug: slug,
         $addToSet: {
