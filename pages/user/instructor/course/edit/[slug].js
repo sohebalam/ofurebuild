@@ -5,21 +5,16 @@ import axios from "axios"
 import { useRouter } from "next/router"
 // import { List } from "@material-ui/icons"
 import {
-  ListItemAvatar,
   makeStyles,
-  Container,
   CardContent,
   Avatar,
   Grid,
   Box,
   Card,
   Typography,
-  ListItem,
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
-  DialogActions,
   Button,
 } from "@material-ui/core"
 // import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
@@ -27,7 +22,7 @@ import {
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator"
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline"
 import { List } from "antd"
-import DraggableList from "react-draggable-lists"
+
 import UpdateLessonForm from "../../../../../components/forms/UpdateLesson"
 // import { ListItem, List } from "@material-ui/core"
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd-next"

@@ -213,6 +213,8 @@ export const paidEnroll = (course) => async (dispatch) => {
 }
 
 export const getSingleCourse = (authCookie, req, slug) => async (dispatch) => {
+  console.log(slug)
+
   try {
     dispatch({ type: SINGLE_COURSE_REQUEST })
 
@@ -319,32 +321,32 @@ export const imageDelete = (image) => async (dispatch) => {
   }
 }
 
-export const imageUpload = (uri) => async (dispatch) => {
-  console.log(uri)
+// export const imageUpload = (uri) => async (dispatch) => {
+//   console.log(uri)
 
-  return
+//   return
 
-  try {
-    dispatch({ type: UPLOAD_IMAGE_REQUEST })
+//   try {
+//     dispatch({ type: UPLOAD_IMAGE_REQUEST })
 
-    let { data } = await axios.post("/api/course/image", {
-      image: uri,
-    })
+//     let { data } = await axios.post("/api/course/image", {
+//       image: uri,
+//     })
 
-    dispatch({
-      type: UPLOAD_IMAGE_SUCCESS,
-      payload: data,
-    })
-  } catch (error) {
-    dispatch({
-      type: UPLOAD_IMAGE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
-  }
-}
+//     dispatch({
+//       type: UPLOAD_IMAGE_SUCCESS,
+//       payload: data,
+//     })
+//   } catch (error) {
+//     dispatch({
+//       type: UPLOAD_IMAGE_FAIL,
+//       payload:
+//         error.response && error.response.data.message
+//           ? error.response.data.message
+//           : error.message,
+//     })
+//   }
+// }
 
 export const selectLesson = (video) => async (dispatch) => {
   try {

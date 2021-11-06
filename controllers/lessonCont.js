@@ -7,7 +7,7 @@ import { readFileSync } from "fs"
 import formidable from "formidable"
 import fs from "fs"
 
-import YTList from "../models/courseModel"
+import YTList from "../models/lessonModel"
 
 export const getFiles = async (req, res) => {
   const { slug } = req.query
@@ -108,15 +108,11 @@ export const youtube = async (req, res) => {
       `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&maxResults=50&playlistId=${playlistId}&key=${process.env.YOUTUBE_API_KEY}`
     )
 
-    if (!response) {
-      return res.status(400).send("no lessons")
-    }
-
     const data = await response?.json()
 
     const videos =
       data &&
-      data.items?.map((item) => ({
+      data?.items?.map((item) => ({
         media: "video",
         playlistId: item.snippet.playlistId,
         videoId: item.snippet.resourceId.videoId,

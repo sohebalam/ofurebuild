@@ -61,10 +61,7 @@ const CourseView = () => {
     video: "",
   })
   const classes = useStyles()
-  const [uploading, setUploading] = useState(false)
-  const [uploadButtonText, setUploadButtonText] = useState("Upload Video")
-  const [fileButtonText, setFileButtonText] = useState("Upload File")
-  const [progress, setProgress] = useState(0)
+
   const [students, setStudents] = useState(0)
 
   const router = useRouter()
@@ -73,7 +70,7 @@ const CourseView = () => {
   const singleCourse = useSelector((state) => state.singleCourse)
   const { loading, error: courseError, course } = singleCourse
 
-  console.log(course)
+  // console.log(course)
 
   useEffect(() => {
     course && studentCount()
@@ -250,11 +247,3 @@ export const getServerSideProps = wrapper.getServerSideProps(
 )
 
 export default CourseView
-
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   (store) => async (context) => {
-//     const { params, req } = context
-
-//     await store.dispatch(getLessons(params.slug))
-//   }
-// )
