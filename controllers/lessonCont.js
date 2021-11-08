@@ -34,14 +34,8 @@ export const fileSave = async (req, res) => {
 
   const form = new formidable.IncomingForm()
   form.parse(req, async function (err, fields, files) {
-    // const { slug } = req.query
-    console.log(req.query.slug)
-    console.log(files.file)
-
     const slug = req.query.slug
-    console.log("newslug", slug)
     await saveFile(files.file, fields, slug)
-    console.log("anotherslug", slug)
     // return res.status(201).json({ message: "uploaded file" })
   })
   return

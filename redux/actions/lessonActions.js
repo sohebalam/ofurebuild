@@ -95,7 +95,7 @@ export const getlessons = (authCookie, req, slug) => async (dispatch) => {
       config
     )
 
-    console.log("actio", data[0])
+    // console.log("action", data[0])
 
     dispatch({
       type: GET_LESSONS_SUCCESS,
