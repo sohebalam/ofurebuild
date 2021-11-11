@@ -13,6 +13,8 @@ const InstructorIndex = () => {
   const coursesLoad = useSelector((state) => state.coursesLoad)
   const { loading, error, courses } = coursesLoad
 
+  console.log(courses)
+
   return (
     <>
       <h1 className="jumbotron text-center square">Instructor Dashboard</h1>
@@ -49,7 +51,7 @@ const InstructorIndex = () => {
                   <CheckCircleOutlined className="h5 pointer text-success" />
                 </Tooltip>
               ) : (
-                <Tooltip title="Unpublished">
+                <Tooltip title="Not Published">
                   <CancelIcon className="h5 pointer text-warning" />
                 </Tooltip>
               )}

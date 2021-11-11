@@ -24,3 +24,5 @@ add option fullscreen to youtube
 send no password for socialId
 
 delete Course - admin section
+
+fix modal close position

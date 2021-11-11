@@ -10,7 +10,6 @@ import {
   Typography,
   Box,
 } from "@material-ui/core"
-import ReactPlayer from "react-player"
 import { CloseIcon } from "@material-ui/icons"
 import UploadButton from "../layout/UploadButton"
 // import { Typography } from "antd"

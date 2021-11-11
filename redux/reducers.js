@@ -44,7 +44,7 @@ const reducer = combineReducers({
   //   deleteImage: deleteImageReducer,
   coursesLoad: coursesLoadReducer,
   //   coursePublished: coursePublishedReducer,
-  // courseLoad: courseLoadReducer,
+  courseLoad: courseLoadReducer,
   singleCourse: singleCourseReducer,
   //   paidEnroll: paidEnrollReducer,
   //   enrollmentCheck: enrollmentCheckReducer,

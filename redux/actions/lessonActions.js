@@ -48,14 +48,14 @@ export const postLessons = (items, slug) => async (dispatch) => {
   try {
     dispatch({ type: POST_LESSONS_REQUEST })
 
-    console.log("itemssds", items)
+    // console.log("itemssds", items)
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     }
 
-    console.log("ster", items)
+    // console.log("ster", items)
     const { data } = await axios.post(
       `/api/lessons/${slug}`,
       { ...items },
@@ -78,7 +78,7 @@ export const postLessons = (items, slug) => async (dispatch) => {
 }
 
 export const getlessons = (authCookie, req, slug) => async (dispatch) => {
-  console.log(slug)
+  // console.log(slug)
   try {
     dispatch({ type: GET_LESSONS_REQUEST })
 
@@ -113,6 +113,8 @@ export const getlessons = (authCookie, req, slug) => async (dispatch) => {
 }
 
 export const courseEdit = (image, values, slug) => async (dispatch) => {
+  console.log("courseedit", image)
+
   try {
     dispatch({ type: CREATE_COURSE_REQUEST })
 
@@ -125,7 +127,7 @@ export const courseEdit = (image, values, slug) => async (dispatch) => {
       image,
     })
 
-    console.log(data)
+    // console.log(data)
 
     dispatch({
       type: CREATE_COURSE_SUCCESS,
@@ -261,6 +263,8 @@ export const loadCourse = (authCookie, req, slug) => async (dispatch) => {
     const { origin } = absoluteUrl(req)
 
     const { data } = await axios.get(`${origin}/api/course/${slug}`, config)
+
+    console.log("load", data)
 
     dispatch({
       type: LOAD_COURSE_SUCCESS,

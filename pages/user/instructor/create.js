@@ -87,28 +87,10 @@ const CourseCreate = () => {
 
   const handleImageRemove = async (image) => {
     console.log(image)
-    // console.log("image remove", image.Bucket)
-
-    // window.confirm("Are you sure you want to delete")
-    // try {
-    //   // console.log("image", image)
-    //   setValues({ ...values, loading: true })
-    //   const res = await axios.post("/api/course/delete", { image })
-    //   dispatch(imageDelete(image))
-    //   // setImage({})
-    //   // setPreview("")
-    //   setUploadButtonText("Upload Image")
-    //   setValues({ ...values, loading: false })
-    // } catch (err) {
-    //   console.log(err)
-    //   setValues({ ...values, loading: false })
-    //   console.log("upload failed. Try later")
-    // }
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log(files)
 
     try {
       console.log(files, values)

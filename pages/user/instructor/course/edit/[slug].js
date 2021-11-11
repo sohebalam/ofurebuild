@@ -16,26 +16,23 @@ import {
   DialogTitle,
   DialogContent,
   Button,
+  List,
 } from "@material-ui/core"
-// import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
-// import ListItemCard from "../../../../../components/drag/ListItem"
+
 import DragIndicatorIcon from "@material-ui/icons/DragIndicator"
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline"
-import { List } from "antd"
 
 import UpdateLessonForm from "../../../../../components/forms/UpdateLesson"
 // import { ListItem, List } from "@material-ui/core"
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd-next"
 import {
   courseEdit,
+  getlessons,
   imageDelete,
   imageUpload,
   loadCourse,
 } from "../../../../../redux/actions/lessonActions"
 import { useDispatch, useSelector } from "react-redux"
 import { wrapper } from "../../../../../redux/store"
-
-const { Item } = List
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -65,47 +62,46 @@ const EditCourse = () => {
     lessons: [],
   })
 
-  const [course, setCourse] = useState({})
-  const [current, setCurrent] = useState({})
-  const [visible, setVisible] = useState(false)
-  const [uploadVideoButtonText, setUploadVideoButtonText] =
-    useState("Upload Video")
   const [image, setImage] = useState("")
   const [uploadButtonText, setUploadButtonText] = useState("Upload Video")
   const dispatch = useDispatch()
-  const [progress, setProgress] = useState(0)
-  const [uploading, setUploading] = useState(false)
+
+  const [files, setFiles] = useState({})
 
   const handleChange = (e) => {
+    // e.preventDefault()
+    // console.log(e)
     setValues({ ...values, [e.target.name]: e.target.value })
+
+    // console.log(values[0].title)
   }
   const router = useRouter()
 
   const { slug } = router.query
 
-  const handleImage = (e) => {
-    let file = e.target.files[0]
-    setPreview(window.URL.createObjectURL(file))
-    setUploadButtonText(file.name)
-    setValues({ ...values, loading: true })
-    // resize
-    Resizer.imageFileResizer(file, 720, 500, "JPEG", 100, 0, async (uri) => {
-      try {
-        // let { data } = await axios.post("/api/course/image", {
-        //   image: uri,
-        // })
-        dispatch(imageUpload(uri))
-        console.log("IMAGE UPLOADED", data)
-        // set image in the state
-        setImage(data)
-        setValues({ ...values, loading: false })
-      } catch (err) {
-        console.log(err)
-        setValues({ ...values, loading: false })
-        // toast("Image upload failed. Try later.")
-      }
-    })
-  }
+  // const handleImage = (e) => {
+  //   let file = e.target.files[0]
+  //   setPreview(window.URL.createObjectURL(file))
+  //   setUploadButtonText(file.name)
+  //   setValues({ ...values, loading: true })
+  //   // resize
+  //   Resizer.imageFileResizer(file, 720, 500, "JPEG", 100, 0, async (uri) => {
+  //     try {
+  //       // let { data } = await axios.post("/api/course/image", {
+  //       //   image: uri,
+  //       // })
+  //       setImage(uri)
+  //       // console.log("IMAGE UPLOADED", data)
+  //       // set image in the state
+  //       // setImage(data)
+  //       setValues({ ...values, loading: false })
+  //     } catch (err) {
+  //       console.log(err)
+  //       setValues({ ...values, loading: false })
+  //       // toast("Image upload failed. Try later.")
+  //     }
+  //   })
+  // }
 
   const handleImageRemove = async () => {
     try {
@@ -124,7 +120,9 @@ const EditCourse = () => {
   }
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // console.log(e)
+
+    console.log(image)
+
     console.log(values, image)
     try {
       var strNum = values.price
@@ -132,17 +130,9 @@ const EditCourse = () => {
 
       values.price = parseFloat(strNum)
 
-      // const { data } = await axios.put(`/api/course/update/${slug}`, {
-      //   ...values,
-      //   image,
-      // })
       dispatch(courseEdit(image, values, slug))
       console.log("here", data)
-      // toast("Course updated!")
-      // router.push("/instructor");
-    } catch (err) {
-      // toast(err.response.data)
-    }
+    } catch (err) {}
   }
 
   const handleDelete = async (index) => {
@@ -179,12 +169,13 @@ const EditCourse = () => {
           0,
           async (uri) => {
             try {
-              let { data } = await axios.post("/api/course/image", {
-                image: uri,
-              })
-              // console.log("IMAGE UPLOADED", data)
-              setImage(data)
+              // let { data } = await axios.post("/api/course/image", {
+              //   image: uri,
+              // })
+
               // setImage(data)
+              setImage(uri)
+
               setValues({ ...values, loading: false })
             } catch (err) {
               console.log(err)
@@ -195,197 +186,24 @@ const EditCourse = () => {
         )
       }
     })
-  // console.log(values.lessons)
 
-  const handleDrag = (e, index) => {
-    // console.log("ON DRAG", index)
-    e.dataTransfer.setData("itemIndex", index)
-  }
-
-  const handleDrop = async (e, index) => {
-    console.log("ON DROP", index)
-
-    const movingItemIndex = e.dataTransfer.getData("itemIndex")
-    const targetItemIndex = index
-    let allLessons = values.lessons
-    let movingItem = allLessons[movingItemIndex]
-    allLessons.splice(movingItemIndex, 1)
-    allLessons.splice(targetItemIndex, 0, movingItem)
-
-    // let data = {}
-
-    if (data) setValues({ ...values, lessons: [...allLessons] })
-    const { data } = await axios.put(`/api/course/${slug}`, {
-      ...values,
-      image,
-    })
-  }
-
-  const handelVideo = async (e) => {
-    const file = e.target.files[0]
-    setUploadButtonText(file.name)
-    console.log(file.name)
-
-    if (current.video && current.video?.Location) {
-      const res = await axios.post(
-        `/api/course/video/remove/${values.instructor._id}`,
-        current.video
-      )
-      console.log("remove", res)
-    }
-
-    try {
-      const file = e.target.files[0]
-      setUploadButtonText(file.name)
-      setUploading(true)
-      console.log(file.name)
-      const formData = new FormData()
-      formData.append("video", file)
-
-      // videoData.append("video", file)
-
-      console.log(formData)
-
-      let instructorId = values.instructor._id
-
-      const { data } = await axios.post(
-        `/api/course/video/${instructorId}`,
-        formData,
-        {
-          onUploadProgress: (e) =>
-            setProgress(Math.round((100 * e.loaded) / e.total)),
-        }
-      )
-
-      console.log(data)
-      setValues({ ...values, video: data })
-      setUploading(false)
-      // toast("Video Upload Success")
-    } catch (error) {
-      console.log(error)
-      setUploading(false)
-      // toast("Video Upload Failed")
-    }
-  }
-  const handelUpdateLesson = async (e) => {
-    e.preventDefault()
-
-    console.log(current)
-
-    const { data } = await axios.put(
-      `/api/course/lesson/${slug}/${current._id}`,
-      current
-    )
-    setUploadVideoButtonText("Upload Video")
-    setVisible(false)
-    // toast("Lesson updated")
-    if (data.ok) {
-      let arr = values.lessons
-      const index = arr.findIndex((el) => el._id === current._id)
-      arr[index] = current
-      setValues({ ...values, lessons: arr })
-    }
-
-    // setValues({ ...data })
-  }
-  // console.log(values)
   const classes = useStyles()
-
-  const childrenToRender = values.lessons.map((item, i) => (
-    <div key={item._id}>
-      <Card>
-        <h1>{item.title}</h1>
-        <p>{item.content}</p>
-      </Card>
-    </div>
-  ))
 
   return (
     <>
-      {values && values.lessons && (
+      {values && (
         <>
           <div>
             <UpdateCourse
               handleChange={handleChange}
               values={values}
               setValues={setValues}
-              handleImage={handleImage}
-              handleImageRemove={handleImageRemove}
+              // handleImage={handleImage}
+              // handleImageRemove={handleImageRemove}
               handleSubmit={handleSubmit}
               onDropzoneArea={onDropzoneArea}
+              slug={slug}
             />
-          </div>
-          <div>
-            <div style={{ width: 500, margin: "0 auto" }}>
-              <List
-                className="draggable"
-                onDragOver={(e) => e.preventDefault()}
-                itemLayout="horizontal"
-                dataSource={values && values.lessons}
-                renderItem={(item, index) => (
-                  <Item
-                    draggable
-                    onDragStart={(e) => handleDrag(e, index)}
-                    onDrop={(e) => handleDrop(e, index)}
-                  >
-                    <Card
-                      style={{ marginBottom: "0.25rem" }}
-                      onClick={() => {
-                        setVisible(true)
-                        setCurrent(item)
-                      }}
-                    >
-                      <Grid container>
-                        <Grid item xs={2}>
-                          <Box padding="1rem">
-                            <Avatar className={classes.avcolor}>
-                              {index + 1}
-                            </Avatar>
-                          </Box>
-                        </Grid>
-                        <Grid item xs={7}>
-                          <CardContent>
-                            <Typography>{item?.title}</Typography>
-                            <span>{item?.content}</span>
-                          </CardContent>
-                        </Grid>
-                        <Grid item xs={2}>
-                          <Box
-                            padding="1rem"
-                            onClick={() => handleDelete(index)}
-                          >
-                            <DeleteOutlineIcon
-                              style={{ marginLeft: "0.5rem" }}
-                            />
-                            <Typography variant="body1">Delete</Typography>
-                          </Box>
-                        </Grid>
-                        <Grid item xs={1}>
-                          <Box padding="1rem">
-                            <DragIndicatorIcon />
-                          </Box>
-                        </Grid>
-                      </Grid>
-                    </Card>
-                  </Item>
-                )}
-              ></List>
-            </div>
-            <Dialog open={visible}>
-              <DialogTitle id="update lesson">Update Lesson</DialogTitle>
-              <DialogContent>
-                <UpdateLessonForm
-                  current={current}
-                  setCurrent={setCurrent}
-                  handelVideo={handelVideo}
-                  handelUpdateLesson={handelUpdateLesson}
-                  uploadVideoButtonText={uploadVideoButtonText}
-                  progress={progress}
-                  uploading={uploading}
-                />
-              </DialogContent>
-              <Button onClick={() => setVisible(false)}>Close</Button>
-            </Dialog>
           </div>
         </>
       )}
@@ -393,17 +211,12 @@ const EditCourse = () => {
   )
 }
 
-// export async function getServerSideProps(context) {
-//   const { params } = context
-
-//   console.log(params)
-// }
-
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
     const { params, req } = context
     // console.log(context)
     await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
+    await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
   }
 )
 

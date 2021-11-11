@@ -5,8 +5,91 @@ import slugify from "slugify"
 import { readFileSync } from "fs"
 import User from "../models/userModel"
 import cloudinary from "../utils/cloudinary"
+import YTList from "../models/lessonModel"
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
+
+// const updateRoom = catchAsyncErrors(async (req, res) => {
+//   console.log(req.method)
+//   let room = await Room.findById(req.query.id)
+
+//   if (!room) {
+//     return next(new ErrorHandler("Room not found with this ID", 404))
+//   }
+
+//   if (req.body.images) {
+//     // Delete images associated with the room
+//     for (let i = 0; i < room.images.length; i++) {
+//       await cloudinary.v2.uploader.destroy(room.images[i].public_id)
+//     }
+
+//     let imagesLinks = []
+//     const images = req.body.images
+
+//     for (let i = 0; i < images.length; i++) {
+//       const result = await cloudinary.v2.uploader.upload(images[i], {
+//         folder: "bookit/rooms",
+//       })
+
+//       imagesLinks.push({
+//         public_id: result.public_id,
+//         url: result.secure_url,
+//       })
+//     }
+
+//     req.body.images = imagesLinks
+//   }
+
+//   room = await Room.findByIdAndUpdate(req.query.id, req.body, {
+//     new: true,
+//     runValidators: true,
+//     useFindAndModify: false,
+//   })
+
+//   res.status(200).json({
+//     success: true,
+//     room,
+//   })
+// })
+
+export const update = async (req, res) => {
+  // console.log(req.body.images[0].public_id)
+
+  try {
+    const { slug } = req.query
+    // console.log(slug)
+
+    const course = await Course.findOne({ slug }).exec()
+
+    if (req.user._id != course.instructor) {
+      return res.status(400).json({ message: "Unathorized" })
+    }
+
+    await cloudinary.uploader.destroy(req.body.images[0].public_id)
+    const fileStr = req.body.image
+    const result = await cloudinary.uploader.upload(fileStr, {
+      folder: "ofu",
+    })
+
+    let imagesLinks = []
+
+    imagesLinks.push({
+      public_id: result.public_id,
+      url: result.secure_url,
+    })
+
+    req.body.images = imagesLinks
+
+    const updated = await Course.findOneAndUpdate({ slug }, req.body, {
+      new: true,
+    }).exec()
+
+    res.json(updated)
+  } catch (error) {
+    console.log(error)
+    return res.status(400).send(error.message)
+  }
+}
 
 export const uploadImage = async (req, res) => {
   // console.log(req.body.image)
@@ -94,23 +177,17 @@ export const readCourse = async (req, res) => {
   const { slug } = req.query
 
   try {
-    const YOUTUBE_PLAYLIST_ITEMS_API =
-      "https://www.googleapis.com/youtube/v3/playlistItems"
-
     const course = await Course.findOne({ slug: slug })
       .populate("instructor", "_id name")
       .exec()
 
-    const playlistId = course?.playlistId
-    const response = await fetch(
-      `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&maxResults=50&playlistId=${playlistId}&key=${process.env.YOUTUBE_API_KEY}`
-    )
+    const ytList = await YTList.findOne({
+      slug: slug,
+    })
 
-    const data = await response?.json()
+    // const courseList = [course, ytList]
 
-    // console.log(data)
-
-    res.send(data)
+    res.send(course)
   } catch (error) {
     console.log(error)
   }
@@ -209,28 +286,6 @@ export const addLesson = async (req, res) => {
   } catch (error) {
     console.log(error)
     return res.status(400).send("add lesson failed")
-  }
-}
-
-export const update = async (req, res) => {
-  try {
-    const { slug } = req.query
-    // console.log(slug)
-
-    const course = await Course.findOne({ slug }).exec()
-
-    if (req.user._id != course.instructor) {
-      return res.status(400).json({ message: "Unathorized" })
-    }
-
-    const updated = await Course.findOneAndUpdate({ slug }, req.body, {
-      new: true,
-    }).exec()
-
-    res.json(updated)
-  } catch (error) {
-    console.log(error)
-    return res.status(400).send(error.message)
   }
 }
 

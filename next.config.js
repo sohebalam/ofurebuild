@@ -29,6 +29,7 @@ module.exports = {
       "ofu-bucket.s3.eu-west-2.amazonaws.com",
       "https://www.youtube.com",
       "i.ytimg.com",
+      "res.cloudinary.com",
     ],
     hostname: "ofu-bucket.s3.eu-west-2.amazonaws.com",
   },

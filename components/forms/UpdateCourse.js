@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-
+import EditList from "../file/EditList"
 import { Box, CircularProgress, Input } from "@material-ui/core"
 import MenuBookIcon from "@material-ui/icons/MenuBook"
 import { InputLabel } from "@material-ui/core"
@@ -15,6 +15,7 @@ import { Button } from "@material-ui/core"
 import { Container } from "@material-ui/core"
 import { useRouter } from "next/router"
 import { useSelector, useDispatch } from "react-redux"
+import Image from "next/image"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -56,19 +57,16 @@ const UpdateCourse = ({
   handleImageRemove,
   setValues,
   values,
+  slug,
 }) => {
   const children = []
   for (let i = 9.99; i <= 100.99; i++) {
     children.push(<option key={i.toFixed(2)}>£{i.toFixed(2)}</option>)
   }
 
-  const [preview, setPreview] = useState("")
-  const [uploadButtonText, setUploadButtonText] = useState("Upload Image")
-  const [urlimage, setUrlimage] = useState("")
   const router = useRouter()
 
-  const dispatch = useDispatch()
-  // console.log(slug)
+  // console.log(values)
 
   const classes = useStyles()
 
@@ -77,13 +75,8 @@ const UpdateCourse = ({
 
   useEffect(() => {
     setValues(course)
-    if (course?.image?.Location) {
-      var url = course?.image?.Location
-      setUrlimage(url)
-    }
   }, [])
 
-  console.log(urlimage)
   return (
     <Container component="main" maxWidth="sm">
       <CssBaseline />
@@ -101,9 +94,10 @@ const UpdateCourse = ({
             required
             fullWidth
             id="title"
-            // label="Course Title"
+            label="Course Title"
             name="title"
             autoFocus
+            // defaultValue={values[0]?.title || ""}
             value={values?.title || ""}
             onChange={handleChange}
           />
@@ -112,11 +106,11 @@ const UpdateCourse = ({
             margin="normal"
             required
             fullWidth
-            id="category"
-            // label="Category"
-            name="category"
+            id="playlistId"
+            label="Playlist Id"
+            name="playlistId"
             autoFocus
-            value={values?.category || ""}
+            value={values?.playlistId || ""}
             onChange={handleChange}
           />
 
@@ -129,7 +123,7 @@ const UpdateCourse = ({
             required
             fullWidth
             name="description"
-            // label="Description"
+            label="Description"
             type="text"
             id="description"
             value={values?.description || ""}
@@ -141,7 +135,7 @@ const UpdateCourse = ({
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={values?.paid}
+                      checked={values.paid || ""}
                       color="primary"
                       onChange={(e) =>
                         setValues({ ...values, paid: e.target.checked })
@@ -161,6 +155,7 @@ const UpdateCourse = ({
 
               <Select
                 native
+                value={values?.price || ""}
                 onChange={(e) =>
                   setValues({ ...values, price: e.target.value })
                 }
@@ -172,17 +167,29 @@ const UpdateCourse = ({
 
           <Box mt="2rem">
             <Grid container>
-              {urlimage && (
-                <DropzoneArea
-                  initialFiles={[urlimage]}
-                  acceptedFiles={["image/*"]}
-                  filesLimit={3}
-                  maxFileSize={1048576} //1 MB
-                  showFileNames={true}
-                  dropzoneText={"Drag and drop an image here or click"}
-                  onChange={onDropzoneArea}
-                  onDelete={handleImageRemove}
-                />
+              {values?.images && (
+                <>
+                  <Grid item xs={8}>
+                    <DropzoneArea
+                      // initialFiles={[values[0]?.images[0]?.url || ""]}
+                      acceptedFiles={["image/*"]}
+                      filesLimit={1}
+                      maxFileSize={1048576} //1 MB
+                      showFileNames={true}
+                      dropzoneText={"Drag and drop an image here or click"}
+                      onChange={onDropzoneArea}
+                      onDelete={handleImageRemove}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <Image
+                      src={values?.images[0]?.url || ""}
+                      alt="Picture of the author"
+                      width={200}
+                      height={200}
+                    />
+                  </Grid>
+                </>
               )}
             </Grid>
           </Box>
@@ -198,8 +205,7 @@ const UpdateCourse = ({
           </Button>
           {values.loading && <CircularProgress />}
           <Grid container>
-            {/* <Grid item></Grid>
-            <Grid item></Grid> */}
+            <EditList slug={slug} />
           </Grid>
         </form>
       </div>
