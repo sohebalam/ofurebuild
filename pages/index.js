@@ -8,14 +8,16 @@ import CourseCard from "../components/cards/CourseCard"
 import { Grid, Paper } from "@material-ui/core"
 import { Box } from "@mui/system"
 import { wrapper } from "../redux/store"
-// import { publishedCourse } from "../redux/actions/lessonActions"
+import { publishedCourse } from "../redux/actions/lessonActions"
 import { useSelector } from "react-redux"
 
 const Home = () => {
-  // const coursePublished = useSelector((state) => state.coursePublished)
-  // const { loading, error, published } = coursePublished
+  const coursePublished = useSelector((state) => state.coursePublished)
+  const { loading, error, published } = coursePublished
 
-  // const courses = published
+  console.log(published)
+
+  const courses = published
 
   return (
     <div>
@@ -28,7 +30,7 @@ const Home = () => {
         />
       </Paper>
       <Grid container>
-        {/* {courses.map((course) => (
+        {courses.map((course) => (
           <Grid item key={course._id} xs={4}>
             <Box
               style={{ padding: "0.5rem", paddingLeft: "0", paddingRight: "0" }}
@@ -36,19 +38,19 @@ const Home = () => {
               <CourseCard course={course} />
             </Box>
           </Grid>
-        ))} */}
+        ))}
       </Grid>
     </div>
   )
 }
 
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   (store) =>
-//     async ({ req }) => {
-//       // const session = await getSession({ req })
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req }) => {
+      // const session = await getSession({ req })
 
-//       await store.dispatch(publishedCourse(req))
-//     }
-// )
+      await store.dispatch(publishedCourse(req))
+    }
+)
 
 export default Home

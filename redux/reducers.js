@@ -43,7 +43,7 @@ const reducer = combineReducers({
   uploadImage: uploadImageReducer,
   //   deleteImage: deleteImageReducer,
   coursesLoad: coursesLoadReducer,
-  //   coursePublished: coursePublishedReducer,
+  coursePublished: coursePublishedReducer,
   courseLoad: courseLoadReducer,
   singleCourse: singleCourseReducer,
   //   paidEnroll: paidEnrollReducer,

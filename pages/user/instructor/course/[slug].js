@@ -28,6 +28,7 @@ import { wrapper } from "../../../../redux/store"
 import {
   getlessons,
   getSingleCourse,
+  loadCourse,
 } from "../../../../redux/actions/lessonActions"
 import Lessons from "../../../../components/file/DragList"
 
@@ -67,10 +68,18 @@ const CourseView = () => {
   const router = useRouter()
   const { slug } = router.query
 
-  const singleCourse = useSelector((state) => state.singleCourse)
-  const { loading, error: courseError, course } = singleCourse
+  // const singleCourse = useSelector((state) => state.singleCourse)
+  // const { loading, error: courseError, course } = singleCourse
 
-  // console.log(course)
+  const courseLoad = useSelector((state) => state.courseLoad)
+  const { loading, error: courseError, course } = courseLoad
+
+  console.log(course)
+
+  const lessonsList = useSelector((state) => state.lessonsList)
+  const { loading: lessonsLoading, error: errorLoading, lessons } = lessonsList
+
+  console.log(lessons.videos.length)
 
   useEffect(() => {
     course && studentCount()
@@ -132,7 +141,10 @@ const CourseView = () => {
                 <Grid item xs={3}>
                   <Typography variant="h3">{course.title}</Typography>
                   <Typography variant="h4">
-                    {course.lessons && course.lessons.length} Lessons
+                    {lessons.lessons
+                      ? lessons.lessons.length
+                      : lessons.videos.length}{" "}
+                    Lessons
                   </Typography>
                   <Typography variant="h5">{course.category}</Typography>
                   <Box padding="1rem">
@@ -179,7 +191,7 @@ const CourseView = () => {
                         />
                       </Tooltip>
 
-                      {course.lessons && course.lessons.length < 5 ? (
+                      {lessons.lessons && lessons.lessons.length < 5 ? (
                         <Tooltip title="Min 5 lessons required to publish">
                           <HelpOutlineIcon className="h5 pointer text-danger" />
                         </Tooltip>
@@ -241,8 +253,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     // const slug = "fdzsf"
 
-    await store.dispatch(getSingleCourse(req.headers.cookie, req, params.slug))
+    // await store.dispatch(getSingleCourse(req.headers.cookie, req, params.slug))
     await store.dispatch(getlessons(req.headers.cookie, req, slug))
+    await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
   }
 )
 

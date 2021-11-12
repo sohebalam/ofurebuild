@@ -38,7 +38,7 @@ const DragList = ({ slug }) => {
   }
 
   const onEnd = async (result) => {
-    console.log(result)
+    // console.log(result)
     setData(reorder(data, result.source.index, result.destination.index))
   }
   return (

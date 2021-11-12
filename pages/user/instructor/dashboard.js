@@ -13,7 +13,10 @@ const InstructorIndex = () => {
   const coursesLoad = useSelector((state) => state.coursesLoad)
   const { loading, error, courses } = coursesLoad
 
-  console.log(courses)
+  const lessonsList = useSelector((state) => state.lessonsList)
+  const { loading: lessonsLoading, error: errorLoading, lessons } = lessonsList
+
+  console.log(lessons)
 
   return (
     <>
@@ -38,7 +41,7 @@ const InstructorIndex = () => {
               <p>{course.lessons?.length}</p>
             </Grid>
             <Grid item xs={3}>
-              {course.lessons?.length < 5 ? (
+              {/* {course.lessons?.length < 5 ? (
                 <p>At least 5 lessons are required to publish a course</p>
               ) : course.published ? (
                 <p>Your course is live in the marketplace</p>
@@ -54,7 +57,7 @@ const InstructorIndex = () => {
                 <Tooltip title="Not Published">
                   <CancelIcon className="h5 pointer text-warning" />
                 </Tooltip>
-              )}
+              )} */}
             </Grid>
           </Grid>
         ))}
@@ -68,6 +71,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
       // const session = await getSession({ req })
 
       await store.dispatch(loadCourses(req.headers.cookie, req))
+      // await store.dispatch(getlessons(req.headers.cookie, req, slug))
     }
 )
 

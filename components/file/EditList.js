@@ -62,7 +62,7 @@ const EditList = ({ slug }) => {
     const { data } = await axios.put(`/api/lessons/${slug}`, { item })
   }
 
-  console.log(data)
+  // console.log(data)
   return (
     <DragDropContext onDragEnd={onEnd}>
       <Droppable droppableId="123456">
