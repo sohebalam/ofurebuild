@@ -44,10 +44,13 @@ export const fileSave = async (req, res) => {
 const saveFile = async (file, fields, slug) => {
   const { title, description } = fields
   console.log("sdssda", slug)
-  // console.log(file.path, file.type, title, description)
-
+  console.log(file.filepath, title, description)
+  // (`${process.cwd()}\\public\\public\\${req.body.item.name}`
   const data = fs.readFileSync(file.filepath)
-  fs.writeFileSync(`./public/files/${file.originalFilename}`, data)
+  fs.writeFileSync(
+    `${process.cwd()}\\public\\files\\${file.originalFilename}`,
+    data
+  )
   await fs.unlinkSync(file.filepath)
 
   try {
@@ -61,7 +64,9 @@ const saveFile = async (file, fields, slug) => {
           title,
           name: file.originalFilename,
           description,
-          file_path: file.filepath,
+          file_path: `${process.cwd()}\\public\\files\\${
+            file.originalFilename
+          }`,
           file_mimetype: file.mimetype,
         },
       },
@@ -169,4 +174,33 @@ export const lessonOrder = async (req, res) => {
   ).exec()
 
   res.json(updated)
+}
+
+export const deleteFile = async (req, res) => {
+  const { slug } = req.query
+  // console.log(req.method, req.body, slug)
+
+  console.log(`${process.cwd()}\\public\\public\\${req.body.item.name}`)
+
+  await fs.unlinkSync(req.body.item.file_path)
+
+  const updated = await YTList.findOneAndUpdate(
+    { slug: slug },
+    {
+      $pull: { lessons: { _id: req.body.item._id } },
+
+      new: true,
+    }
+  ).exec()
+
+  const updatedfile = await YTList.findOneAndUpdate(
+    { slug: slug },
+    {
+      $pull: { files: { name: req.body.item.name } },
+
+      new: true,
+    }
+  ).exec()
+
+  // console.log(updated, updatedfile)
 }

@@ -141,7 +141,7 @@ const EditCourse = () => {
     let allLessons = values.lessons
     const removed = allLessons.splice(index, 1)
     setValues({ ...values, lessons: allLessons })
-    const { data } = await axios.put(`/api/lesson/${slug}/${removed[0]._id}`)
+    const { data } = await axios.delete(`/api/lesson/${slug}`)
     console.log("lessondeleted", data)
   }
 

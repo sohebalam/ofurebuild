@@ -3,7 +3,7 @@ import nc from "next-connect"
 import connectDB from "../../../connectDB"
 import onError from "../../../middlewares/errors"
 import { isAuthenticated, isInstructor } from "../../../middlewares/auth"
-import { lessonOrder } from "../../../controllers/lessonCont"
+import { lessonOrder, deleteFile } from "../../../controllers/lessonCont"
 connectDB()
 
 export const config = {
@@ -18,5 +18,6 @@ const router = nc({ onError })
 
 // router.use(isAuthenticated, isInstructor).post(formidableSave)
 router.use(isAuthenticated, isInstructor).post(lessonOrder)
+router.use(isAuthenticated, isInstructor).put(deleteFile)
 
 export default router

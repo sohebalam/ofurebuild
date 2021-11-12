@@ -9,49 +9,6 @@ import YTList from "../models/lessonModel"
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
 
-// const updateRoom = catchAsyncErrors(async (req, res) => {
-//   console.log(req.method)
-//   let room = await Room.findById(req.query.id)
-
-//   if (!room) {
-//     return next(new ErrorHandler("Room not found with this ID", 404))
-//   }
-
-//   if (req.body.images) {
-//     // Delete images associated with the room
-//     for (let i = 0; i < room.images.length; i++) {
-//       await cloudinary.v2.uploader.destroy(room.images[i].public_id)
-//     }
-
-//     let imagesLinks = []
-//     const images = req.body.images
-
-//     for (let i = 0; i < images.length; i++) {
-//       const result = await cloudinary.v2.uploader.upload(images[i], {
-//         folder: "bookit/rooms",
-//       })
-
-//       imagesLinks.push({
-//         public_id: result.public_id,
-//         url: result.secure_url,
-//       })
-//     }
-
-//     req.body.images = imagesLinks
-//   }
-
-//   room = await Room.findByIdAndUpdate(req.query.id, req.body, {
-//     new: true,
-//     runValidators: true,
-//     useFindAndModify: false,
-//   })
-
-//   res.status(200).json({
-//     success: true,
-//     room,
-//   })
-// })
-
 export const update = async (req, res) => {
   // console.log(req.body.images[0].public_id)
 
