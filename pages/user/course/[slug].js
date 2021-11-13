@@ -2,7 +2,11 @@ import { Grid } from "@material-ui/core"
 import VideoDetail from "../../../components/videos/VideoDetail"
 import { useEffect, useState } from "react"
 import VideoList from "../../../components/videos/VideoList"
-import { getSingleCourse } from "../../../redux/actions/lessonActions"
+import {
+  getlessons,
+  getSingleCourse,
+  loadCourse,
+} from "../../../redux/actions/lessonActions"
 import { wrapper } from "../../../redux/store"
 import { useRouter } from "next/router"
 import { useSelector, useDispatch } from "react-redux"
@@ -17,9 +21,9 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     // console.log("params", params)
 
-    // const slug = "fdzsf"
-
-    await store.dispatch(getSingleCourse(req, params.slug))
+    await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
+    await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
+    // await store.dispatch(getSingleCourse(req, params.slug))
   }
 )
 
@@ -27,16 +31,21 @@ const Index = () => {
   // const [videos, setVideos] = useState([])
   // const [onSelectedVideo, setOnSelectedVideo] = useState({})
   const [selectedVideo] = useState({})
+  const courseLoad = useSelector((state) => state.courseLoad)
+  const { loading, error: courseError, course } = courseLoad
 
-  const singleCourse = useSelector((state) => state.singleCourse)
-  const { loading, error: courseError, course } = singleCourse
+  const lessonsList = useSelector((state) => state.lessonsList)
+  const { loading: loadingList, error: errorList, lessons } = lessonsList
+
+  // const singleCourse = useSelector((state) => state.singleCourse)
+  // const { loading, error: courseError, course } = singleCourse
 
   console.log(course)
 
-  const videos = course.videos
+  const videos = lessons.videos
 
-  console.log("viasdadsasd", videos)
-  console.log(selectedVideo)
+  console.log("viasdadsasd", lessons)
+  // console.log(selectedVideo)
 
   // const { items } = data
 

@@ -38,7 +38,7 @@ const reducer = combineReducers({
   newInstructor: newInstructorReducer,
 
   //lessons
-  //   selectVideo: selectVideoReducer,
+  selectVideo: selectVideoReducer,
   //   createCourse: createCourseReducer,
   uploadImage: uploadImageReducer,
   //   deleteImage: deleteImageReducer,

@@ -4,12 +4,13 @@ import Image from "next/image"
 import { currencyFormatter } from "../../utils/currency"
 
 const CourseCard = ({ course }) => {
-  const { title, instructor, price, image, slug, paid, category } = course
+  // console.log(course)
+  const { title, instructor, price, images, slug, paid, category } = course
   return (
-    <Link href={`course/${slug}`}>
+    <Link href={`/user/course/${slug}`}>
       <Card style={{ padding: "1rem", cursor: "pointer" }}>
         <Image
-          src={image ? image.Location : "/course.jpg"}
+          src={images ? images[0]?.url : "/course.jpg"}
           height={200}
           width={400}
         />
@@ -17,11 +18,11 @@ const CourseCard = ({ course }) => {
           <Typography variant="h5">{title} </Typography>
           <Typography variant="body1">{instructor?.name}</Typography>
         </Box>
-        <Chip
+        {/* <Chip
           label={category}
           color="primary"
           style={{ display: "flex", marginBottom: "0.5rem" }}
-        />
+        /> */}
         <Chip
           label={
             paid

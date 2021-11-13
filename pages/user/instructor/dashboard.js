@@ -13,11 +13,6 @@ const InstructorIndex = () => {
   const coursesLoad = useSelector((state) => state.coursesLoad)
   const { loading, error, courses } = coursesLoad
 
-  const lessonsList = useSelector((state) => state.lessonsList)
-  const { loading: lessonsLoading, error: errorLoading, lessons } = lessonsList
-
-  console.log(lessons)
-
   return (
     <>
       <h1 className="jumbotron text-center square">Instructor Dashboard</h1>
