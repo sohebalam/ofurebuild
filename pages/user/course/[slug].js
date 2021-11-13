@@ -59,7 +59,6 @@ const Index = () => {
       justifyContent="center"
       style={{ marginBottom: "12rem", marginTop: "0.75rem" }}
     >
-      {/* <Grid item xs={12}> */}
       <Grid container>
         {/* <SearchBar onSubmit={handleSubmit} /> */}
         {/* input field */}
@@ -69,7 +68,6 @@ const Index = () => {
       </Grid>
       <Grid item xs={4}>
         <VideoList videos={videos} />
-        {/* </Grid> */}
       </Grid>
     </Grid>
   )

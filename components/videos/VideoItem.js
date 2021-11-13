@@ -13,13 +13,14 @@ import Skeleton from "@mui/material/Skeleton"
 import { makeStyles } from "@material-ui/core"
 import { Card } from "@mui/material"
 import FileDownloadIcon from "@mui/icons-material/FileDownload"
-
+import { selectLesson } from "../../redux/actions/lessonActions"
+import { useDispatch } from "react-redux"
 const VideoItem = ({ video }) => {
   const useStyles = makeStyles((theme) => ({
     stretch: { height: "100%", width: "100%" },
     item: { display: "flex", flexDirection: "column", borderRadius: "999px" }, // KEY CHANGES
   }))
-
+  const dispatch = useDispatch()
   const classes = useStyles()
 
   if (video.videoId) {
@@ -28,31 +29,36 @@ const VideoItem = ({ video }) => {
         {!video ? (
           <Skeleton variant="rectangular" width={200} height={200} />
         ) : (
-          <Card
-            style={{
-              display: "flex",
-              alignItems: "center",
-              cursor: "pointer",
-              padding: "0.25rem",
-              height: "13vw",
-              width: "20vw",
-            }}
-            className={classes.stretch}
+          <Button
+            key={video.videoId}
+            onClick={() => dispatch(selectLesson(video))}
           >
-            {/* <Box style={{ width: 250, height: 200 }}> */}
-            <Image
-              // style={{ marginRight: "20px" }}
-              alt="thumbnail"
-              src={video.thumbnailUrl}
-              // height="100px"
-              layout="fill"
-            />
-            {/* </Box> */}
+            <Card
+              style={{
+                display: "flex",
+                alignItems: "center",
+                cursor: "pointer",
+                padding: "0.25rem",
+                height: "13vw",
+                width: "20vw",
+              }}
+              className={classes.stretch}
+            >
+              {/* <Box style={{ width: 250, height: 200 }}> */}
+              <Image
+                // style={{ marginRight: "20px" }}
+                alt="thumbnail"
+                src={video.thumbnailUrl}
+                // height="100px"
+                layout="fill"
+              />
+              {/* </Box> */}
 
-            <Typography variant="subtitle1">
-              <b>{video.title}</b>
-            </Typography>
-          </Card>
+              <Typography variant="subtitle1">
+                <b>{video.title}</b>
+              </Typography>
+            </Card>
+          </Button>
         )}
       </Grid>
     )
@@ -66,10 +72,10 @@ const VideoItem = ({ video }) => {
             style={{
               display: "flex",
               alignItems: "center",
-              cursor: "pointer",
-              padding: "0.25rem",
-              height: "13vw",
-              width: "20vw",
+              // cursor: "pointer",
+              padding: "2rem",
+              height: "15vw",
+              width: "21.2vw",
             }}
             className={classes.stretch}
             // className={classes.cardStyle}
@@ -79,21 +85,21 @@ const VideoItem = ({ video }) => {
                 <CardContent>
                   <Typography
                     sx={{ fontSize: 14 }}
-                    color="text.secondary"
+                    // color="text.secondary"
                     gutterBottom
                   >
                     {video.title}
                   </Typography>
                   <Typography variant="h5" component="div"></Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    {video.description}
-                  </Typography>
+                  <Typography sx={{ mb: 1.5 }}>{video.description}</Typography>
                 </CardContent>
               </Grid>
               <Grid item xs={5}>
                 <CardActions>
-                  <FileDownloadIcon />
-                  <Button size="small">Learn More</Button>
+                  <Button size="small" onClick={() => console.log("here")}>
+                    <FileDownloadIcon />
+                    Learn More
+                  </Button>
                 </CardActions>
               </Grid>
             </Grid>

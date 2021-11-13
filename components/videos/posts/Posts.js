@@ -12,14 +12,7 @@ const Posts = ({ posts }) => {
     <div>
       <ul className="list-group mb-4">
         {posts &&
-          posts.map((video) => (
-            <Button
-              key={video.videoId}
-              onClick={() => dispatch(selectLesson(video))}
-            >
-              <VideoItem video={video} />
-            </Button>
-          ))}
+          posts.map((video) => <VideoItem video={video} key={video.videoId} />)}
       </ul>
     </div>
   )
