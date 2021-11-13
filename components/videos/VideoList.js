@@ -5,15 +5,13 @@ import Pagination from "@mui/material/Pagination"
 import { PaginationItem, Stack } from "@mui/material"
 
 function VideoList({ videos }) {
+  const useStyles = makeStyles((theme) => ({
+    stretch: { height: "100%" },
+    item: { display: "flex", flexDirection: "column", borderRadius: "999px" }, // KEY CHANGES
+  }))
   const [posts, setPosts] = useState([])
   const [currentPage, setCurrentPage] = useState(1)
   const [postsPerPage] = useState(2)
-
-  const useStyles = makeStyles((theme) => ({
-    item: {
-      borderRadius: "999px",
-    },
-  }))
 
   // Get current posts
   const indexOfLastPost = currentPage * postsPerPage

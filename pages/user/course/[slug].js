@@ -42,7 +42,7 @@ const Index = () => {
 
   console.log(course)
 
-  const videos = lessons.videos
+  const videos = lessons.lessons
 
   console.log("viasdadsasd", lessons)
   // console.log(selectedVideo)
@@ -59,19 +59,17 @@ const Index = () => {
       justifyContent="center"
       style={{ marginBottom: "12rem", marginTop: "0.75rem" }}
     >
-      <Grid item xs={12}>
-        <Grid container>
-          <Grid item xs={12}>
-            {/* <SearchBar onSubmit={handleSubmit} /> */}
-            {/* input field */}
-          </Grid>
-          <Grid item xs={8}>
-            <VideoDetail />
-          </Grid>
-          <Grid item xs={4}>
-            <VideoList videos={videos} />
-          </Grid>
-        </Grid>
+      {/* <Grid item xs={12}> */}
+      <Grid container>
+        {/* <SearchBar onSubmit={handleSubmit} /> */}
+        {/* input field */}
+      </Grid>
+      <Grid item xs={8}>
+        <VideoDetail />
+      </Grid>
+      <Grid item xs={4}>
+        <VideoList videos={videos} />
+        {/* </Grid> */}
       </Grid>
     </Grid>
   )
