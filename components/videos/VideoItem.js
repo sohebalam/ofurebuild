@@ -15,6 +15,9 @@ import { Card } from "@mui/material"
 import FileDownloadIcon from "@mui/icons-material/FileDownload"
 import { selectLesson } from "../../redux/actions/lessonActions"
 import { useDispatch } from "react-redux"
+import axios from "axios"
+import { useRouter } from "next/router"
+import download from "downloadjs"
 const VideoItem = ({ video }) => {
   const useStyles = makeStyles((theme) => ({
     stretch: { height: "100%", width: "100%" },
@@ -22,6 +25,29 @@ const VideoItem = ({ video }) => {
   }))
   const dispatch = useDispatch()
   const classes = useStyles()
+  const router = useRouter()
+
+  const { slug } = router.query
+
+  const downloadFile = async (id, path, mimetype) => {
+    console.log(id, path, mimetype, slug)
+
+    try {
+      const result = await axios.get(`/api/file/download/${slug}/${id}`, {
+        responseType: "blob",
+      })
+
+      console.log(result)
+      const split = path.split("/")
+      const filename = split[split.length - 1]
+
+      return download(result.data, filename, mimetype)
+    } catch (error) {
+      if (error.response && error.response.status === 400) {
+        console.log("Error while downloading file. Try again later")
+      }
+    }
+  }
 
   if (video.videoId) {
     return (
@@ -96,7 +122,23 @@ const VideoItem = ({ video }) => {
               </Grid>
               <Grid item xs={5}>
                 <CardActions>
-                  <Button size="small" onClick={() => console.log("here")}>
+                  <Button
+                    size="small"
+                    // onClick={() =>
+                    //   console.log(
+                    //     video._id,
+                    //     video.file_path,
+                    //     video.file_mimetype
+                    //   )
+                    // }
+                    onClick={() =>
+                      downloadFile(
+                        video._id,
+                        video.file_path,
+                        video.file_mimetype
+                      )
+                    }
+                  >
                     <FileDownloadIcon />
                     Learn More
                   </Button>
