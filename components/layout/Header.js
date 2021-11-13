@@ -35,7 +35,7 @@ function Header() {
   const [socialUser, setSocialUser] = useState(false)
   const [session] = useSession()
 
-  // console.log(session)
+  console.log(session)
 
   const dispatch = useDispatch()
 

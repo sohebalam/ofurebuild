@@ -9,6 +9,7 @@ import { useSelector } from "react-redux"
 import { wrapper } from "../../../redux/store"
 import { loadCourses } from "../../../redux/actions/lessonActions"
 import { getSession } from "next-auth/client"
+import Publish from "../../../components/course/Publish"
 const InstructorIndex = () => {
   const coursesLoad = useSelector((state) => state.coursesLoad)
   const { loading, error, courses } = coursesLoad
@@ -36,6 +37,7 @@ const InstructorIndex = () => {
               <p>{course.lessons?.length}</p>
             </Grid>
             <Grid item xs={3}>
+              {/* <Publish course={course} slug={course.slug} /> */}
               {/* {course.lessons?.length < 5 ? (
                 <p>At least 5 lessons are required to publish a course</p>
               ) : course.published ? (

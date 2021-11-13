@@ -10,11 +10,14 @@ import fs from "fs"
 import YTList from "../models/lessonModel"
 
 export const getFiles = async (req, res) => {
+  console.log(req.query)
   const { slug } = req.query
 
   const ytList = await YTList.find({
     slug: slug,
   })
+
+  console.log(ytList)
   res.send(ytList)
 }
 
@@ -221,8 +224,6 @@ export const fileDownload = async (req, res) => {
     }
   })
   const [lesson] = newArray
-
-  console.log(lesson.file_path)
 
   try {
     // const filePath = `${process.cwd()}\\public\\${file.name}`

@@ -14,10 +14,7 @@ import {
   Typography,
 } from "@material-ui/core"
 import ReactMarkdown from "react-markdown"
-import { CheckCircleOutline } from "@material-ui/icons"
 import EditIcon from "@material-ui/icons/Edit"
-import HighlightOffIcon from "@material-ui/icons/HighlightOff"
-import HelpOutlineIcon from "@material-ui/icons/HelpOutline"
 import PublishIcon from "@material-ui/icons/Publish"
 import Dialog from "@material-ui/core/Dialog"
 import CloseIcon from "@material-ui/icons/Close"
@@ -25,12 +22,9 @@ import GroupIcon from "@mui/icons-material/Group"
 import CourseForm from "../../../../components/forms/FileForm"
 import { useSelector } from "react-redux"
 import { wrapper } from "../../../../redux/store"
-import {
-  getlessons,
-  getSingleCourse,
-  loadCourse,
-} from "../../../../redux/actions/lessonActions"
+import { getlessons, loadCourse } from "../../../../redux/actions/lessonActions"
 import Lessons from "../../../../components/file/DragList"
+import Publish from "../../../../components/course/Publish"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -79,7 +73,7 @@ const CourseView = () => {
   const lessonsList = useSelector((state) => state.lessonsList)
   const { loading: lessonsLoading, error: errorLoading, lessons } = lessonsList
 
-  console.log(lessons.videos.length)
+  console.log(lessons?.videos.length)
 
   useEffect(() => {
     course && studentCount()
@@ -141,9 +135,9 @@ const CourseView = () => {
                 <Grid item xs={3}>
                   <Typography variant="h3">{course.title}</Typography>
                   <Typography variant="h4">
-                    {lessons.lessons
-                      ? lessons.lessons.length
-                      : lessons.videos.length}{" "}
+                    {lessons?.lessons
+                      ? lessons?.lessons.length
+                      : lessons?.videos.length}{" "}
                     Lessons
                   </Typography>
                   <Typography variant="h5">{course.category}</Typography>
@@ -191,7 +185,9 @@ const CourseView = () => {
                         />
                       </Tooltip>
 
-                      {lessons.lessons && lessons.lessons.length < 5 ? (
+                      <Publish course={course} lessons={lessons} slug={slug} />
+
+                      {/* {lessons.lessons && lessons.lessons.length < 5 ? (
                         <Tooltip title="Min 5 lessons required to publish">
                           <HelpOutlineIcon className="h5 pointer text-danger" />
                         </Tooltip>
@@ -210,7 +206,7 @@ const CourseView = () => {
                             className="h5 pointer text-success"
                           />
                         </Tooltip>
-                      )}
+                      )} */}
                     </Box>
                   </div>
                 </Grid>
@@ -239,7 +235,7 @@ const CourseView = () => {
         </>
       </Grid>
       <Grid container style={{ marginTop: "0.5rem" }}>
-        <Lessons slug={slug} />
+        {lessons && <Lessons slug={slug} />}
       </Grid>
     </>
   )
