@@ -57,7 +57,7 @@ export const lessonsPostReducer = (
 }
 
 export const lessonsListReducer = (
-  state = { loading: false, lessons: null },
+  state = { loading: false, lessons: {} },
   action
 ) => {
   switch (action.type) {

@@ -10,15 +10,15 @@ import fs from "fs"
 import YTList from "../models/lessonModel"
 
 export const getFiles = async (req, res) => {
-  console.log(req.query)
+  // console.log(req.query)
   const { slug } = req.query
 
   const ytList = await YTList.find({
     slug: slug,
   })
 
-  console.log(ytList)
-  res.send(ytList)
+  // console.log(ytList)
+  res.send(ytList[0])
 }
 
 export const fileSave = async (req, res) => {

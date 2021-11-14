@@ -6,9 +6,12 @@ import { getlessons, lessonsGet } from "../../redux/actions/lessonActions"
 import { useDispatch, useSelector } from "react-redux"
 import { useEffect } from "react"
 const Publish = ({ course, slug }) => {
+  // const courseLoad = useSelector((state) => state.courseLoad)
+  // const { loading, error: courseError, course } = courseLoad
+
   const lessonsList = useSelector((state) => state.lessonsList)
-  const { loading: lessonsLoading, error: errorLoading, lessons } = lessonsList
-  console.log(course, slug, lessons)
+  const { loading: loadingList, error: errorList, lessons } = lessonsList
+  // console.log(course, slug, lessons)
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(lessonsGet(slug))
@@ -39,5 +42,14 @@ const Publish = ({ course, slug }) => {
     </div>
   )
 }
+
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) => async (context) => {
+//     const { params, req } = context
+
+//     await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
+//     await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
+//   }
+// )
 
 export default Publish

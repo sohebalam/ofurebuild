@@ -120,11 +120,11 @@ export const getlessons = (authCookie, req, slug) => async (dispatch) => {
       config
     )
 
-    // console.log("action", data[0])
+    console.log(data)
 
     dispatch({
       type: GET_LESSONS_SUCCESS,
-      payload: data[0],
+      payload: data,
     })
   } catch (error) {
     dispatch({

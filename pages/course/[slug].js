@@ -11,7 +11,8 @@ import { useSelector, useDispatch } from "react-redux"
 import {
   checkEnrollment,
   freeEnroll,
-  getSingleCourse,
+  getlessons,
+  loadCourse,
   paidEnroll,
 } from "../../redux/actions/lessonActions"
 import { wrapper } from "../../redux/store"
@@ -29,8 +30,13 @@ const Course = () => {
   const profile = useSelector((state) => state.profile)
   const { error, dbUser } = profile
 
-  const singleCourse = useSelector((state) => state.singleCourse)
-  const { loading, error: courseError, course } = singleCourse
+  const courseLoad = useSelector((state) => state.courseLoad)
+  const { loading, error: courseError, course } = courseLoad
+
+  const lessonsList = useSelector((state) => state.lessonsList)
+  const { loading: loadingList, error: errorList, lessons } = lessonsList
+
+  console.log(course, lessons)
 
   const enrollmentCheck = useSelector((state) => state.enrollmentCheck)
   const { loading: enrollLoad, error: enrollError, enrolled } = enrollmentCheck
@@ -114,7 +120,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
     const { params, req } = context
 
-    await store.dispatch(getSingleCourse(req, params.slug))
+    await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
+    await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
   }
 )
 
