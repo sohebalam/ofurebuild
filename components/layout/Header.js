@@ -8,10 +8,8 @@ import {
   Button,
 } from "@material-ui/core"
 import { makeStyles } from "@material-ui/core/styles"
-import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import PersonIcon from "@material-ui/icons/Person"
 import AssignmentIcon from "@material-ui/icons/Assignment"
-import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"
 import { loadUser, socialReg } from "../../redux/actions/userActions"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
@@ -35,7 +33,7 @@ function Header() {
   const [socialUser, setSocialUser] = useState(false)
   const [session] = useSession()
 
-  console.log(session)
+  // console.log(session.user)
 
   const dispatch = useDispatch()
 
@@ -92,7 +90,10 @@ function Header() {
             <Typography variant="h6" className={classes.title}></Typography>
 
             <>
-              {dbUser && dbUser.role && dbUser.role.includes("instructor") ? (
+              {(dbUser && dbUser.role && dbUser.role.includes("instructor")) ||
+              (session?.user &&
+                session.user.role &&
+                session.user.role.includes("instructor")) ? (
                 <InstructorMenu dbUser={dbUser} />
               ) : (
                 dbUser && (

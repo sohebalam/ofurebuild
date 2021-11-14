@@ -5,14 +5,14 @@ import MenuItem from "@material-ui/core/MenuItem"
 import { signOut } from "next-auth/client"
 import PersonIcon from "@material-ui/icons/Person"
 // import Link from "next/link"
-
+import { useSession } from "next-auth/client"
 import { Link } from "@material-ui/core"
 import { useSelector } from "react-redux"
 const MenuButton = () => {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const profile = useSelector((state) => state.profile)
   const { loading, error, dbUser } = profile
-
+  const [session] = useSession()
   // console.log(dbUser)
 
   const handleClick = (event) => {
@@ -38,7 +38,7 @@ const MenuButton = () => {
         style={{ color: "white" }}
       >
         <PersonIcon style={{ marginRight: "0.25rem" }} />
-        {dbUser.name}
+        {dbUser?.name || session?.user.name}
       </Button>
       <Menu
         id="simple-menu"
@@ -60,7 +60,7 @@ const MenuButton = () => {
             </Link>
           </div>
         )}
-        {dbUser.role === "admin" && (
+        {dbUser?.role === "admin" && (
           <div>
             <Link href="/">
               <MenuItem onClick={handleClose}>Rooms</MenuItem>

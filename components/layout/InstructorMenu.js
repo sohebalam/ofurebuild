@@ -62,7 +62,7 @@ const InstructorMenu = () => {
             </Link> */}
           </div>
         )}
-        {dbUser.role === "admin" && (
+        {dbUser?.role === "admin" && (
           <div>
             <Link href="/">
               <MenuItem onClick={handleClose}>Rooms</MenuItem>
