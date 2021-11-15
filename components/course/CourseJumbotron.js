@@ -42,13 +42,14 @@ const SingleCourseJumbotron = ({
   user,
   handelPaidEnroll,
   handelFreeEnroll,
+  lessons,
 }) => {
   const {
     title,
     description,
     instructor,
     updatedAt,
-    lessons,
+
     image,
     price,
     paid,
@@ -58,7 +59,7 @@ const SingleCourseJumbotron = ({
   const enrollmentCheck = useSelector((state) => state.enrollmentCheck)
   const { loading: enrollLoad, error: enrollError, enrolled } = enrollmentCheck
 
-  console.log(lessons)
+  console.log("jumbo", course)
 
   const classes = useStyles()
   return (
@@ -110,7 +111,12 @@ const SingleCourseJumbotron = ({
             </div>
 
             <div>
-              <Image src={"/course.jpg"} alt={title} height={250} width={400} />
+              <Image
+                src={(course && course?.images[0].url) || "/course.jpg"}
+                alt={title}
+                height={250}
+                width={400}
+              />
             </div>
 
             {loading ? (

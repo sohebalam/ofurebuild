@@ -112,6 +112,8 @@ export const youtube = async (req, res) => {
 
     const data = await response?.json()
 
+    console.log(data)
+
     const videos =
       data &&
       data?.items?.map((item) => ({

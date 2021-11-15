@@ -37,7 +37,7 @@ const InstructorIndex = () => {
               <p>{course.lessons?.length}</p>
             </Grid>
             <Grid item xs={3}>
-              {/* <Publish course={course} slug={course.slug} /> */}
+              <Publish course={course} slug={course.slug} />
               {/* {course.lessons?.length < 5 ? (
                 <p>At least 5 lessons are required to publish a course</p>
               ) : course.published ? (
