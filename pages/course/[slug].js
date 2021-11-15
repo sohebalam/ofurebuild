@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 // import PreviewModal from "../../components/modal/PreviewModal"
 import SingleCourseJumbotron from "../../components/course/CourseJumbotron"
-import SingleCourseLesson from "../../components/course/SingleCourseLesson"
+import LessonList from "../../components/course/LessonList"
 import { useRouter } from "next/router"
 // import { Context } from "../../context"
 // import { toast } from "react-toastify"
@@ -36,14 +36,16 @@ const Course = () => {
   const lessonsList = useSelector((state) => state.lessonsList)
   const { loading: loadingList, error: errorList, lessons } = lessonsList
 
-  console.log(course, lessons)
+  // console.log(course, lessons)
 
   const enrollmentCheck = useSelector((state) => state.enrollmentCheck)
   const { loading: enrollLoad, error: enrollError, enrolled } = enrollmentCheck
 
   const user = dbUser
 
-  console.log(user)
+  useEffect(() => {
+    if (user && course) dispatch(checkEnrollment())
+  }, [])
 
   const handelPaidEnroll = async () => {
     try {
@@ -106,7 +108,7 @@ const Course = () => {
         setShowModal={setShowModal}
         preview={preview}
       /> */}
-      <SingleCourseLesson />
+      <LessonList />
     </>
   )
 }

@@ -15,7 +15,7 @@ const Publish = ({ course, slug }) => {
     dispatch(lessonsGet(slug))
   }, [])
 
-  console.log(course, lessons)
+  // console.log(course, lessons)
 
   return (
     <div>

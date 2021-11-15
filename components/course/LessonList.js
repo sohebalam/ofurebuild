@@ -23,7 +23,7 @@ const SingleCourseLesson = ({}) => {
   const lessonsList = useSelector((state) => state.lessonsList)
   const { loading: loadingList, error: errorList, lessons } = lessonsList
 
-  console.log(lessons)
+  // console.log(lessons)
   const classes = useStyles()
   return (
     <Grid container>
@@ -35,7 +35,7 @@ const SingleCourseLesson = ({}) => {
       <Grid container>
         {lessons
           ? lessons.lessons.map((lesson, index) => (
-              <Grid container key={lesson.videoId}>
+              <Grid container key={lesson._id}>
                 <Grid item xs={3} style={{ marginTop: "0.5rem" }}>
                   <Avatar>{index + 1}</Avatar>
                 </Grid>
@@ -45,7 +45,7 @@ const SingleCourseLesson = ({}) => {
               </Grid>
             ))
           : lessons.vidoes.map((lesson, index) => (
-              <Grid container key={lesson.videoId}>
+              <Grid container key={lesson._id}>
                 <Grid item xs={3}>
                   <Avatar>{index + 1}</Avatar>
                 </Grid>

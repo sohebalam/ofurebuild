@@ -73,7 +73,7 @@ const CourseView = () => {
   const lessonsList = useSelector((state) => state.lessonsList)
   const { loading: lessonsLoading, error: errorLoading, lessons } = lessonsList
 
-  console.log(lessons?.videos.length)
+  console.log(lessons?.videos?.length)
 
   useEffect(() => {
     course && studentCount()
@@ -137,7 +137,7 @@ const CourseView = () => {
                   <Typography variant="h4">
                     {lessons?.lessons
                       ? lessons?.lessons.length
-                      : lessons?.videos.length}{" "}
+                      : lessons?.videos?.length}{" "}
                     Lessons
                   </Typography>
                   <Typography variant="h5">{course.category}</Typography>

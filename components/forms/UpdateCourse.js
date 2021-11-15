@@ -135,10 +135,13 @@ const UpdateCourse = ({
                 <FormControlLabel
                   control={
                     <Checkbox
-                      checked={values.paid || ""}
+                      checked={values.paid || false}
                       color="primary"
                       onChange={(e) =>
-                        setValues({ ...values, paid: e.target.checked })
+                        setValues({
+                          ...values,
+                          paid: e.target.checked || false,
+                        })
                       }
                       // onChange={(e) => console.log(e.target.checked)}
                     />
@@ -183,7 +186,7 @@ const UpdateCourse = ({
                   </Grid>
                   <Grid item xs={4}>
                     <Image
-                      src={values?.images[0]?.url || ""}
+                      src={values?.images[0]?.url || "/course.jpg"}
                       alt="Picture of the author"
                       width={200}
                       height={200}
