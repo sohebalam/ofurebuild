@@ -28,13 +28,13 @@ const SingleCourseLesson = ({}) => {
   return (
     <Grid container>
       {lessons ? (
-        <h4>{lessons.lessons.length} Lessons</h4>
+        <h4>{lessons?.lessons?.length} Lessons</h4>
       ) : (
-        <h4>{lessons.videos.length} Lessons</h4>
+        <h4>{lessons?.videos?.length} Lessons</h4>
       )}
       <Grid container>
         {lessons
-          ? lessons.lessons.map((lesson, index) => (
+          ? lessons?.lessons?.map((lesson, index) => (
               <Grid container key={lesson._id}>
                 <Grid item xs={3} style={{ marginTop: "0.5rem" }}>
                   <Avatar>{index + 1}</Avatar>
@@ -44,7 +44,7 @@ const SingleCourseLesson = ({}) => {
                 </Grid>
               </Grid>
             ))
-          : lessons.vidoes.map((lesson, index) => (
+          : lessons?.vidoes?.map((lesson, index) => (
               <Grid container key={lesson._id}>
                 <Grid item xs={3}>
                   <Avatar>{index + 1}</Avatar>

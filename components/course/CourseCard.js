@@ -7,7 +7,7 @@ const CourseCard = ({ course }) => {
   // console.log(course)
   const { title, instructor, price, images, slug, paid, category } = course
   return (
-    <Link href={`/user/course/${slug}`}>
+    <Link href={`/course/${slug}`}>
       <Card style={{ padding: "1rem", cursor: "pointer" }}>
         <Image
           src={images ? images[0]?.url : "/course.jpg"}

@@ -42,9 +42,9 @@ const Index = () => {
 
   console.log(course)
 
-  const videos = lessons.lessons
+  const videos = lessons?.lessons
 
-  console.log("viasdadsasd", lessons)
+  // console.log("viasdadsasd", lessons)
   // console.log(selectedVideo)
 
   // const { items } = data

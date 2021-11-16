@@ -58,7 +58,7 @@ function Header() {
       if (!dbUser) {
         if (user.id) {
           dispatch(socialReg(userData))
-          console.log(userData)
+          // console.log(userData)
         }
       }
     }

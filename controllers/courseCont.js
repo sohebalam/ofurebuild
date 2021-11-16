@@ -131,6 +131,7 @@ export const instructorCourses = async (req, res) => {
 }
 
 export const readCourse = async (req, res) => {
+  console.log(req.method)
   const { slug } = req.query
 
   try {
@@ -138,11 +139,27 @@ export const readCourse = async (req, res) => {
       .populate("instructor", "_id name")
       .exec()
 
-    const ytList = await YTList.findOne({
-      slug: slug,
-    })
+    // const ytList = await YTList.findOne({
+    //   slug: slug,
+    // })
 
     // const courseList = [course, ytList]
+
+    res.send(course)
+  } catch (error) {
+    console.log(error)
+  }
+}
+export const singleCourse = async (req, res) => {
+  const { slug } = req.query
+  console.log(req.method, slug)
+
+  try {
+    const course = await Course.findOne({ slug: slug })
+      .populate("instructor", "_id name")
+      .exec()
+
+    console.log(course)
 
     res.send(course)
   } catch (error) {

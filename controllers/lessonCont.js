@@ -10,7 +10,7 @@ import fs from "fs"
 import YTList from "../models/lessonModel"
 
 export const getFiles = async (req, res) => {
-  // console.log(req.query)
+  console.log(req.query)
   const { slug } = req.query
 
   const ytList = await YTList.find({

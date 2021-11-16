@@ -103,7 +103,7 @@ export const lessonsGet = (slug) => async (dispatch) => {
   }
 }
 export const getlessons = (authCookie, req, slug) => async (dispatch) => {
-  // console.log(slug)
+  console.log(slug)
   try {
     dispatch({ type: GET_LESSONS_REQUEST })
 
@@ -239,26 +239,20 @@ export const paidEnroll = (course) => async (dispatch) => {
   }
 }
 
-export const getSingleCourse = (authCookie, req, slug) => async (dispatch) => {
+export const getSingleCourse = (req, slug) => async (dispatch) => {
   console.log(slug)
 
   try {
     dispatch({ type: SINGLE_COURSE_REQUEST })
 
-    const config = {
-      headers: {
-        cookie: authCookie,
-      },
-    }
-
     const { origin } = absoluteUrl(req)
 
     const { data } = await axios.get(
-      `${origin}/api/course/single/${slug}`,
-      config
+      `${origin}/api/course/single/${slug}`
+      // config
     )
 
-    console.log(data)
+    console.log("data", data)
 
     dispatch({
       type: SINGLE_COURSE_SUCCESS,

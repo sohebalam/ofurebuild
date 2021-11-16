@@ -12,6 +12,7 @@ import {
   checkEnrollment,
   freeEnroll,
   getlessons,
+  getSingleCourse,
   loadCourse,
   paidEnroll,
 } from "../../redux/actions/lessonActions"
@@ -30,13 +31,13 @@ const Course = () => {
   const profile = useSelector((state) => state.profile)
   const { error, dbUser } = profile
 
-  const courseLoad = useSelector((state) => state.courseLoad)
-  const { loading, error: courseError, course } = courseLoad
+  const singleCourse = useSelector((state) => state.singleCourse)
+  const { loading, error: courseError, course } = singleCourse
 
   const lessonsList = useSelector((state) => state.lessonsList)
   const { loading: loadingList, error: errorList, lessons } = lessonsList
 
-  // console.log(course, lessons)
+  console.log(course)
 
   const enrollmentCheck = useSelector((state) => state.enrollmentCheck)
   const { loading: enrollLoad, error: enrollError, enrolled } = enrollmentCheck
@@ -89,19 +90,21 @@ const Course = () => {
 
   return (
     <>
-      <SingleCourseJumbotron
-        course={course}
-        showModal={showModal}
-        setShowModal={setShowModal}
-        preview={preview}
-        setPreview={setPreview}
-        user={user}
-        loading={loading}
-        handelPaidEnroll={handelPaidEnroll}
-        handelFreeEnroll={handelFreeEnroll}
-        enrolled={enrolled}
-        lessons={lessons}
-      />
+      {course && (
+        <SingleCourseJumbotron
+          course={course}
+          showModal={showModal}
+          setShowModal={setShowModal}
+          preview={preview}
+          setPreview={setPreview}
+          user={user}
+          loading={loading}
+          handelPaidEnroll={handelPaidEnroll}
+          handelFreeEnroll={handelFreeEnroll}
+          enrolled={enrolled}
+          lessons={lessons}
+        />
+      )}
 
       {/* <PreviewModal
         showModal={showModal}
@@ -118,7 +121,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const { params, req } = context
 
     await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
-    await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
+    await store.dispatch(getSingleCourse(req, params.slug))
   }
 )
 

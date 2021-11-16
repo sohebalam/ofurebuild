@@ -34,8 +34,8 @@ export const imageDelete = async (req, res) => {
 
   let course = await Course.findById({ _id: req.query.id })
 
-  console.log(course.images[0]._id)
-  console.log(course.images[0].public_id)
+  // console.log(course.images[0]._id)
+  // console.log(course.images[0].public_id)
 
   // let course = await Course.findById(req.query._id)
   // Delete image from cloudinary

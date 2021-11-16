@@ -73,6 +73,8 @@ const CourseView = () => {
   const lessonsList = useSelector((state) => state.lessonsList)
   const { loading: lessonsLoading, error: errorLoading, lessons } = lessonsList
 
+  console.log(lessons)
+
   console.log(lessons?.videos?.length)
 
   useEffect(() => {

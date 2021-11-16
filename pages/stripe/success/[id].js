@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 // import { SyncOutlined } from "@ant-design/icons"
-import UserRoute from "../../../components/route/UserRoute"
+import UserRoute from "../../../components/routes/UserRoute"
 import { useRouter } from "next/router"
 import axios from "axios"
 import { CircularProgress, Grid } from "@material-ui/core"
@@ -23,7 +23,7 @@ const StripeSuccess = () => {
   }
 
   return (
-    <UserRoute showNav={false}>
+    <UserRoute>
       <Grid>
         <Grid item xs={9} mb="5">
           <div className="d-flex justify-content-center p-5">

@@ -314,7 +314,7 @@ export const regInstructor = () => async (dispatch) => {
 
     const { data } = await axios.post(`/api/auth/instructor/new`)
 
-    console.log(data)
+    // console.log(data)
 
     dispatch({
       type: REGISTER_INSTRUCTOR_SUCCESS,

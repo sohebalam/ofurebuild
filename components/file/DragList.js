@@ -16,14 +16,14 @@ const DragList = ({ slug }) => {
 
   const { files, videos, lessons: dblessons } = lessons
 
-  const listLessons = [...files, ...videos]
+  if (files || videos || videos) var listLessons = [...files, ...videos]
 
   useEffect(() => {
-    if (dblessons.length > 0) {
+    if (dblessons?.length > 0) {
       setData(dblessons)
     }
 
-    if (listLessons.length > dblessons.length) {
+    if (listLessons?.length > dblessons?.length) {
       setData(listLessons)
     }
   }, [dblessons])

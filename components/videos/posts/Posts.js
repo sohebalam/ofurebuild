@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux"
 
 const Posts = ({ posts }) => {
   const dispatch = useDispatch()
-  console.log("posts", posts)
+  // console.log("posts", posts)
 
   return (
     <div>

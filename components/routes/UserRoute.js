@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { useRouter } from "next/router"
-import { SyncOutlined } from "@ant-design/icons"
+import { CircularProgress } from "@material-ui/core"
 const UserRoute = ({ children, showNav = true }) => {
   // state
   const [data, setData] = useState(false)
@@ -17,7 +17,7 @@ const UserRoute = ({ children, showNav = true }) => {
       const { data } = await axios.get("/api/auth/profile")
       //   console.log(data);
       if (data) setData(true)
-      console.log(data)
+      // console.log(data)
     } catch (err) {
       console.log(err)
       setData(false)
@@ -25,22 +25,7 @@ const UserRoute = ({ children, showNav = true }) => {
     }
   }
 
-  return (
-    <>
-      {!data ? (
-        <SyncOutlined
-          spin
-          className="d-flex justify-content-center display-1 text-primary p-5"
-        />
-      ) : (
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-md-12">{children}</div>
-          </div>
-        </div>
-      )}
-    </>
-  )
+  return <>{!data ? <CircularProgress /> : <div>{children}</div>}</>
 }
 
 export default UserRoute

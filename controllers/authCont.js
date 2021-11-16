@@ -11,7 +11,7 @@ import queryString from "query-string"
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
 
 export const registerUser = catchAsyncErrors(async (req, res) => {
-  console.log(req.method)
+  // console.log(req.method)
 
   const { name, email, password, conPassword } = req.body
 
@@ -75,7 +75,7 @@ export const currentUserProfile = catchAsyncErrors(async (req, res) => {
 })
 
 export const updateProfile = async (req, res) => {
-  console.log(req.method)
+  // console.log(req.method)
 
   if (req.user.id) {
     const user = await User.findOne({ socialId: req.user.id })
@@ -132,7 +132,7 @@ export const forgotPassword = async (req, res) => {
   // Send Email to email provided but first check if user exists
   const { email } = req.body
 
-  console.log(email)
+  // console.log(email)
 
   try {
     const user = await User.findOne({ email })
@@ -286,7 +286,7 @@ export const deleteUser = catchAsyncErrors(async (req, res) => {
   // console.log(req.method, req.query.id)
   const user = await User.findByIdAndDelete(req.query.id)
 
-  console.log(user)
+  // console.log(user)
 
   if (!user) {
     return next(new ErrorHandler("User not found with this ID", 400))

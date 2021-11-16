@@ -30,14 +30,14 @@ const VideoItem = ({ video }) => {
   const { slug } = router.query
 
   const downloadFile = async (id, path, mimetype) => {
-    console.log(id, path, mimetype, slug)
+    // console.log(id, path, mimetype, slug)
 
     try {
       const result = await axios.get(`/api/file/download/${slug}/${id}`, {
         responseType: "blob",
       })
 
-      console.log(result)
+      // console.log(result)
       const split = path.split("/")
       const filename = split[split.length - 1]
 
@@ -140,7 +140,7 @@ const VideoItem = ({ video }) => {
                     }
                   >
                     <FileDownloadIcon />
-                    Learn More
+                    Download File
                   </Button>
                 </CardActions>
               </Grid>
