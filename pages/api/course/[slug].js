@@ -6,13 +6,17 @@ import { CorsNext } from "../../../middlewares/mid"
 
 import onError from "../../../middlewares/errors"
 import next from "next"
-import { isAuthenticated, isInstructor } from "../../../middlewares/auth"
+import {
+  isAuthenticated,
+  isEnrolled,
+  isInstructor,
+} from "../../../middlewares/auth"
 
 const router = nc({ onError })
 
 connectDB()
 
-router.use(isAuthenticated, isInstructor).get(readCourse)
+router.use(isAuthenticated, isEnrolled).get(readCourse)
 router.use(isAuthenticated, isInstructor).put(update)
 
 export default router

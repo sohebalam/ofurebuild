@@ -35,6 +35,9 @@ import {
   SINGLE_COURSE_FAIL,
   SINGLE_COURSE_REQUEST,
   SINGLE_COURSE_SUCCESS,
+  STUDENT_COUNT_FAIL,
+  STUDENT_COUNT_REQUEST,
+  STUDENT_COUNT_SUCCESS,
   UPLOAD_IMAGE_FAIL,
   UPLOAD_IMAGE_REQUEST,
   UPLOAD_IMAGE_SUCCESS,
@@ -43,6 +46,30 @@ import absoluteUrl from "next-absolute-url"
 import { loadStripe } from "@stripe/stripe-js"
 
 import axios from "axios"
+
+export const countStudents = (courseId) => async (dispatch) => {
+  console.log(courseId)
+  try {
+    dispatch({ type: STUDENT_COUNT_REQUEST })
+
+    const { data } = await axios.post(`/api/instructor/students`, {
+      courseId: courseId,
+    })
+
+    dispatch({
+      type: STUDENT_COUNT_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: STUDENT_COUNT_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
 
 export const postLessons = (items, slug) => async (dispatch) => {
   try {
@@ -282,6 +309,39 @@ export const loadCourse = (authCookie, req, slug) => async (dispatch) => {
     const { origin } = absoluteUrl(req)
 
     const { data } = await axios.get(`${origin}/api/course/${slug}`, config)
+
+    console.log("load", data)
+
+    dispatch({
+      type: LOAD_COURSE_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: LOAD_COURSE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
+export const instructorCourse = (authCookie, req, slug) => async (dispatch) => {
+  try {
+    dispatch({ type: LOAD_COURSE_REQUEST })
+
+    const config = {
+      headers: {
+        cookie: authCookie,
+      },
+    }
+
+    const { origin } = absoluteUrl(req)
+
+    const { data } = await axios.get(
+      `${origin}/api/course/instructor/${slug}`,
+      config
+    )
 
     console.log("load", data)
 

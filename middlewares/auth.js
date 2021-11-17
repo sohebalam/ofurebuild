@@ -59,8 +59,9 @@ export const isEnrolled = async (req, res, next) => {
     }
 
     if (!ids.includes(course._id.toString())) {
-      res.sendStatus(403)
+      res.status(403)
     } else {
+      console.log("has access to course")
       next()
     }
   } catch (err) {

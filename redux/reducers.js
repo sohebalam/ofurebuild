@@ -15,6 +15,7 @@ import {
   paidEnrollReducer,
   selectVideoReducer,
   singleCourseReducer,
+  studentCountReducer,
   uploadImageReducer,
 } from "./reducers/lessonReducers"
 import {
@@ -56,6 +57,9 @@ const reducer = combineReducers({
   //   //files
   fileGet: fileGetReducer,
   getImage: getImageReducer,
+
+  //instructor
+  studentCount: studentCountReducer,
 })
 
 export default reducer

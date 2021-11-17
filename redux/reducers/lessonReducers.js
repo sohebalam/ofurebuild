@@ -35,10 +35,29 @@ import {
   SINGLE_COURSE_FAIL,
   SINGLE_COURSE_REQUEST,
   SINGLE_COURSE_SUCCESS,
+  STUDENT_COUNT_FAIL,
+  STUDENT_COUNT_REQUEST,
+  STUDENT_COUNT_SUCCESS,
   UPLOAD_IMAGE_FAIL,
   UPLOAD_IMAGE_REQUEST,
   UPLOAD_IMAGE_SUCCESS,
 } from "../constants/lessonTypes"
+
+export const studentCountReducer = (
+  state = { loading: false, students: 0 },
+  action
+) => {
+  switch (action.type) {
+    case STUDENT_COUNT_REQUEST:
+      return { loading: true }
+    case STUDENT_COUNT_SUCCESS:
+      return { loading: false, students: action.payload }
+    case STUDENT_COUNT_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
 
 export const lessonsPostReducer = (
   state = { loading: false, dblessons: null },

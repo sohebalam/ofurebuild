@@ -20,11 +20,16 @@ import Dialog from "@material-ui/core/Dialog"
 import CloseIcon from "@material-ui/icons/Close"
 import GroupIcon from "@mui/icons-material/Group"
 import CourseForm from "../../../../components/forms/FileForm"
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import { wrapper } from "../../../../redux/store"
-import { getlessons, loadCourse } from "../../../../redux/actions/lessonActions"
+import {
+  getlessons,
+  instructorCourse,
+  loadCourse,
+} from "../../../../redux/actions/lessonActions"
 import Lessons from "../../../../components/file/DragList"
 import Publish from "../../../../components/course/Publish"
+import { countStudents } from "../../../../redux/actions/lessonActions"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const CourseView = () => {
-  // const [course, setCourse] = useState({})
   const [file, setFile] = useState({})
   const [fileVisible, setFileVisible] = useState(false)
   const [visible, setVisible] = useState(false)
@@ -56,8 +60,8 @@ const CourseView = () => {
     video: "",
   })
   const classes = useStyles()
-
-  const [students, setStudents] = useState(0)
+  const dispatch = useDispatch()
+  // const [students, setStudents] = useState(0)
 
   const router = useRouter()
   const { slug } = router.query
@@ -73,21 +77,17 @@ const CourseView = () => {
   const lessonsList = useSelector((state) => state.lessonsList)
   const { loading: lessonsLoading, error: errorLoading, lessons } = lessonsList
 
+  const studentCount = useSelector((state) => state.studentCount)
+  const { students } = studentCount
+
   console.log(lessons)
 
   console.log(lessons?.videos?.length)
 
   useEffect(() => {
-    course && studentCount()
+    course && dispatch(countStudents(course._id))
+    // course && studentCount()
   }, [course])
-
-  const studentCount = async () => {
-    const { data } = await axios.post(`/api/instructor/studentCount`, {
-      courseId: course._id,
-    })
-    // console.log("STUDENT COUNT => ", data.length)
-    setStudents(data.length)
-  }
 
   const handlePublish = async (e, courseId) => {
     try {
@@ -169,7 +169,7 @@ const CourseView = () => {
                   <div>
                     <Box marginLeft="6rem">
                       <Tooltip
-                        title={`${students} Enrolled`}
+                        title={`${students?.length} Enrolled`}
                         style={{ marginBottom: "0.5rem", marginRight: "1rem" }}
                       >
                         <GroupIcon
@@ -252,7 +252,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     // const slug = "fdzsf"
 
     // await store.dispatch(getSingleCourse(req.headers.cookie, req, params.slug))
-    await store.dispatch(getlessons(req.headers.cookie, req, slug))
+    await store.dispatch(instructorCourse(req.headers.cookie, req, slug))
     await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
   }
 )

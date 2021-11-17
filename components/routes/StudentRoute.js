@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { SyncOutlined } from "@ant-design/icons"
 import { loadUser } from "../../redux/actions/userActions"
+import { CircularProgress } from "@material-ui/core"
+import { useSelector } from "react-redux"
+import { useSession } from "next-auth/client"
 
 const StudentRoute = ({ children, showNav = true }) => {
   // state
   const profile = useSelector((state) => state.profile)
   const { loading, error, dbUser } = profile
+
+  const { session } = useSession()
 
   console.log(dbUser)
   const router = useRouter()
@@ -25,11 +29,8 @@ const StudentRoute = ({ children, showNav = true }) => {
 
   return (
     <>
-      {!data ? (
-        <SyncOutlined
-          spin
-          className="d-flex justify-content-center display-1 text-primary p-5"
-        />
+      {!dbUser ? (
+        <CircularProgress />
       ) : (
         <div className="container-fluid">{children}</div>
       )}

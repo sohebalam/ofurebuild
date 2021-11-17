@@ -10,6 +10,7 @@ import {
 import { wrapper } from "../../../redux/store"
 import { useRouter } from "next/router"
 import { useSelector, useDispatch } from "react-redux"
+import StudentRoute from "../../../components/routes/StudentRoute"
 // const YOUTUBE_PLAYLIST_ITEMS_API =
 //   "https://www.googleapis.com/youtube/v3/playlistItems"
 
@@ -54,22 +55,24 @@ const Index = () => {
   }, [])
 
   return (
-    <Grid
-      container
-      justifyContent="center"
-      style={{ marginBottom: "12rem", marginTop: "0.75rem" }}
-    >
-      <Grid container>
-        {/* <SearchBar onSubmit={handleSubmit} /> */}
-        {/* input field */}
+    <StudentRoute>
+      <Grid
+        container
+        justifyContent="center"
+        style={{ marginBottom: "12rem", marginTop: "0.75rem" }}
+      >
+        <Grid container>
+          {/* <SearchBar onSubmit={handleSubmit} /> */}
+          {/* input field */}
+        </Grid>
+        <Grid item xs={8}>
+          <VideoDetail />
+        </Grid>
+        <Grid item xs={4}>
+          <VideoList videos={videos} />
+        </Grid>
       </Grid>
-      <Grid item xs={8}>
-        <VideoDetail />
-      </Grid>
-      <Grid item xs={4}>
-        <VideoList videos={videos} />
-      </Grid>
-    </Grid>
+    </StudentRoute>
   )
 }
 
