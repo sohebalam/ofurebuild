@@ -27,7 +27,7 @@ export const instructorBalance = async (req, res) => {
 }
 
 export const instructorPayoutSettings = async (req, res) => {
-  // console.log(req.user)
+  console.log(req.user)
   try {
     const user = await User.findById(req.user._id).exec()
 
@@ -40,7 +40,7 @@ export const instructorPayoutSettings = async (req, res) => {
 
     // console.log(loginLink)
 
-    res.json(loginLink.url)
+    res.send(loginLink.url)
   } catch (err) {
     console.log("stripe payout settings login link err => , err")
   }
@@ -52,7 +52,7 @@ export const getAccountStatus = async (req, res) => {
   try {
     if (req.user.id) {
       const user = await User.findOne({ socialId: req.user.id })
-      console.log(user)
+      // console.log(user)
       const account = await stripe.accounts.retrieve(user.stripe_account_id)
       // console.log("ACCOUNT => ", account);
       if (!account.charges_enabled) {

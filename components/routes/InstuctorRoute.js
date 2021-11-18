@@ -34,9 +34,9 @@ const InstructorRoute = ({ children }) => {
       {loading ? (
         <CircularProgress />
       ) : (
-        <div className="container-fluid">
-          <div>{children}</div>
-        </div>
+        <>
+          <>{children}</>
+        </>
       )}
     </>
   )

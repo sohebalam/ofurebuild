@@ -30,6 +30,7 @@ module.exports = {
       "https://www.youtube.com",
       "i.ytimg.com",
       "res.cloudinary.com",
+      "connect.stripe.com",
     ],
     hostname: "ofu-bucket.s3.eu-west-2.amazonaws.com",
   },

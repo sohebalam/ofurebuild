@@ -194,7 +194,7 @@ const Profile = () => {
               </Container>
             </Grid>
             <Grid item sm={4}>
-              <Box styles={{ marginTop: "12" }}>
+              <Box styles={{ marginTop: "1rem" }}>
                 <Container component="main" maxWidth="xs">
                   <div className={classes.profile}>
                     {dbUser && (

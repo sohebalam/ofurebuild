@@ -80,6 +80,9 @@ const InstructorMenu = () => {
         <Link href="/user/instructor/dashboard">
           <MenuItem onClick={handleClose}>Instructor Dashboard</MenuItem>
         </Link>
+        <Link href="/user/instructor/revenue">
+          <MenuItem onClick={handleClose}>Account Dashboard</MenuItem>
+        </Link>
 
         <Link>
           <MenuItem onClick={handleClose} onClick={handleSignout}>
