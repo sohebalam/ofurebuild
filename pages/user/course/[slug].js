@@ -11,6 +11,7 @@ import { wrapper } from "../../../redux/store"
 import { useRouter } from "next/router"
 import { useSelector, useDispatch } from "react-redux"
 import StudentRoute from "../../../components/routes/StudentRoute"
+import { Box } from "@mui/system"
 // const YOUTUBE_PLAYLIST_ITEMS_API =
 //   "https://www.googleapis.com/youtube/v3/playlistItems"
 
@@ -29,24 +30,13 @@ export const getServerSideProps = wrapper.getServerSideProps(
 )
 
 const Index = () => {
-  // const [videos, setVideos] = useState([])
-  // const [onSelectedVideo, setOnSelectedVideo] = useState({})
   const [selectedVideo] = useState({})
   const courseLoad = useSelector((state) => state.courseLoad)
   const { loading, error: courseError, course } = courseLoad
 
-  const lessonsList = useSelector((state) => state.lessonsList)
-  const { loading: loadingList, error: errorList, lessons } = lessonsList
-
-  // const singleCourse = useSelector((state) => state.singleCourse)
-  // const { loading, error: courseError, course } = singleCourse
-
   console.log(course)
 
-  const videos = lessons?.lessons
-
-  // console.log("viasdadsasd", lessons)
-  // console.log(selectedVideo)
+  const videos = course?.lessons
 
   // const { items } = data
 
@@ -56,22 +46,20 @@ const Index = () => {
 
   return (
     <StudentRoute>
-      <Grid
-        container
-        justifyContent="center"
-        style={{ marginBottom: "12rem", marginTop: "0.75rem" }}
-      >
-        <Grid container>
-          {/* <SearchBar onSubmit={handleSubmit} /> */}
-          {/* input field */}
+      <Box style={{ marginBottom: "8rem" }}>
+        <Grid
+          container
+          justifyContent="center"
+          style={{ marginBottom: "1rem", marginTop: "0.75rem" }}
+        >
+          <Grid item xs={8}>
+            <VideoDetail />
+          </Grid>
+          <Grid item xs={4}>
+            <VideoList videos={videos} />
+          </Grid>
         </Grid>
-        <Grid item xs={8}>
-          <VideoDetail />
-        </Grid>
-        <Grid item xs={4}>
-          <VideoList videos={videos} />
-        </Grid>
-      </Grid>
+      </Box>
     </StudentRoute>
   )
 }

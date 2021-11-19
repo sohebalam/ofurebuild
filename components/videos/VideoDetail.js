@@ -35,6 +35,7 @@ const VideoDetail = () => {
           width="100%"
           title="Video Player"
           src={videoSrc}
+          allow="fullscreen"
         />
       </Paper>
       <Paper elevation={6} style={{ padding: "15px" }}>

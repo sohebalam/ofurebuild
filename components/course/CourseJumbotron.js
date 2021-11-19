@@ -16,6 +16,7 @@ import {
 import Image from "next/image"
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline"
 import { useSelector, useDispatch } from "react-redux"
+import { checkEnrollment } from "../../redux/actions/lessonActions"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,18 +50,20 @@ const SingleCourseJumbotron = ({
     description,
     instructor,
     updatedAt,
-
     image,
     price,
     paid,
     category,
   } = course
   const dispatch = useDispatch()
+
   const enrollmentCheck = useSelector((state) => state.enrollmentCheck)
   const { loading: enrollLoad, error: enrollError, enrolled } = enrollmentCheck
 
+  console.log(user, enrolled, course)
+
   useEffect(() => {
-    if (user && course) dispatch(checkEnrollment())
+    if (user && course) dispatch(checkEnrollment(course))
   }, [])
 
   const classes = useStyles()

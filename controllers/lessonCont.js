@@ -11,10 +11,9 @@ export const getFiles = async (req, res) => {
   console.log(req.query)
   const { slug } = req.query
 
-  return
+  const course = await Course.findOne({ slug: slug })
 
-  // console.log(ytList)
-  res.send(ytList[0])
+  res.send(course)
 }
 
 export const fileSave = async (req, res) => {

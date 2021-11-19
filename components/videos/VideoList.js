@@ -40,7 +40,8 @@ function VideoList({ videos }) {
   return (
     <Box style={{ padding: "0.25rem" }}>
       <Posts posts={currentPosts} />
-      <Stack spacing={2}>
+      {/* <Stack spacing={2}> */}
+      <Box style={{ padding: "0.25rem", marginLeft: "1.5rem" }}>
         <Pagination
           className="pagination "
           count={count}
@@ -50,7 +51,8 @@ function VideoList({ videos }) {
             <PaginationItem {...item} className={classes.item} />
           )}
         />
-      </Stack>
+      </Box>
+      {/* </Stack> */}
     </Box>
   )
 }

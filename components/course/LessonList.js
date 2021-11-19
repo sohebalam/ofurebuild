@@ -20,10 +20,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const SingleCourseLesson = ({ lessons }) => {
-  // const lessonsList = useSelector((state) => state.lessonsList)
-  // const { loading: loadingList, error: errorList, lessons } = lessonsList
-
-  console.log(lessons)
   const classes = useStyles()
   return (
     <Grid container>
@@ -58,13 +54,5 @@ const SingleCourseLesson = ({ lessons }) => {
     </Grid>
   )
 }
-
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   (store) => async (context) => {
-//     const { params, req } = context
-
-//     await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
-//   }
-// )
 
 export default SingleCourseLesson

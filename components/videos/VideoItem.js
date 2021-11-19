@@ -58,6 +58,7 @@ const VideoItem = ({ video }) => {
           <Button
             key={video.videoId}
             onClick={() => dispatch(selectLesson(video))}
+            style={{ marginBottom: "0.5rem" }}
           >
             <Card
               style={{
@@ -66,7 +67,7 @@ const VideoItem = ({ video }) => {
                 cursor: "pointer",
                 padding: "0.25rem",
                 height: "13vw",
-                width: "20vw",
+                width: "19vw",
               }}
               className={classes.stretch}
             >
@@ -98,22 +99,16 @@ const VideoItem = ({ video }) => {
             style={{
               display: "flex",
               alignItems: "center",
-              // cursor: "pointer",
               padding: "2rem",
               height: "15vw",
               width: "21.2vw",
             }}
             className={classes.stretch}
-            // className={classes.cardStyle}
           >
             <Grid container>
               <Grid item xs={7}>
                 <CardContent>
-                  <Typography
-                    sx={{ fontSize: 14 }}
-                    // color="text.secondary"
-                    gutterBottom
-                  >
+                  <Typography sx={{ fontSize: 14 }} gutterBottom>
                     {video.title}
                   </Typography>
                   <Typography variant="h5" component="div"></Typography>
@@ -124,13 +119,6 @@ const VideoItem = ({ video }) => {
                 <CardActions>
                   <Button
                     size="small"
-                    // onClick={() =>
-                    //   console.log(
-                    //     video._id,
-                    //     video.file_path,
-                    //     video.file_mimetype
-                    //   )
-                    // }
                     onClick={() =>
                       downloadFile(
                         video._id,
