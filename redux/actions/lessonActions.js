@@ -266,18 +266,16 @@ export const paidEnroll = (course) => async (dispatch) => {
   }
 }
 
-export const getSingleCourse = (req, slug) => async (dispatch) => {
-  console.log(slug)
+export const getSingleCourse = (slug, playlistId) => async (dispatch) => {
+  console.log("action", slug)
 
   try {
     dispatch({ type: SINGLE_COURSE_REQUEST })
 
-    const { origin } = absoluteUrl(req)
-
-    const { data } = await axios.get(
-      `${origin}/api/course/single/${slug}`
-      // config
-    )
+    const { data } = await axios.post(`/api/course/single/${slug}`, {
+      slug,
+      playlistId,
+    })
 
     console.log("data", data)
 
@@ -297,6 +295,7 @@ export const getSingleCourse = (req, slug) => async (dispatch) => {
 }
 
 export const loadCourse = (authCookie, req, slug) => async (dispatch) => {
+  console.log("loadcourse", slug)
   try {
     dispatch({ type: LOAD_COURSE_REQUEST })
 

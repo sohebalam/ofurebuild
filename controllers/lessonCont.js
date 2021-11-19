@@ -7,15 +7,13 @@ import { readFileSync } from "fs"
 import formidable from "formidable"
 import fs from "fs"
 
-import YTList from "../models/lessonModel"
+//update
 
 export const getFiles = async (req, res) => {
   console.log(req.query)
   const { slug } = req.query
 
-  const ytList = await YTList.find({
-    slug: slug,
-  })
+  return
 
   // console.log(ytList)
   res.send(ytList[0])
@@ -24,29 +22,29 @@ export const getFiles = async (req, res) => {
 export const fileSave = async (req, res) => {
   const slug = req.query.slug
 
-  console.log(req.method)
-  const ytList = await YTList.findOne({
-    slug: slug,
-  })
+  // console.log(req.method)
+  const course = await Course.findOne({ slug: slug })
 
-  if (!ytList) {
-    const newList = await new YTList({
-      slug: slug,
-    }).save()
-  }
+  console.log(course)
+
+  // if (!ytList) {
+  //   const newList = await new YTList({
+  //     slug: slug,
+  //   }).save()
+  // }
 
   const form = new formidable.IncomingForm()
   form.parse(req, async function (err, fields, files) {
     const slug = req.query.slug
-    await saveFile(files.file, fields, slug)
+    await saveFile(files.file, fields, slug, course)
     // return res.status(201).json({ message: "uploaded file" })
   })
   return
 }
 
-const saveFile = async (file, fields, slug) => {
+const saveFile = async (file, fields, slug, course) => {
   const { title, description } = fields
-  console.log("sdssda", slug)
+  // console.log("sdssda", slug, course)
   console.log(file.filepath, title, description)
   // (`${process.cwd()}\\public\\public\\${req.body.item.name}`
   const data = fs.readFileSync(file.filepath)
@@ -59,21 +57,24 @@ const saveFile = async (file, fields, slug) => {
   try {
     // console.log(file.path, file.type, title, description)
 
-    return await YTList.findOneAndUpdate({
-      slug: slug,
-      $addToSet: {
-        files: {
-          media: "file",
-          title,
-          name: file.originalFilename,
-          description,
-          file_path: `${process.cwd()}\\public\\files\\${
-            file.originalFilename
-          }`,
-          file_mimetype: file.mimetype,
-        },
-      },
-    })
+    const files = {
+      media: "file",
+      title,
+      name: file.originalFilename,
+      description,
+      file_path: `${process.cwd()}\\public\\files\\${file.originalFilename}`,
+      file_mimetype: file.mimetype,
+    }
+
+    console.log("files", files)
+
+    var newList = await Course.findByIdAndUpdate(
+      { _id: course?._id },
+
+      { $push: { lessons: files } }
+    )
+
+    // console.log("dssds", newList)
 
     // res.send(newList)
   } catch (error) {
@@ -84,70 +85,6 @@ const saveFile = async (file, fields, slug) => {
 
   return
 }
-
-// export const youtube = async (req, res) => {
-//   const { slug } = req.query
-//   const ytList = await YTList.findOne({
-//     slug: slug,
-//   })
-
-//   if (!ytList) {
-//     const newList = await new YTList({
-//       slug: slug,
-//     }).save()
-//   }
-
-//   try {
-//     const YOUTUBE_PLAYLIST_ITEMS_API =
-//       "https://www.googleapis.com/youtube/v3/playlistItems"
-
-//     const course = await Course.findOne({ slug: slug })
-//       .populate("instructor", "_id name")
-//       .exec()
-
-//     const playlistId = course?.playlistId
-//     const response = await fetch(
-//       `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&maxResults=50&playlistId=${playlistId}&key=${process.env.YOUTUBE_API_KEY}`
-//     )
-
-//     const data = await response?.json()
-
-//     console.log(data)
-
-//     const videos =
-//       data &&
-//       data?.items?.map((item) => ({
-//         media: "video",
-//         playlistId: item.snippet.playlistId,
-//         videoId: item.snippet.resourceId.videoId,
-//         thumbnailUrl: item.snippet.thumbnails.medium.url,
-//         title: item.snippet.title,
-//         description: item.snippet.description,
-//         channelTitle: item.snippet.channelTitle,
-//       }))
-
-//     const ytCount = await YTList.find()
-
-//     if (ytCount[0]?.videos?.length < 1) {
-//       return await YTList.findOneAndUpdate({
-//         slug: slug,
-//         $addToSet: {
-//           videos: videos,
-//         },
-//       })
-//     }
-
-//     const ytList = await YTList.find({
-//       videos: {
-//         playlistId: course.playlistId.toString(),
-//       },
-//     })
-
-//     res.send(ytList)
-//   } catch (error) {
-//     console.log(error)
-//   }
-// }
 
 export const lessonOrder = async (req, res) => {
   const { slug } = req.query
@@ -256,59 +193,54 @@ export const fileDownload = async (req, res) => {
   }
 }
 
-export const youtube = async (req, res) => {
-  // console.log("xfcvfdzxhere")
-  const { slug } = req.query
+// export const youtube = async (req, res) => {
+//   // console.log("xfcvfdzxhere")
+//   const { slug } = req.query
 
-  try {
-    const YOUTUBE_PLAYLIST_ITEMS_API =
-      "https://www.googleapis.com/youtube/v3/playlistItems"
+//   // const { playlistId } = req.body
 
-    const course = await Course.findOne({ slug: slug })
-      .populate("instructor", "_id name")
-      .exec()
+//   console.log("youtube", slug)
 
-    const playlistId = course?.playlistId
+//   try {
+//     const YOUTUBE_PLAYLIST_ITEMS_API =
+//       "https://www.googleapis.com/youtube/v3/playlistItems"
 
-    console.log(playlistId)
+//     // const course = await Course.findOne({ slug: slug })
+//     //   .populate("instructor", "_id name")
+//     //   .exec()
 
-    const response = await fetch(
-      `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&maxResults=50&playlistId=${playlistId}&key=${process.env.YOUTUBE_API_KEY}`
-    )
+//     const playlistId = req.body.playlistId
+//     console.log(playlistId)
 
-    console.log("coursezds", course)
+//     return
 
-    const data = await response?.json()
+//     const response = await fetch(
+//       `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&maxResults=50&playlistId=${playlistId}&key=${process.env.YOUTUBE_API_KEY}`
+//     )
 
-    const videos = data.items.map((item) => ({
-      playlistId: item.snippet.playlistId,
-      videoId: item.snippet.resourceId.videoId,
-      thumbnailUrl: item.snippet.thumbnails.medium.url,
-      title: item.snippet.title,
-      description: item.snippet.description,
-      channelTitle: item.snippet.channelTitle,
-    }))
+//     // console.log("coursezds", course)
 
-    console.log(slug)
+//     const data = await response?.json()
 
-    // const ytList = await YTList.findOne({ slug: slug })
+//     const videos = data.items?.map((item) => ({
+//       playlistId: item.snippet.playlistId,
+//       videoId: item.snippet.resourceId.videoId,
+//       thumbnailUrl: item.snippet.thumbnails.medium.url,
+//       title: item.snippet.title,
+//       description: item.snippet.description,
+//       channelTitle: item.snippet.channelTitle,
+//     }))
 
-    const ytList = await YTList.findOne({ slug: slug })
+//     console.log("newyoutube", slug)
 
-    const createdList = await new YTList({
-      slug,
+//     const newList = await Course.findByIdAndUpdate(
+//       { _id: course?._id },
 
-      videos: videos,
-    }).save()
-
-    // if (createdList.videos[0].length === 0) return
-    const newList = await YTList.findOneAndUpdate(
-      slug,
-
-      { videos: videos }
-    )
-    res.send(newList)
-  } catch (error) {
-    console.log(error)
-  }
-}
+//       { $addToSet: { lessons: videos } }
+//     )
+//     // console.log("newlist", newList)
+//     res.send(newList)
+//   } catch (error) {
+//     console.log(error)
+//   }
+// }

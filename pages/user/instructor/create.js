@@ -7,6 +7,7 @@ import { useRouter } from "next/router"
 import { Box } from "@material-ui/core"
 import {
   courseCreate,
+  getSingleCourse,
   imageDelete,
   imageUpload,
 } from "../../../redux/actions/lessonActions"
@@ -26,7 +27,6 @@ const CourseCreate = () => {
   const [preview, setPreview] = useState("")
   const [uploadButtonText, setUploadButtonText] = useState("Upload Image")
   const dispatch = useDispatch()
-
   const [files, setFiles] = useState({})
 
   const uploadImage = useSelector((state) => state.uploadImage)
@@ -94,6 +94,8 @@ const CourseCreate = () => {
 
     try {
       console.log(files, values)
+
+      // dispatch(getSingleCourse(values.title, values.playlistId))
 
       dispatch(courseCreate(files, values))
       console.log("Great! Now you can start adding lessons")

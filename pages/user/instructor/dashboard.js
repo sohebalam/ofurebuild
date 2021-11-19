@@ -3,12 +3,9 @@ import axios from "axios"
 // import InstructorRoute from "../../../components/route/Instructor"
 import { Avatar, Button, Grid, Tooltip, Typography } from "@material-ui/core"
 import Link from "next/link"
-import { CheckCircleOutlined } from "@material-ui/icons"
-import CancelIcon from "@material-ui/icons/Cancel"
 import { useSelector } from "react-redux"
 import { wrapper } from "../../../redux/store"
 import { loadCourses } from "../../../redux/actions/lessonActions"
-import { getSession } from "next-auth/client"
 import Publish from "../../../components/course/Publish"
 const InstructorIndex = () => {
   const coursesLoad = useSelector((state) => state.coursesLoad)
@@ -30,14 +27,14 @@ const InstructorIndex = () => {
               <Link href={`/user/instructor/course/${course.slug}`}>
                 <a>
                   {/* <Button style={{ underline: true }}> */}
-                  <Typography variant="h5">{course.title}</Typography>
+                  <Typography variant="h5">{course?.title}</Typography>
                   {/* </Button> */}
                 </a>
               </Link>
               <p>{course.lessons?.length}</p>
             </Grid>
             <Grid item xs={3}>
-              <Publish course={course} slug={course.slug} />
+              {/* <Publish course={course} slug={course.slug} /> */}
               {/* {course.lessons?.length < 5 ? (
                 <p>At least 5 lessons are required to publish a course</p>
               ) : course.published ? (

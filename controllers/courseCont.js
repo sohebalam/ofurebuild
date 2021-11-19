@@ -5,7 +5,6 @@ import slugify from "slugify"
 import { readFileSync } from "fs"
 import User from "../models/userModel"
 import cloudinary from "../utils/cloudinary"
-import YTList from "../models/lessonModel"
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
 
@@ -111,10 +110,62 @@ export const create = async (req, res) => {
     ...req.body,
   }).save()
 
+  await youtube(course)
+
   res.status(200).json({
     success: true,
     course,
   })
+}
+
+const youtube = async (course) => {
+  // console.log("xfcvfdzxhere")
+  // const { slug } = req.query
+
+  // const { playlistId } = req.body
+
+  // console.log("youtube", slug)
+
+  try {
+    const YOUTUBE_PLAYLIST_ITEMS_API =
+      "https://www.googleapis.com/youtube/v3/playlistItems"
+
+    // const course = await Course.findOne({ slug: slug })
+    //   .populate("instructor", "_id name")
+    //   .exec()
+
+    const playlistId = course?.playlistId
+    console.log(playlistId)
+
+    const response = await fetch(
+      `${YOUTUBE_PLAYLIST_ITEMS_API}?part=snippet&maxResults=50&playlistId=${playlistId}&key=${process.env.YOUTUBE_API_KEY}`
+    )
+
+    // console.log("coursezds", course)
+
+    const data = await response?.json()
+
+    const videos = data.items?.map((item) => ({
+      playlistId: item.snippet.playlistId,
+      videoId: item.snippet.resourceId.videoId,
+      thumbnailUrl: item.snippet.thumbnails.medium.url,
+      title: item.snippet.title,
+      description: item.snippet.description,
+      channelTitle: item.snippet.channelTitle,
+    }))
+
+    // console.log("newyoutube", slug)
+
+    const newList = await Course.findByIdAndUpdate(
+      { _id: course?._id },
+
+      { $addToSet: { lessons: videos } }
+    )
+    // console.log("newlist", newList)
+    return newList
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const instructorCourses = async (req, res) => {

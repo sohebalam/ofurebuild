@@ -33,6 +33,6 @@ connectDB()
 
 // console.log(req.method)
 
-router.get(youtube)
+router.use(isAuthenticated, isInstructor).post(youtube)
 
 export default router

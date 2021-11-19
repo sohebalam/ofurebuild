@@ -116,13 +116,15 @@ const Course = () => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (context) => {
-    const { params, req } = context
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) => async (context) => {
+//     const { params, req } = context
 
-    await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
-    await store.dispatch(getSingleCourse(req, params.slug))
-  }
-)
+//     console.log("params", params.slug)
+
+//     // await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
+//     await store.dispatch(getSingleCourse(req, params.slug))
+//   }
+// )
 
 export default Course

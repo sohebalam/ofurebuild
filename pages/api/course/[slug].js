@@ -16,7 +16,7 @@ const router = nc({ onError })
 
 connectDB()
 
-router.use(isAuthenticated, isEnrolled).get(readCourse)
+router.use(isAuthenticated, isInstructor).get(readCourse)
 router.use(isAuthenticated, isInstructor).put(update)
 
 export default router
