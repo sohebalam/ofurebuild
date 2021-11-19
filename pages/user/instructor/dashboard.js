@@ -23,7 +23,7 @@ const InstructorIndex = () => {
             <Grid item xs={3}>
               <Avatar
                 style={{ height: "100px", width: "100px" }}
-                src={course?.images ? course.images[0].url : "/course.jpg"}
+                src={course?.images ? course.images[0]?.url : "/course.jpg"}
               />
             </Grid>
             <Grid item xs={6}>

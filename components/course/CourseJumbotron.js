@@ -114,7 +114,7 @@ const SingleCourseJumbotron = ({
 
             <div>
               <Image
-                src={(course && course?.images[0].url) || "/course.jpg"}
+                src={(course.images && course?.images[0]?.url) || "/course.jpg"}
                 alt={title}
                 height={250}
                 width={400}
