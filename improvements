@@ -17,10 +17,6 @@ password-validator
 fix mycourses on menubutton
 
 
-youtube upload
-
-add option fullscreen to youtube
-
 send no password for socialId
 
 delete Course - admin section
@@ -33,7 +29,6 @@ download file
 
 update file
 
-combine course and lessonslist (ytlist)
 
 set up free preview lesson 114 chapter 18
 
@@ -41,5 +36,14 @@ update userRoute to redux
 
 fix student route + student dashboard
 
+protect routes correctly 
+
+youtube preview video 
+
+126 - lesson page (drawer)
+
+Publish text
+
+mark completed
 
 

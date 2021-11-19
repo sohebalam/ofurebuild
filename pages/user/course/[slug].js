@@ -46,7 +46,7 @@ const Index = () => {
 
   return (
     <StudentRoute>
-      <Box style={{ marginBottom: "8rem" }}>
+      <Box style={{ marginBottom: "11rem" }}>
         <Grid
           container
           justifyContent="center"

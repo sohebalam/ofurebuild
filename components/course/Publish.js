@@ -53,7 +53,7 @@ const Publish = ({ initCourse, slug, lessons }) => {
         <CircularProgress />
       ) : (
         <div>
-          {lessons && lessons.length < 5 ? (
+          {/* {lessons && lessons.length < 5 ? (
             <Tooltip title="Min 5 lessons required to publish">
               <HelpOutlineIcon className="h5 pointer text-danger" />
             </Tooltip>
@@ -70,6 +70,29 @@ const Publish = ({ initCourse, slug, lessons }) => {
               <CheckCircleOutline
                 onClick={(e) => handlePublish(e, course?._id)}
                 className="h5 pointer text-success"
+              />
+            </Tooltip>
+          )} */}
+          {lessons && lessons.length < 5 ? (
+            <p>At least 5 lessons are required to publish a course</p>
+          ) : course.published ? (
+            <p>Your course is live in the marketplace</p>
+          ) : (
+            <p>Your course is ready to be published</p>
+          )}
+
+          {course.published ? (
+            <Tooltip title="Published">
+              <CheckCircleOutline
+                className="h5 pointer text-success"
+                onClick={(e) => handleUnpublish(e, course?._id)}
+              />
+            </Tooltip>
+          ) : (
+            <Tooltip title="Unpublished">
+              <HighlightOffIcon
+                className="h5 pointer text-warning"
+                onClick={(e) => handlePublish(e, course?._id)}
               />
             </Tooltip>
           )}
