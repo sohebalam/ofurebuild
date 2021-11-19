@@ -30,6 +30,7 @@ import {
 import Lessons from "../../../../components/file/DragList"
 import Publish from "../../../../components/course/Publish"
 import { countStudents } from "../../../../redux/actions/lessonActions"
+import InstructorRoute from "../../../../components/routes/InstuctorRoute"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -79,7 +80,7 @@ const CourseView = () => {
   }, [course])
 
   return (
-    <>
+    <InstructorRoute>
       <Grid container>
         <>
           {course && (
@@ -176,7 +177,7 @@ const CourseView = () => {
       <Grid container style={{ marginTop: "0.5rem" }}>
         <Lessons slug={slug} lessons={course.lessons} />
       </Grid>
-    </>
+    </InstructorRoute>
   )
 }
 

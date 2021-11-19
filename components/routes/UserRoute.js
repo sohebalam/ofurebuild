@@ -2,30 +2,33 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 import { useRouter } from "next/router"
 import { CircularProgress } from "@material-ui/core"
-const UserRoute = ({ children, showNav = true }) => {
+import { useDispatch, useSelector } from "react-redux"
+import { useSession } from "next-auth/client"
+const UserRoute = ({ children }) => {
   // state
-  const [data, setData] = useState(false)
-  // router
+  const profile = useSelector((state) => state.profile)
+  const { loading, error, dbUser } = profile
+
+  const { session } = useSession()
+
+  console.log(dbUser)
   const router = useRouter()
 
   useEffect(() => {
-    fetchUser()
-  }, [])
-
-  const fetchUser = async () => {
-    try {
-      const { data } = await axios.get("/api/auth/profile")
-      //   console.log(data);
-      if (data) setData(true)
-      // console.log(data)
-    } catch (err) {
-      console.log(err)
-      setData(false)
-      router.push("/user/login")
+    if (!dbUser) {
+      if (session) {
+        useDispatch(loadUser())
+      }
     }
-  }
 
-  return <>{!data ? <CircularProgress /> : <div>{children}</div>}</>
+    if (
+      dbUser === null ||
+      (dbUser && dbUser.role && !dbUser.role.includes("user"))
+    ) {
+      router.push("/")
+    }
+  }, [dbUser])
+  return <>{!dbUser ? <CircularProgress /> : <div>{children}</div>}</>
 }
 
 export default UserRoute

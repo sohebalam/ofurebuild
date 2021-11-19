@@ -22,7 +22,10 @@ const StudentRoute = ({ children, showNav = true }) => {
       }
     }
 
-    if (dbUser && dbUser.role && !dbUser.role.includes("user")) {
+    if (
+      dbUser === null ||
+      (dbUser && dbUser.role && !dbUser.role.includes("user"))
+    ) {
       router.push("/")
     }
   }, [dbUser])

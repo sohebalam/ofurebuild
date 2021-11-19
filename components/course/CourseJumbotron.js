@@ -60,7 +60,7 @@ const SingleCourseJumbotron = ({
   const enrollmentCheck = useSelector((state) => state.enrollmentCheck)
   const { loading: enrollLoad, error: enrollError, enrolled } = enrollmentCheck
 
-  console.log(user, enrolled, course)
+  // console.log(user, enrolled, course)
 
   useEffect(() => {
     if (user && course) dispatch(checkEnrollment(course))

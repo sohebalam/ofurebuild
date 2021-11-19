@@ -11,6 +11,9 @@ import {
   EDIT_COURSE_FAIL,
   EDIT_COURSE_REQUEST,
   EDIT_COURSE_SUCCESS,
+  GET_COURSE_FAIL,
+  GET_COURSE_REQUEST,
+  GET_COURSE_SUCCESS,
   GET_LESSONS_FAIL,
   GET_LESSONS_REQUEST,
   GET_LESSONS_SUCCESS,
@@ -171,6 +174,21 @@ export const singleCourseReducer = (
   }
 }
 
+export const courseGetReducer = (
+  state = { loading: false, course: null },
+  action
+) => {
+  switch (action.type) {
+    case GET_COURSE_REQUEST:
+      return { loading: true }
+    case GET_COURSE_SUCCESS:
+      return { loading: false, course: action.payload }
+    case GET_COURSE_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
 export const courseLoadReducer = (
   state = { loading: false, course: null },
   action

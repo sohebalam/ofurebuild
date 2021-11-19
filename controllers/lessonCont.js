@@ -8,10 +8,11 @@ import fs from "fs"
 //update
 
 export const getFiles = async (req, res) => {
-  console.log(req.query)
   const { slug } = req.query
 
   const course = await Course.findOne({ slug: slug })
+    .populate("instructor", "_id name")
+    .exec()
 
   res.send(course)
 }

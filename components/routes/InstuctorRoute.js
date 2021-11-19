@@ -24,7 +24,10 @@ const InstructorRoute = ({ children }) => {
       }
     }
 
-    if (dbUser && dbUser.role && !dbUser.role.includes("instructor")) {
+    if (
+      dbUser === null ||
+      (dbUser && dbUser.role && !dbUser.role.includes("instructor"))
+    ) {
       router.push("/")
     }
   }, [dbUser])

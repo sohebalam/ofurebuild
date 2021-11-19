@@ -3,6 +3,7 @@ import { getImageReducer } from "./reducers/imageReducers"
 import { fileGetReducer, FileGetReducer } from "./reducers/fileReducers"
 import {
   courseEditReducer,
+  courseGetReducer,
   courseLoadReducer,
   coursePublishedReducer,
   coursesLoadReducer,
@@ -49,6 +50,7 @@ const reducer = combineReducers({
   singleCourse: singleCourseReducer,
   //   paidEnroll: paidEnrollReducer,
   enrollmentCheck: enrollmentCheckReducer,
+  courseGet: courseGetReducer,
   //   freeEnroll: freeEnrollReducer,
   //   courseEdit: courseEditReducer,
   // lessonsList: lessonsListReducer,

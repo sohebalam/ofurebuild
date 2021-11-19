@@ -23,7 +23,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     // console.log("params", params)
 
-    await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
+    // await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
     await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
     // await store.dispatch(getSingleCourse(req, params.slug))
   }

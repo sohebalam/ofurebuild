@@ -11,6 +11,7 @@ import { useSelector, useDispatch } from "react-redux"
 import {
   checkEnrollment,
   freeEnroll,
+  getCourse,
   getlessons,
   getSingleCourse,
   loadCourse,
@@ -36,12 +37,13 @@ const Course = () => {
 
   const user = dbUser
 
-  const courseLoad = useSelector((state) => state.courseLoad)
-  const { loading, error: courseError, course } = courseLoad
+  const courseGet = useSelector((state) => state.courseGet)
+  const { loading, error: courseError, course } = courseGet
 
   // useEffect(() => {
   //   if (user && course) dispatch(checkEnrollment())
   // }, [])
+  // console.log(course)
 
   const handelPaidEnroll = async () => {
     try {
@@ -119,9 +121,10 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
     // const slug = "fdzsf"
 
+    await store.dispatch(getCourse(req, params.slug))
     // await store.dispatch(getSingleCourse(req.headers.cookie, req, params.slug))
     // await store.dispatch(instructorCourse(req.headers.cookie, req, slug))
-    await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
+    // await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
   }
 )
 

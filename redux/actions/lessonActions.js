@@ -11,6 +11,11 @@ import {
   FREE_ENROLL_FAIL,
   FREE_ENROLL_REQUEST,
   FREE_ENROLL_SUCCESS,
+  GET_COURSES_REQUEST,
+  GET_COURSES_SUCCESS,
+  GET_COURSE_FAIL,
+  GET_COURSE_REQUEST,
+  GET_COURSE_SUCCESS,
   GET_LESSONS_FAIL,
   GET_LESSONS_REQUEST,
   GET_LESSONS_SUCCESS,
@@ -104,40 +109,40 @@ export const postLessons = (items, slug) => async (dispatch) => {
   }
 }
 
-export const getlessons = (authCookie, req, slug) => async (dispatch) => {
-  // console.log(slug)
-  try {
-    dispatch({ type: GET_LESSONS_REQUEST })
+// export const getlessons = (authCookie, req, slug) => async (dispatch) => {
+//   // console.log(slug)
+//   try {
+//     dispatch({ type: GET_LESSONS_REQUEST })
 
-    const config = {
-      headers: {
-        cookie: authCookie,
-      },
-    }
+//     const config = {
+//       headers: {
+//         cookie: authCookie,
+//       },
+//     }
 
-    const { origin } = absoluteUrl(req)
+//     const { origin } = absoluteUrl(req)
 
-    const { data } = await axios.get(
-      `${origin}/api/course/lessons/${slug}`,
-      config
-    )
+//     const { data } = await axios.get(
+//       `${origin}/api/course/lessons/${slug}`,
+//       config
+//     )
 
-    console.log(data)
+//     console.log(data)
 
-    dispatch({
-      type: GET_LESSONS_SUCCESS,
-      payload: data,
-    })
-  } catch (error) {
-    dispatch({
-      type: GET_LESSONS_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
-  }
-}
+//     dispatch({
+//       type: GET_LESSONS_SUCCESS,
+//       payload: data,
+//     })
+//   } catch (error) {
+//     dispatch({
+//       type: GET_LESSONS_FAIL,
+//       payload:
+//         error.response && error.response.data.message
+//           ? error.response.data.message
+//           : error.message,
+//     })
+//   }
+// }
 
 export const courseEdit = (image, values, slug) => async (dispatch) => {
   console.log("courseedit", image)
@@ -241,6 +246,31 @@ export const paidEnroll = (course) => async (dispatch) => {
   }
 }
 
+export const getCourse = (req, slug) => async (dispatch) => {
+  // console.log("action", slug)
+
+  try {
+    dispatch({ type: GET_COURSE_REQUEST })
+
+    const { origin } = absoluteUrl(req)
+
+    // console.log("actiodsn", slug)
+    const { data } = await axios.get(`${origin}/api/course/authless/${slug}`)
+    // console.log("data", data)
+    dispatch({
+      type: GET_COURSE_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: GET_COURSE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
 export const getSingleCourse = (slug, playlistId) => async (dispatch) => {
   console.log("action", slug)
 
