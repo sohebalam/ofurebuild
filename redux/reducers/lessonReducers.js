@@ -75,21 +75,21 @@ export const lessonsPostReducer = (
   }
 }
 
-export const lessonsListReducer = (
-  state = { loading: false, lessons: {} },
-  action
-) => {
-  switch (action.type) {
-    case GET_LESSONS_REQUEST:
-      return { loading: true }
-    case GET_LESSONS_SUCCESS:
-      return { loading: false, lessons: action.payload }
-    case GET_LESSONS_FAIL:
-      return { loading: false, error: action.payload }
-    default:
-      return state
-  }
-}
+// export const lessonsListReducer = (
+//   state = { loading: false, lessons: {} },
+//   action
+// ) => {
+//   switch (action.type) {
+//     case GET_LESSONS_REQUEST:
+//       return { loading: true }
+//     case GET_LESSONS_SUCCESS:
+//       return { loading: false, lessons: action.payload }
+//     case GET_LESSONS_FAIL:
+//       return { loading: false, error: action.payload }
+//     default:
+//       return state
+//   }
+// }
 
 export const courseEditReducer = (
   state = { loading: false, course: null },

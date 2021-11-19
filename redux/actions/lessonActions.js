@@ -104,65 +104,40 @@ export const postLessons = (items, slug) => async (dispatch) => {
   }
 }
 
-export const lessonsGet = (slug) => async (dispatch) => {
-  // console.log(slug)
-  try {
-    dispatch({ type: GET_LESSONS_REQUEST })
+// export const getlessons = (authCookie, req, slug) => async (dispatch) => {
+//   console.log(slug)
+//   try {
+//     dispatch({ type: GET_LESSONS_REQUEST })
 
-    // const { origin } = absoluteUrl(req)
+//     const config = {
+//       headers: {
+//         cookie: authCookie,
+//       },
+//     }
 
-    const { data } = await axios.get(`/api/course/lessons/${slug}`)
+//     const { origin } = absoluteUrl(req)
 
-    // console.log("action", data[0])
+//     const { data } = await axios.get(
+//       `${origin}/api/course/lessons/${slug}`,
+//       config
+//     )
 
-    dispatch({
-      type: GET_LESSONS_SUCCESS,
-      payload: data,
-    })
-  } catch (error) {
-    dispatch({
-      type: GET_LESSONS_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
-  }
-}
-export const getlessons = (authCookie, req, slug) => async (dispatch) => {
-  console.log(slug)
-  try {
-    dispatch({ type: GET_LESSONS_REQUEST })
+//     console.log(data)
 
-    const config = {
-      headers: {
-        cookie: authCookie,
-      },
-    }
-
-    const { origin } = absoluteUrl(req)
-
-    const { data } = await axios.get(
-      `${origin}/api/course/lessons/${slug}`,
-      config
-    )
-
-    console.log(data)
-
-    dispatch({
-      type: GET_LESSONS_SUCCESS,
-      payload: data,
-    })
-  } catch (error) {
-    dispatch({
-      type: GET_LESSONS_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    })
-  }
-}
+//     dispatch({
+//       type: GET_LESSONS_SUCCESS,
+//       payload: data,
+//     })
+//   } catch (error) {
+//     dispatch({
+//       type: GET_LESSONS_FAIL,
+//       payload:
+//         error.response && error.response.data.message
+//           ? error.response.data.message
+//           : error.message,
+//     })
+//   }
+// }
 
 export const courseEdit = (image, values, slug) => async (dispatch) => {
   console.log("courseedit", image)
@@ -403,33 +378,6 @@ export const imageDelete = (image) => async (dispatch) => {
   }
 }
 
-// export const imageUpload = (uri) => async (dispatch) => {
-//   console.log(uri)
-
-//   return
-
-//   try {
-//     dispatch({ type: UPLOAD_IMAGE_REQUEST })
-
-//     let { data } = await axios.post("/api/course/image", {
-//       image: uri,
-//     })
-
-//     dispatch({
-//       type: UPLOAD_IMAGE_SUCCESS,
-//       payload: data,
-//     })
-//   } catch (error) {
-//     dispatch({
-//       type: UPLOAD_IMAGE_FAIL,
-//       payload:
-//         error.response && error.response.data.message
-//           ? error.response.data.message
-//           : error.message,
-//     })
-//   }
-// }
-
 export const selectLesson = (video) => async (dispatch) => {
   try {
     dispatch({ type: SELECT_VIDEO_REQUEST })
@@ -473,13 +421,6 @@ export const courseCreate = (image, values) => async (dispatch) => {
       },
       config
     )
-    // const { data } = await axios.put(
-    //   "/api/course/mid/course",
-    //   {
-
-    //   },
-    //   config
-    // )
 
     dispatch({
       type: CREATE_COURSE_SUCCESS,

@@ -34,24 +34,11 @@ const InstructorIndex = () => {
               <p>{course.lessons?.length}</p>
             </Grid>
             <Grid item xs={3}>
-              {/* <Publish course={course} slug={course.slug} /> */}
-              {/* {course.lessons?.length < 5 ? (
-                <p>At least 5 lessons are required to publish a course</p>
-              ) : course.published ? (
-                <p>Your course is live in the marketplace</p>
-              ) : (
-                <p>Your course is ready to be published</p>
-              )}
-
-              {course.published ? (
-                <Tooltip title="Published">
-                  <CheckCircleOutlined className="h5 pointer text-success" />
-                </Tooltip>
-              ) : (
-                <Tooltip title="Not Published">
-                  <CancelIcon className="h5 pointer text-warning" />
-                </Tooltip>
-              )} */}
+              <Publish
+                initCourse={course}
+                slug={course.slug}
+                lessons={course.lessons}
+              />
             </Grid>
           </Grid>
         ))}

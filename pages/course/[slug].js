@@ -31,22 +31,17 @@ const Course = () => {
   const profile = useSelector((state) => state.profile)
   const { error, dbUser } = profile
 
-  const singleCourse = useSelector((state) => state.singleCourse)
-  const { loading, error: courseError, course } = singleCourse
-
-  const lessonsList = useSelector((state) => state.lessonsList)
-  const { loading: loadingList, error: errorList, lessons } = lessonsList
-
-  console.log(course)
-
   const enrollmentCheck = useSelector((state) => state.enrollmentCheck)
   const { loading: enrollLoad, error: enrollError, enrolled } = enrollmentCheck
 
   const user = dbUser
 
-  useEffect(() => {
-    if (user && course) dispatch(checkEnrollment())
-  }, [])
+  const courseLoad = useSelector((state) => state.courseLoad)
+  const { loading, error: courseError, course } = courseLoad
+
+  // useEffect(() => {
+  //   if (user && course) dispatch(checkEnrollment())
+  // }, [])
 
   const handelPaidEnroll = async () => {
     try {
@@ -84,9 +79,9 @@ const Course = () => {
     }
   }
 
-  useEffect(() => {
-    if (user && course) dispatch(checkEnrollment(course))
-  }, [user, course])
+  // useEffect(() => {
+  //   if (user && course) dispatch(checkEnrollment(course))
+  // }, [user, course])
 
   return (
     <>
@@ -102,7 +97,7 @@ const Course = () => {
           handelPaidEnroll={handelPaidEnroll}
           handelFreeEnroll={handelFreeEnroll}
           enrolled={enrolled}
-          lessons={lessons}
+          lessons={course?.lessons}
         />
       )}
 
@@ -111,20 +106,23 @@ const Course = () => {
         setShowModal={setShowModal}
         preview={preview}
       /> */}
-      <LessonList />
+      <LessonList lessons={course?.lessons} />
     </>
   )
 }
 
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   (store) => async (context) => {
-//     const { params, req } = context
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async (context) => {
+    const { params, req } = context
 
-//     console.log("params", params.slug)
+    const { slug } = params
 
-//     // await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
-//     await store.dispatch(getSingleCourse(req, params.slug))
-//   }
-// )
+    // const slug = "fdzsf"
+
+    // await store.dispatch(getSingleCourse(req.headers.cookie, req, params.slug))
+    // await store.dispatch(instructorCourse(req.headers.cookie, req, slug))
+    await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
+  }
+)
 
 export default Course

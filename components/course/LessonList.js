@@ -19,11 +19,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const SingleCourseLesson = ({}) => {
-  const lessonsList = useSelector((state) => state.lessonsList)
-  const { loading: loadingList, error: errorList, lessons } = lessonsList
+const SingleCourseLesson = ({ lessons }) => {
+  // const lessonsList = useSelector((state) => state.lessonsList)
+  // const { loading: loadingList, error: errorList, lessons } = lessonsList
 
-  // console.log(lessons)
+  console.log(lessons)
   const classes = useStyles()
   return (
     <Grid container>
@@ -34,7 +34,7 @@ const SingleCourseLesson = ({}) => {
       )}
       <Grid container>
         {lessons
-          ? lessons?.lessons?.map((lesson, index) => (
+          ? lessons?.map((lesson, index) => (
               <Grid container key={lesson._id}>
                 <Grid item xs={3} style={{ marginTop: "0.5rem" }}>
                   <Avatar>{index + 1}</Avatar>
@@ -59,12 +59,12 @@ const SingleCourseLesson = ({}) => {
   )
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (context) => {
-    const { params, req } = context
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) => async (context) => {
+//     const { params, req } = context
 
-    await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
-  }
-)
+//     await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
+//   }
+// )
 
 export default SingleCourseLesson

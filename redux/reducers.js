@@ -51,7 +51,7 @@ const reducer = combineReducers({
   enrollmentCheck: enrollmentCheckReducer,
   //   freeEnroll: freeEnrollReducer,
   //   courseEdit: courseEditReducer,
-  lessonsList: lessonsListReducer,
+  // lessonsList: lessonsListReducer,
   //   lessonsPost: lessonsPostReducer,
 
   //   //files

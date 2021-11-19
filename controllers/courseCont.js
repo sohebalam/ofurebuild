@@ -371,6 +371,8 @@ export const updateLesson = async (req, res) => {
 }
 
 export const publishCourse = async (req, res) => {
+  console.log(req.method)
+
   try {
     const { courseId } = req.query
     const course = await Course.findById(courseId).select("instructor").exec()

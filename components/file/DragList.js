@@ -7,26 +7,15 @@ import { wrapper } from "../../redux/store"
 import { useSelector, useDispatch } from "react-redux"
 import { postLessons } from "../../redux/actions/lessonActions"
 
-const DragList = ({ slug }) => {
+const DragList = ({ slug, lessons }) => {
   const [data, setData] = useState([])
   const dispatch = useDispatch()
 
-  const lessonsList = useSelector((state) => state.lessonsList)
-  const { loading, error, lessons } = lessonsList
-
-  const { files, videos, lessons: dblessons } = lessons
-
-  if (files || videos || videos) var listLessons = [...files, ...videos]
-
   useEffect(() => {
-    if (dblessons?.length > 0) {
-      setData(dblessons)
+    if (lessons?.length > 0) {
+      setData(lessons)
     }
-
-    if (listLessons?.length > dblessons?.length) {
-      setData(listLessons)
-    }
-  }, [dblessons])
+  }, [])
 
   const reorder = (data, startIndex, endIndex) => {
     const result = Array.from(data)
