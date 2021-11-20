@@ -19,11 +19,6 @@ import {
   List,
 } from "@material-ui/core"
 
-import DragIndicatorIcon from "@material-ui/icons/DragIndicator"
-import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline"
-
-import UpdateLessonForm from "../../../../../components/forms/UpdateLesson"
-// import { ListItem, List } from "@material-ui/core"
 import {
   courseEdit,
   getlessons,
@@ -33,6 +28,7 @@ import {
 } from "../../../../../redux/actions/lessonActions"
 import { useDispatch, useSelector } from "react-redux"
 import { wrapper } from "../../../../../redux/store"
+import InstructorRoute from "../../../../../components/routes/InstuctorRoute"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -75,6 +71,9 @@ const EditCourse = () => {
 
     // console.log(values[0].title)
   }
+
+  const courseLoad = useSelector((state) => state.courseLoad)
+  const { loading, error, course } = courseLoad
   const router = useRouter()
 
   const { slug } = router.query
@@ -190,7 +189,7 @@ const EditCourse = () => {
   const classes = useStyles()
 
   return (
-    <>
+    <InstructorRoute>
       {values && (
         <>
           <div>
@@ -203,11 +202,12 @@ const EditCourse = () => {
               handleSubmit={handleSubmit}
               onDropzoneArea={onDropzoneArea}
               slug={slug}
+              course={course}
             />
           </div>
         </>
       )}
-    </>
+    </InstructorRoute>
   )
 }
 
@@ -216,7 +216,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const { params, req } = context
     // console.log(context)
     await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
-    await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
+    // await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
   }
 )
 

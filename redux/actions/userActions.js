@@ -76,7 +76,8 @@ export const clearProfile = () => async (dispatch) => {
 
 //loadUserProfile
 
-export const loadUser = () => async (dispatch) => {
+export const loadUser = (authCookie, req) => async (dispatch) => {
+  // console.log(authCookie)
   try {
     dispatch({ type: LOAD_USER_REQUEST })
 

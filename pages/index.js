@@ -10,6 +10,8 @@ import { Box } from "@mui/system"
 import { wrapper } from "../redux/store"
 import { publishedCourse } from "../redux/actions/lessonActions"
 import { useSelector } from "react-redux"
+import { getSession } from "next-auth/client"
+import { loadUser } from "../redux/actions/userActions"
 
 const Home = () => {
   const coursePublished = useSelector((state) => state.coursePublished)
@@ -47,7 +49,9 @@ const Home = () => {
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req }) => {
-      // const session = await getSession({ req })
+      const session = await getSession({ req })
+
+      if (!session) await store.dispatch(loadUser(req.headers.cookie, req))
 
       await store.dispatch(publishedCourse(req))
     }

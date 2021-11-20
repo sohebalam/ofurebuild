@@ -11,7 +11,7 @@ const Publish = ({ initCourse, slug, lessons }) => {
   const [course, setCourse] = useState(initCourse)
   const [loading, setLoading] = useState(false)
 
-  console.log(course)
+  // console.log(course)
 
   const handlePublish = async (e, courseId) => {
     try {

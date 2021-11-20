@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { useSession, signIn, signOut } from "next-auth/client"
+import { useSession, signIn, signOut, getSession } from "next-auth/client"
 import {
   AppBar,
   Toolbar,
@@ -17,6 +17,7 @@ import MenuButton from "../layout/MenuButton"
 import InstructorMenu from "./InstructorMenu"
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople"
 import { Alert } from "@mui/material"
+import { wrapper } from "../../redux/store"
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -41,6 +42,11 @@ function Header() {
   const { loading, error, dbUser } = profile
 
   useEffect(() => {
+    if (!dbUser) {
+      // if (session) {
+      dispatch(loadUser())
+      // }
+    }
     if (session) {
       const { user } = session
 
@@ -62,17 +68,15 @@ function Header() {
         }
       }
     }
-    if (!dbUser) {
-      if (session) {
-        dispatch(loadUser())
-      }
-    }
+
     if (dbUser?.email) {
       setSocialUser(false)
     } else if (dbUser?.isPassword === false) {
       setSocialUser(true)
     }
   }, [session])
+
+  const AUser = dbUser || session?.user
 
   const classes = useStyles()
 
@@ -90,13 +94,13 @@ function Header() {
             <Typography variant="h6" className={classes.title}></Typography>
 
             <>
-              {(dbUser && dbUser.role && dbUser.role.includes("instructor")) ||
+              {(AUser && AUser.role && AUser.role.includes("instructor")) ||
               (session?.user &&
                 session.user.role &&
                 session.user.role.includes("instructor")) ? (
                 <InstructorMenu dbUser={dbUser} />
               ) : (
-                dbUser && (
+                AUser && (
                   <Link href="/user/instructor/new">
                     <Button style={{ color: "white" }}>
                       <EmojiPeopleIcon style={{ marginRight: "0.3rem" }} />
@@ -106,11 +110,11 @@ function Header() {
                 )
               )}
 
-              {dbUser ? (
+              {AUser ? (
                 <>
                   <div></div>
 
-                  <MenuButton dbUser={dbUser} />
+                  <MenuButton dbUser={AUser} />
                 </>
               ) : (
                 <>

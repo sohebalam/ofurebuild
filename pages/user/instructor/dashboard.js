@@ -7,12 +7,13 @@ import { useSelector } from "react-redux"
 import { wrapper } from "../../../redux/store"
 import { loadCourses } from "../../../redux/actions/lessonActions"
 import Publish from "../../../components/course/Publish"
+import InstructorRoute from "../../../components/routes/InstuctorRoute"
 const InstructorIndex = () => {
   const coursesLoad = useSelector((state) => state.coursesLoad)
   const { loading, error, courses } = coursesLoad
 
   return (
-    <>
+    <InstructorRoute>
       <h1 className="jumbotron text-center square">Instructor Dashboard</h1>
       {courses &&
         courses.map((course) => (
@@ -42,7 +43,7 @@ const InstructorIndex = () => {
             </Grid>
           </Grid>
         ))}
-    </>
+    </InstructorRoute>
   )
 }
 

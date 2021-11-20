@@ -12,6 +12,7 @@ import { useRouter } from "next/router"
 import { useSelector, useDispatch } from "react-redux"
 import StudentRoute from "../../../components/routes/StudentRoute"
 import { Box } from "@mui/system"
+import { loadUser } from "../../../redux/actions/userActions"
 // const YOUTUBE_PLAYLIST_ITEMS_API =
 //   "https://www.googleapis.com/youtube/v3/playlistItems"
 
@@ -63,5 +64,14 @@ const Index = () => {
     </StudentRoute>
   )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req }) => {
+      const session = await getSession({ req })
+
+      if (!session) await store.dispatch(loadUser(req.headers.cookie, req))
+    }
+)
 
 export default Index

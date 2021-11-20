@@ -52,6 +52,10 @@ import { loadStripe } from "@stripe/stripe-js"
 
 import axios from "axios"
 
+export const sendBalanceRequest = () => async (dispatch) => {
+  const { data } = await axios.get("/api/instructor/balance")
+}
+
 export const countStudents = (courseId) => async (dispatch) => {
   console.log(courseId)
   try {

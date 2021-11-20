@@ -58,6 +58,7 @@ const UpdateCourse = ({
   setValues,
   values,
   slug,
+  course,
 }) => {
   const children = []
   for (let i = 9.99; i <= 100.99; i++) {
@@ -70,8 +71,8 @@ const UpdateCourse = ({
 
   const classes = useStyles()
 
-  const courseLoad = useSelector((state) => state.courseLoad)
-  const { loading, error, course } = courseLoad
+  // const courseLoad = useSelector((state) => state.courseLoad)
+  // const { loading, error, course } = courseLoad
 
   useEffect(() => {
     setValues(course)
@@ -208,7 +209,7 @@ const UpdateCourse = ({
           </Button>
           {values.loading && <CircularProgress />}
           <Grid container>
-            <EditList slug={slug} />
+            <EditList slug={slug} lessons={course?.lessons} />
           </Grid>
         </form>
       </div>

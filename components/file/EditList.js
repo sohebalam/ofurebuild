@@ -8,28 +8,15 @@ import { useSelector, useDispatch } from "react-redux"
 import { postLessons } from "../../redux/actions/lessonActions"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 
-const EditList = ({ slug }) => {
+const EditList = ({ slug, lessons }) => {
   const [data, setData] = useState([])
   const dispatch = useDispatch()
 
-  const lessonsList = useSelector((state) => state.lessonsList)
-  const { loading, error, lessons } = lessonsList
-
-  // console.log(lessons)
-
-  const { files, videos, lessons: dblessons } = lessons
-
-  const listLessons = [...files, ...videos]
-
   useEffect(() => {
-    if (dblessons.length > 0) {
-      setData(dblessons)
+    if (lessons?.length > 0) {
+      setData(lessons)
     }
-
-    if (listLessons.length > dblessons.length) {
-      setData(listLessons)
-    }
-  }, [dblessons, setData])
+  }, [])
 
   const reorder = (data, startIndex, endIndex) => {
     const result = Array.from(data)
