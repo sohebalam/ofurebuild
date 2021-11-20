@@ -46,7 +46,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
 
       store.dispatch(loadUser(req.headers.cookie, req))
 
-      if (!session || !session.user.role.includes("user")) {
+      if (!session || !session?.user.role.includes("user")) {
         return {
           redirect: {
             destination: "/",

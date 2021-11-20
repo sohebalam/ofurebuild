@@ -11,8 +11,8 @@ export const isAuthenticated = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Login first to access this resource", 401))
   }
 
-  if (session.user.id) {
-    const suser = await User.findOne({ socialId: session.user.id })
+  if (session?.user.id) {
+    const suser = await User.findOne({ socialId: session?.user.id })
 
     const ObjectId = suser._id
 
@@ -21,8 +21,8 @@ export const isAuthenticated = catchAsyncErrors(async (req, res, next) => {
     req.user = user
   }
 
-  if (session.user._id) {
-    req.user = session.user
+  if (session?.user._id) {
+    req.user = session?.user
   }
   // console.log(req.user._id)
   next()

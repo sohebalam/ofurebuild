@@ -36,7 +36,7 @@ const Index = () => {
   const singleCourse = useSelector((state) => state.singleCourse)
   const { loading, error: courseError, course } = singleCourse
 
-  console.log(course)
+  // console.log(course)
 
   const videos = course?.lessons
 
@@ -69,12 +69,14 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const { params, req } = context
     const session = await getSession({ req })
 
+    // console.log(session.user.email)
+
     store.dispatch(loadUser(req.headers.cookie, req))
     await store.dispatch(
       getStudentCourses(req.headers.cookie, req, params.slug)
     )
 
-    if (!session || !session.user.role.includes("user")) {
+    if (!session || !session?.user.role.includes("user")) {
       return {
         redirect: {
           destination: "/",

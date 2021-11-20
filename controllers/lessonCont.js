@@ -23,7 +23,7 @@ export const fileSave = async (req, res) => {
   // console.log(req.method)
   const course = await Course.findOne({ slug: slug })
 
-  console.log(course)
+  // console.log(course)
 
   const form = new formidable.IncomingForm()
   form.parse(req, async function (err, fields, files) {

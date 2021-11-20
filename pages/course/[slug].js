@@ -37,7 +37,7 @@ const Course = () => {
   const enrollmentCheck = useSelector((state) => state.enrollmentCheck)
   const { loading: enrollLoad, error: enrollError, enrolled } = enrollmentCheck
 
-  const user = dbUser || session.user
+  const user = dbUser || session?.user
 
   const courseGet = useSelector((state) => state.courseGet)
   const { loading, error: courseError, course } = courseGet

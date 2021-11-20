@@ -81,7 +81,7 @@ const MenuButton = () => {
         <Link href="/user/profile">
           <MenuItem onClick={handleClose}>Profile</MenuItem>
         </Link>
-        <Link href={`/user/student/${dbUser?._id}`}>
+        <Link href={`/user/student/myCourses`}>
           <MenuItem onClick={handleClose}>My Courses</MenuItem>
         </Link>
 

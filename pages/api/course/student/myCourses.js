@@ -6,7 +6,7 @@ import formidable from "formidable"
 import onError from "../../../../middlewares/errors"
 
 import { isAuthenticated, isInstructor } from "../../../../middlewares/auth"
-import { studentCourses } from "../../../../controllers/courseCont"
+import { myCourses } from "../../../../controllers/courseCont"
 
 const router = nc({ onError })
 
@@ -14,6 +14,6 @@ connectDB()
 
 // console.log(req.method)
 
-router.use(isAuthenticated).get(studentCourses)
+router.use(isAuthenticated).get(myCourses)
 
 export default router

@@ -55,36 +55,35 @@ import { loadStripe } from "@stripe/stripe-js"
 
 import axios from "axios"
 
-export const studentCourses =
-  (authCookie, req, studentId) => async (dispatch) => {
-    try {
-      const config = {
-        headers: {
-          cookie: authCookie,
-        },
-      }
-      const { origin } = absoluteUrl(req)
-      dispatch({ type: STUDENT_COURSES_REQUEST })
-
-      const { data } = await axios.get(
-        `${origin}/api/course/student/${studentId}`,
-        config
-      )
-
-      dispatch({
-        type: STUDENT_COURSES_SUCCESS,
-        payload: data,
-      })
-    } catch (error) {
-      dispatch({
-        type: STUDENT_COURSES_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      })
+export const studentCourses = (authCookie, req) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        cookie: authCookie,
+      },
     }
+    const { origin } = absoluteUrl(req)
+    dispatch({ type: STUDENT_COURSES_REQUEST })
+
+    const { data } = await axios.get(
+      `${origin}/api/course/student/myCourses`,
+      config
+    )
+
+    dispatch({
+      type: STUDENT_COURSES_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: STUDENT_COURSES_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
   }
+}
 
 export const sendBalanceRequest = () => async (dispatch) => {
   const { data } = await axios.get("/api/instructor/balance")
@@ -332,7 +331,7 @@ export const getStudentCourses =
         config
       )
 
-      console.log("data", data)
+      // console.log("data", data)
 
       dispatch({
         type: SINGLE_COURSE_SUCCESS,
@@ -359,7 +358,7 @@ export const getSingleCourse = (slug, playlistId) => async (dispatch) => {
       playlistId,
     })
 
-    console.log("data", data)
+    // console.log("data", data)
 
     dispatch({
       type: SINGLE_COURSE_SUCCESS,
@@ -377,7 +376,7 @@ export const getSingleCourse = (slug, playlistId) => async (dispatch) => {
 }
 
 export const loadCourse = (authCookie, req, slug) => async (dispatch) => {
-  console.log("loadcourse", slug)
+  // console.log("loadcourse", slug)
   try {
     dispatch({ type: LOAD_COURSE_REQUEST })
 
@@ -391,7 +390,7 @@ export const loadCourse = (authCookie, req, slug) => async (dispatch) => {
 
     const { data } = await axios.get(`${origin}/api/course/${slug}`, config)
 
-    console.log("load", data)
+    // console.log("load", data)
 
     dispatch({
       type: LOAD_COURSE_SUCCESS,

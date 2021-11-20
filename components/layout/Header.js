@@ -96,8 +96,8 @@ function Header() {
             <>
               {(AUser && AUser.role && AUser.role.includes("instructor")) ||
               (session?.user &&
-                session.user.role &&
-                session.user.role.includes("instructor")) ? (
+                session?.user.role &&
+                session?.user.role.includes("instructor")) ? (
                 <InstructorMenu dbUser={dbUser} />
               ) : (
                 AUser &&

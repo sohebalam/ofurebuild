@@ -3,11 +3,14 @@ import Link from "next/link"
 import Image from "next/image"
 import { currencyFormatter } from "../../utils/currency"
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, local }) => {
   // console.log(course)
   const { title, instructor, price, images, slug, paid, category } = course
+
   return (
-    <Link href={`/course/${slug}`}>
+    <Link
+      href={local === "myCourses" ? `/user/course/${slug}` : `/course/${slug}`}
+    >
       <Card style={{ padding: "1rem", cursor: "pointer" }}>
         <Image
           src={images ? images[0]?.url : "/course.jpg"}

@@ -8,6 +8,19 @@ import cloudinary from "../utils/cloudinary"
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
 
+export const myCourses = async (req, res) => {
+  const user = await User.findById(req.user._id).exec()
+
+  let coursesArray = []
+
+  for (let i = 0; i < user?.courses.length; i++) {
+    const result = await Course.findById(user?.courses[i].toString()).exec()
+
+    coursesArray.push(result)
+  }
+  res.send(coursesArray)
+}
+
 export const update = async (req, res) => {
   // console.log(req.body.images[0].public_id)
 
@@ -203,7 +216,7 @@ export const readCourse = async (req, res) => {
 }
 export const singleCourse = async (req, res) => {
   const { slug } = req.query
-  console.log(req.method)
+  // console.log(req.method)
 
   try {
     const course = await Course.findOne({ slug: slug })
@@ -213,74 +226,6 @@ export const singleCourse = async (req, res) => {
     // console.log(course)
 
     res.send(course)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-export const uploadVideo = async (req, res) => {
-  // console.log(req.method)
-  // console.log(req.query.instructorId)
-
-  try {
-    // console.log(req.user._id)
-
-    if (req.user._id != req.query.instructorId) {
-      return res.status(400).json({ message: "Unathorized" })
-    }
-
-    const { video } = req.files
-    // console.log(video)
-
-    if (!video) res.status(400).json({ message: "No Video" })
-
-    const params = {
-      Bucket: "ofu-bucket",
-      Key: `${nanoid()}.${video.type.split("/")[1]}`,
-      Body: readFileSync(video.path),
-      ACL: "public-read",
-      ContentType: video.type,
-    }
-
-    S3.upload(params, (err, data) => {
-      if (err) {
-        console.log(err)
-        return res.status(400)
-      }
-      // console.log(data)
-      res.send(data)
-    })
-  } catch (error) {
-    console.log(error)
-  }
-}
-export const removeVideo = async (req, res) => {
-  // console.log(req.body)
-  // console.log(req.method)
-
-  try {
-    if (req.user._id != req.query.instructorId) {
-      return res.status(400).json({ message: "Unathorized" })
-    }
-
-    const { Bucket, Key } = req.body
-
-    // console.log(video)
-    // return
-
-    const params = {
-      Bucket,
-      Key,
-    }
-
-    S3.deleteObject(params, (err, data) => {
-      if (err) {
-        console.log(err)
-        return res.status(400)
-      }
-      // console.log(data)
-      res.send({ ok: true })
-    })
   } catch (error) {
     console.log(error)
   }

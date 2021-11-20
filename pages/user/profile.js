@@ -57,7 +57,7 @@ const Profile = () => {
     loading: updateLoading,
   } = useSelector((state) => state.update)
   const dispatch = useDispatch()
-
+  console.log(dbUser)
   useEffect(() => {
     if (!dbUser) {
       dispatch(loadUser())

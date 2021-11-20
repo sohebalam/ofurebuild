@@ -229,7 +229,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     await store.dispatch(loadUser(req.headers.cookie, req))
     await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
 
-    if (!session || !session.user.role.includes("instructor")) {
+    if (!session || !session?.user.role.includes("instructor")) {
       return {
         redirect: {
           destination: "/",
