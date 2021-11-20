@@ -18,6 +18,7 @@ const Hero = ({ title, subtitle }) => {
       <Grid container alignItems="center" justifyContent="center">
         <Box>
           <Typography
+            style={{ marginTop: "1rem" }}
             variant="h1"
             align="center"
             gutterBottom

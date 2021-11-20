@@ -1,51 +1,14 @@
-homepage
-dragable list
-
-redux
-  destination: @stripe_account,
-  
-
-instrcutor dashboard and routes - containers
-
-delete image from MongoDb!!! and video from MongoDb
-
-remove MongoDb image and video deleted
-
-
+improvements
+mark completed
+126 - lesson page (drawer)
+youtube preview video set up free preview lesson 114 chapter 18
+protect routes correctly done -review
+student dashboard fix mycourses on menubutton
+update file
+fix modal close position
 password-validator
-
-fix mycourses on menubutton
-
-
 send no password for socialId
 
-delete Course - admin section
-
-fix modal close position
-
-fix navabr - retireve local user
-
-download file
-
-update file
-
-
-set up free preview lesson 114 chapter 18
-
-update userRoute to redux
-
-fix student route + student dashboard
-
-protect routes correctly 
-
-youtube preview video 
-
-126 - lesson page (drawer)
-
-Publish text
-
-mark completed
-
+admin section
 delete playlist
-
-
+delete Course - admin section

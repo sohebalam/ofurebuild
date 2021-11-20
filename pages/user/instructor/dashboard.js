@@ -6,7 +6,6 @@ import { useSelector } from "react-redux"
 import { wrapper } from "../../../redux/store"
 import { loadCourses } from "../../../redux/actions/lessonActions"
 import Publish from "../../../components/course/Publish"
-import InstructorRoute from "../../../components/routes/InstuctorRoute"
 import { getSession } from "next-auth/client"
 import { loadUser } from "../../../redux/actions/userActions"
 const InstructorIndex = () => {
@@ -14,7 +13,6 @@ const InstructorIndex = () => {
   const { loading, error, courses } = coursesLoad
 
   return (
-    // <InstructorRoute>
     <>
       <h1 className="jumbotron text-center square">Instructor Dashboard</h1>
       {courses &&
@@ -46,7 +44,6 @@ const InstructorIndex = () => {
           </Grid>
         ))}
     </>
-    // </InstructorRoute>
   )
 }
 

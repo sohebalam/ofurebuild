@@ -36,13 +36,13 @@ const InstructorRevenue = () => {
 
   const handlePayoutSettings = async () => {
     try {
-      setLoading(true)
+      // setLoading(true)
       const { data } = await axios.get("/api/instructor/payout")
       // console.log(data)
 
       router.push(data)
     } catch (err) {
-      setLoading(false)
+      // setLoading(false)
       console.log(err)
       alert("Unable to access payout settings. Try later.")
     }

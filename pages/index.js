@@ -23,10 +23,10 @@ const Home = () => {
 
   return (
     <div>
-      <Paper>
+      <Paper style={{ marginTop: "0.5rem" }}>
         <Hero
-          imgSrc="/home-hero.jpg"
-          imgAlt="satified woman eating in restaurant"
+          // imgSrc="/home-hero.jpg"
+          // imgAlt="satified woman eating in restaurant"
           title="OpenFreeUni"
           subtitle="Learn for Free!"
         />

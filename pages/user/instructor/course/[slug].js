@@ -30,7 +30,6 @@ import {
 import Lessons from "../../../../components/file/DragList"
 import Publish from "../../../../components/course/Publish"
 import { countStudents } from "../../../../redux/actions/lessonActions"
-import InstructorRoute from "../../../../components/routes/InstuctorRoute"
 import { getSession } from "next-auth/client"
 import { loadUser } from "../../../../redux/actions/userActions"
 
@@ -82,104 +81,102 @@ const CourseView = () => {
   }, [course])
 
   return (
-    <InstructorRoute>
+    <>
       <Grid container>
-        <>
-          {course && (
-            <Grid container key={course._id} style={{ marginTop: "2rem" }}>
-              <Grid container>
-                <Grid item xs={2}>
-                  <Avatar
-                    style={{ height: "150px", width: "150px" }}
-                    src={course.image ? course.image.Location : "/course.jpg"}
-                  />
-                </Grid>
-                <Grid item xs={3}>
-                  <Typography variant="h3">{course.title}</Typography>
-                  <Typography variant="h4">
-                    {course?.lessons && course?.lessons?.length} Lessons
+        {course && (
+          <Grid container key={course._id} style={{ marginTop: "2rem" }}>
+            <Grid container>
+              <Grid item xs={2}>
+                <Avatar
+                  style={{ height: "150px", width: "150px" }}
+                  src={course.image ? course.image.Location : "/course.jpg"}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                <Typography variant="h3">{course.title}</Typography>
+                <Typography variant="h4">
+                  {course?.lessons && course?.lessons?.length} Lessons
+                </Typography>
+                <Typography variant="h5">{course.category}</Typography>
+                <Box padding="1rem">
+                  <Typography variant="h5">
+                    <ReactMarkdown children={course.description || ""} />
                   </Typography>
-                  <Typography variant="h5">{course.category}</Typography>
-                  <Box padding="1rem">
-                    <Typography variant="h5">
-                      <ReactMarkdown children={course.description || ""} />
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={4}>
-                  <Box mt="1rem">
-                    <Button
-                      variant="outlined"
-                      fullWidth={true}
-                      color="primary"
-                      icon={<PublishIcon />}
-                      size="large"
-                      onClick={() => setFileVisible(true)}
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box mt="1rem">
+                  <Button
+                    variant="outlined"
+                    fullWidth={true}
+                    color="primary"
+                    icon={<PublishIcon />}
+                    size="large"
+                    onClick={() => setFileVisible(true)}
+                  >
+                    Add File
+                  </Button>
+                </Box>
+              </Grid>
+
+              <Grid item xs={1}></Grid>
+              <Grid item xs={2}>
+                <div>
+                  <Box marginLeft="6rem">
+                    <Tooltip
+                      title={`${students?.length} Enrolled`}
+                      style={{ marginBottom: "0.5rem", marginRight: "1rem" }}
                     >
-                      Add File
-                    </Button>
-                  </Box>
-                </Grid>
-
-                <Grid item xs={1}></Grid>
-                <Grid item xs={2}>
-                  <div>
-                    <Box marginLeft="6rem">
-                      <Tooltip
-                        title={`${students?.length} Enrolled`}
-                        style={{ marginBottom: "0.5rem", marginRight: "1rem" }}
-                      >
-                        <GroupIcon
-                          className="h5 pointer mr-4"
-                          className={classes.iconColor}
-                        />
-                      </Tooltip>
-
-                      <Tooltip title="Edit" style={{ marginRight: "1rem" }}>
-                        <EditIcon
-                          onClick={() =>
-                            router.push(`/user/instructor/course/edit/${slug}`)
-                          }
-                          className="h5 pointer text-warning mr-4"
-                        />
-                      </Tooltip>
-
-                      <Publish
-                        initCourse={course}
-                        lessons={course.lessons}
-                        slug={slug}
+                      <GroupIcon
+                        className="h5 pointer mr-4"
+                        className={classes.iconColor}
                       />
-                    </Box>
-                  </div>
-                </Grid>
+                    </Tooltip>
+
+                    <Tooltip title="Edit" style={{ marginRight: "1rem" }}>
+                      <EditIcon
+                        onClick={() =>
+                          router.push(`/user/instructor/course/edit/${slug}`)
+                        }
+                        className="h5 pointer text-warning mr-4"
+                      />
+                    </Tooltip>
+
+                    <Publish
+                      initCourse={course}
+                      lessons={course.lessons}
+                      slug={slug}
+                    />
+                  </Box>
+                </div>
               </Grid>
             </Grid>
-          )}
+          </Grid>
+        )}
 
-          <Dialog
-            open={fileVisible}
-            onClose={() => setFileVisible(false)}
-            footer={null}
-            classes={{ paper: classes.paper }}
-          >
-            <CourseForm slug={slug} />
-            <DialogActions>
-              <IconButton
-                autoFocus
-                onClick={() => setFileVisible(false)}
-                color="primary"
-                className={classes.customizedButton}
-              >
-                <CloseIcon />
-              </IconButton>
-            </DialogActions>
-          </Dialog>
-        </>
+        <Dialog
+          open={fileVisible}
+          onClose={() => setFileVisible(false)}
+          footer={null}
+          classes={{ paper: classes.paper }}
+        >
+          <CourseForm slug={slug} />
+          <DialogActions>
+            <IconButton
+              autoFocus
+              onClick={() => setFileVisible(false)}
+              color="primary"
+              className={classes.customizedButton}
+            >
+              <CloseIcon />
+            </IconButton>
+          </DialogActions>
+        </Dialog>
       </Grid>
       <Grid container style={{ marginTop: "0.5rem" }}>
         <Lessons slug={slug} lessons={course.lessons} />
       </Grid>
-    </InstructorRoute>
+    </>
   )
 }
 

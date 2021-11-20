@@ -28,7 +28,6 @@ import {
 } from "../../../../../redux/actions/lessonActions"
 import { useDispatch, useSelector } from "react-redux"
 import { wrapper } from "../../../../../redux/store"
-import InstructorRoute from "../../../../../components/routes/InstuctorRoute"
 import { getSession } from "next-auth/client"
 import { loadUser } from "../../../../../redux/actions/userActions"
 
@@ -191,7 +190,7 @@ const EditCourse = () => {
   const classes = useStyles()
 
   return (
-    <InstructorRoute>
+    <>
       {values && (
         <>
           <div>
@@ -209,7 +208,7 @@ const EditCourse = () => {
           </div>
         </>
       )}
-    </InstructorRoute>
+    </>
   )
 }
 
