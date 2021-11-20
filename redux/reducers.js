@@ -7,6 +7,7 @@ import {
   courseLoadReducer,
   coursePublishedReducer,
   coursesLoadReducer,
+  coursesStudentReducer,
   createCourseReducer,
   deleteImageReducer,
   enrollmentCheckReducer,
@@ -55,6 +56,7 @@ const reducer = combineReducers({
   //   courseEdit: courseEditReducer,
   // lessonsList: lessonsListReducer,
   //   lessonsPost: lessonsPostReducer,
+  coursesStudent: coursesStudentReducer,
 
   //   //files
   fileGet: fileGetReducer,

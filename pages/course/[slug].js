@@ -8,6 +8,7 @@ import { useRouter } from "next/router"
 // import { toast } from "react-toastify"
 import { loadStripe } from "@stripe/stripe-js"
 import { useSelector, useDispatch } from "react-redux"
+import { useSession, signIn, signOut, getSession } from "next-auth/client"
 import {
   checkEnrollment,
   freeEnroll,
@@ -21,6 +22,7 @@ import { wrapper } from "../../redux/store"
 import { CircularProgress } from "@mui/material"
 
 const Course = () => {
+  const [session] = useSession()
   const [showModal, setShowModal] = useState(false)
   const [preview, setPreview] = useState("")
   // const [loading, setLoading] = useState(false)
@@ -35,7 +37,7 @@ const Course = () => {
   const enrollmentCheck = useSelector((state) => state.enrollmentCheck)
   const { loading: enrollLoad, error: enrollError, enrolled } = enrollmentCheck
 
-  const user = dbUser
+  const user = dbUser || session.user
 
   const courseGet = useSelector((state) => state.courseGet)
   const { loading, error: courseError, course } = courseGet

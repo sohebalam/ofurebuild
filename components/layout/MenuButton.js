@@ -54,11 +54,14 @@ const MenuButton = () => {
             </Link> */}
           </div>
         ) : (
-          <div>
-            <Link href="/user/instructor/new">
-              <MenuItem onClick={handleClose}>Become instructor</MenuItem>
-            </Link>
-          </div>
+          dbUser &&
+          dbUser.isAllowed === true && (
+            <div>
+              <Link href="/user/instructor/new">
+                <MenuItem onClick={handleClose}>Become instructor</MenuItem>
+              </Link>
+            </div>
+          )
         )}
         {dbUser?.role === "admin" && (
           <div>
@@ -78,7 +81,7 @@ const MenuButton = () => {
         <Link href="/user/profile">
           <MenuItem onClick={handleClose}>Profile</MenuItem>
         </Link>
-        <Link href="/">
+        <Link href={`/user/student/${dbUser?._id}`}>
           <MenuItem onClick={handleClose}>My Courses</MenuItem>
         </Link>
 

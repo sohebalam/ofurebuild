@@ -100,7 +100,8 @@ function Header() {
                 session.user.role.includes("instructor")) ? (
                 <InstructorMenu dbUser={dbUser} />
               ) : (
-                AUser && (
+                AUser &&
+                AUser.isAllowed === true && (
                   <Link href="/user/instructor/new">
                     <Button style={{ color: "white" }}>
                       <EmojiPeopleIcon style={{ marginRight: "0.3rem" }} />

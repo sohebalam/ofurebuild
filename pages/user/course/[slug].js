@@ -5,35 +5,36 @@ import VideoList from "../../../components/videos/VideoList"
 import {
   getlessons,
   getSingleCourse,
+  getStudentCourses,
   loadCourse,
 } from "../../../redux/actions/lessonActions"
 import { wrapper } from "../../../redux/store"
 import { useRouter } from "next/router"
 import { useSelector, useDispatch } from "react-redux"
-import StudentRoute from "../../routes/StudentRoute"
 import { Box } from "@mui/system"
 import { loadUser } from "../../../redux/actions/userActions"
+import { getSession } from "next-auth/client"
 // const YOUTUBE_PLAYLIST_ITEMS_API =
 //   "https://www.googleapis.com/youtube/v3/playlistItems"
 
 // const playlistId = "PL25nRqESo6qH6t-8NcPRE20XSThI2JgTa"
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async (context) => {
-    const { params, req } = context
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) => async (context) => {
+//     const { params, req } = context
 
-    // console.log("params", params)
+//     // console.log("params", params)
 
-    // await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
-    await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
-    // await store.dispatch(getSingleCourse(req, params.slug))
-  }
-)
+//     // await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
+//     await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
+//     // await store.dispatch(getSingleCourse(req, params.slug))
+//   }
+// )
 
 const Index = () => {
   const [selectedVideo] = useState({})
-  const courseLoad = useSelector((state) => state.courseLoad)
-  const { loading, error: courseError, course } = courseLoad
+  const singleCourse = useSelector((state) => state.singleCourse)
+  const { loading, error: courseError, course } = singleCourse
 
   console.log(course)
 
@@ -64,21 +65,24 @@ const Index = () => {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ req }) => {
-      const session = await getSession({ req })
+  (store) => async (context) => {
+    const { params, req } = context
+    const session = await getSession({ req })
 
-      store.dispatch(loadUser(req.headers.cookie, req))
+    store.dispatch(loadUser(req.headers.cookie, req))
+    await store.dispatch(
+      getStudentCourses(req.headers.cookie, req, params.slug)
+    )
 
-      if (!session || !session.user.role.includes("user")) {
-        return {
-          redirect: {
-            destination: "/",
-            permanent: false,
-          },
-        }
+    if (!session || !session.user.role.includes("user")) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
       }
     }
+  }
 )
 
 export default Index

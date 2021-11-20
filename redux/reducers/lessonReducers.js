@@ -41,6 +41,9 @@ import {
   STUDENT_COUNT_FAIL,
   STUDENT_COUNT_REQUEST,
   STUDENT_COUNT_SUCCESS,
+  STUDENT_COURSES_FAIL,
+  STUDENT_COURSES_REQUEST,
+  STUDENT_COURSES_SUCCESS,
   UPLOAD_IMAGE_FAIL,
   UPLOAD_IMAGE_REQUEST,
   UPLOAD_IMAGE_SUCCESS,
@@ -295,6 +298,22 @@ export const deleteImageReducer = (
     case DELETE_IMAGE_SUCCESS:
       return { loading: false, image: action.payload }
     case DELETE_IMAGE_FAIL:
+      return { loading: false, error: action.payload }
+    default:
+      return state
+  }
+}
+
+export const coursesStudentReducer = (
+  state = { loading: false, courses: null },
+  action
+) => {
+  switch (action.type) {
+    case STUDENT_COURSES_REQUEST:
+      return { loading: true }
+    case STUDENT_COURSES_SUCCESS:
+      return { loading: false, courses: action.payload }
+    case STUDENT_COURSES_FAIL:
       return { loading: false, error: action.payload }
     default:
       return state

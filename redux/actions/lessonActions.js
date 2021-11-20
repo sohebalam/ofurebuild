@@ -43,6 +43,9 @@ import {
   STUDENT_COUNT_FAIL,
   STUDENT_COUNT_REQUEST,
   STUDENT_COUNT_SUCCESS,
+  STUDENT_COURSES_FAIL,
+  STUDENT_COURSES_REQUEST,
+  STUDENT_COURSES_SUCCESS,
   UPLOAD_IMAGE_FAIL,
   UPLOAD_IMAGE_REQUEST,
   UPLOAD_IMAGE_SUCCESS,
@@ -51,6 +54,37 @@ import absoluteUrl from "next-absolute-url"
 import { loadStripe } from "@stripe/stripe-js"
 
 import axios from "axios"
+
+export const studentCourses =
+  (authCookie, req, studentId) => async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          cookie: authCookie,
+        },
+      }
+      const { origin } = absoluteUrl(req)
+      dispatch({ type: STUDENT_COURSES_REQUEST })
+
+      const { data } = await axios.get(
+        `${origin}/api/course/student/${studentId}`,
+        config
+      )
+
+      dispatch({
+        type: STUDENT_COURSES_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: STUDENT_COURSES_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
 
 export const sendBalanceRequest = () => async (dispatch) => {
   const { data } = await axios.get("/api/instructor/balance")
@@ -275,8 +309,47 @@ export const getCourse = (req, slug) => async (dispatch) => {
     })
   }
 }
+export const getStudentCourses =
+  (authCookie, req, slug) => async (dispatch) => {
+    console.log("action", slug)
+
+    try {
+      const config = {
+        headers: {
+          cookie: authCookie,
+        },
+      }
+
+      dispatch({ type: SINGLE_COURSE_REQUEST })
+
+      const { origin } = absoluteUrl(req)
+
+      const { data } = await axios.get(
+        `${origin}/api/course/single/${slug}`,
+        // {
+        //   slug,
+        // },
+        config
+      )
+
+      console.log("data", data)
+
+      dispatch({
+        type: SINGLE_COURSE_SUCCESS,
+        payload: data,
+      })
+    } catch (error) {
+      dispatch({
+        type: SINGLE_COURSE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      })
+    }
+  }
 export const getSingleCourse = (slug, playlistId) => async (dispatch) => {
-  console.log("action", slug)
+  // console.log("action", slug)
 
   try {
     dispatch({ type: SINGLE_COURSE_REQUEST })

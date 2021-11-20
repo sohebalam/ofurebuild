@@ -203,14 +203,14 @@ export const readCourse = async (req, res) => {
 }
 export const singleCourse = async (req, res) => {
   const { slug } = req.query
-  console.log(req.method, slug)
+  console.log(req.method)
 
   try {
     const course = await Course.findOne({ slug: slug })
       .populate("instructor", "_id name")
       .exec()
 
-    console.log(course)
+    // console.log(course)
 
     res.send(course)
   } catch (error) {

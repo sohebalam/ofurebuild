@@ -50,6 +50,10 @@ const userSchema = mongoose.Schema(
       default: ["user"],
       enum: ["user", "instructor", "admin", "student"],
     },
+    isAllowed: {
+      type: Boolean,
+      default: false,
+    },
 
     stripe_account_id: "",
     stripe_seller: {},
