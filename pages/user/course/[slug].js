@@ -10,7 +10,7 @@ import {
 import { wrapper } from "../../../redux/store"
 import { useRouter } from "next/router"
 import { useSelector, useDispatch } from "react-redux"
-import StudentRoute from "../../../components/routes/StudentRoute"
+import StudentRoute from "../../routes/StudentRoute"
 import { Box } from "@mui/system"
 import { loadUser } from "../../../redux/actions/userActions"
 // const YOUTUBE_PLAYLIST_ITEMS_API =

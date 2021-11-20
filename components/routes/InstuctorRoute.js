@@ -17,16 +17,19 @@ const InstructorRoute = ({ children }) => {
   // router
   const router = useRouter()
 
+  // console.log(AUser)
+
   useEffect(() => {
     if (!dbUser) {
-      if (session) {
-        dispatch(loadUser())
-      }
+      // if (session) {
+      dispatch(loadUser())
+      // }
     }
-
+    const AUser = dbUser || session?.user
     if (
-      dbUser === null ||
-      (dbUser && dbUser.role && !dbUser.role.includes("instructor"))
+      // AUser === null ||
+      AUser === undefined ||
+      (AUser && AUser.role && !AUser.role.includes("instructor"))
     ) {
       router.push("/")
     }

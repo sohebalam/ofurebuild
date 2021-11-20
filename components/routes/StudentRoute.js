@@ -17,14 +17,16 @@ const StudentRoute = ({ children, showNav = true }) => {
 
   useEffect(() => {
     if (!dbUser) {
-      if (session) {
-        dispatch(loadUser())
-      }
+      // if (session) {
+      dispatch(loadUser())
+      // }
     }
 
+    const AUser = dbUser || session?.user
+
     if (
-      dbUser === null ||
-      (dbUser && dbUser.role && !dbUser.role.includes("user"))
+      AUser === null ||
+      (AUser && AUser.role && !AUser.role.includes("instructor"))
     ) {
       router.push("/")
     }

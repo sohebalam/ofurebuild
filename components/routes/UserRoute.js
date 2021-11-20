@@ -16,18 +16,19 @@ const UserRoute = ({ children }) => {
 
   useEffect(() => {
     if (!dbUser) {
-      if (session) {
-        useDispatch(loadUser())
-      }
+      // if (session) {
+      useDispatch(loadUser())
+      // }
     }
-
+    const AUser = dbUser || session?.user
     if (
-      dbUser === null ||
-      (dbUser && dbUser.role && !dbUser.role.includes("user"))
+      AUser === null ||
+      (AUser && AUser.role && !AUser.role.includes("instructor"))
     ) {
       router.push("/")
     }
   }, [dbUser])
+
   return <>{!dbUser ? <CircularProgress /> : <div>{children}</div>}</>
 }
 

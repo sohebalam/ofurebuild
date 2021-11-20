@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
-// import InstructorRoute from "../../../components/route/Instructor"
 import { Avatar, Button, Grid, Tooltip, Typography } from "@material-ui/core"
 import Link from "next/link"
 import { useSelector } from "react-redux"
@@ -8,12 +7,15 @@ import { wrapper } from "../../../redux/store"
 import { loadCourses } from "../../../redux/actions/lessonActions"
 import Publish from "../../../components/course/Publish"
 import InstructorRoute from "../../../components/routes/InstuctorRoute"
+import { getSession } from "next-auth/client"
+import { loadUser } from "../../../redux/actions/userActions"
 const InstructorIndex = () => {
   const coursesLoad = useSelector((state) => state.coursesLoad)
   const { loading, error, courses } = coursesLoad
 
   return (
-    <InstructorRoute>
+    // <InstructorRoute>
+    <>
       <h1 className="jumbotron text-center square">Instructor Dashboard</h1>
       {courses &&
         courses.map((course) => (
@@ -43,17 +45,28 @@ const InstructorIndex = () => {
             </Grid>
           </Grid>
         ))}
-    </InstructorRoute>
+    </>
+    // </InstructorRoute>
   )
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) =>
     async ({ req }) => {
-      // const session = await getSession({ req })
+      const session = await getSession({ req })
+
+      store.dispatch(loadUser(req.headers.cookie, req))
+
+      if (!session || !session.user.role.includes("instructor")) {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        }
+      }
 
       await store.dispatch(loadCourses(req.headers.cookie, req))
-      // await store.dispatch(getlessons(req.headers.cookie, req, slug))
     }
 )
 

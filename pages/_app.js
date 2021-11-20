@@ -35,6 +35,7 @@ function MyApp({ Component, pageProps }) {
       <ThemeProvider theme={theme}>
         <Container>
           <CssBaseline />
+
           <Provider session={pageProps.session}>
             <Layout>
               <StyledEngineProvider injectFirst>
