@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-import InstructorRoute from "../../../components/routes/InstuctorRoute"
 import axios from "axios"
 
 import { stripeCurrencyFormatter } from ".././../../utils/currency"

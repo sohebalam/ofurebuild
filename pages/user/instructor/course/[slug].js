@@ -31,6 +31,8 @@ import Lessons from "../../../../components/file/DragList"
 import Publish from "../../../../components/course/Publish"
 import { countStudents } from "../../../../redux/actions/lessonActions"
 import InstructorRoute from "../../../../components/routes/InstuctorRoute"
+import { getSession } from "next-auth/client"
+import { loadUser } from "../../../../redux/actions/userActions"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -181,17 +183,39 @@ const CourseView = () => {
   )
 }
 
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) => async (context) => {
+//     const { params, req } = context
+
+//     const { slug } = params
+
+//     // const slug = "fdzsf"
+
+//     // await store.dispatch(getSingleCourse(req.headers.cookie, req, params.slug))
+//     await store.dispatch(instructorCourse(req.headers.cookie, req, slug))
+//     await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
+//   }
+// )
+
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
     const { params, req } = context
+    const session = await getSession({ req })
 
-    const { slug } = params
+    // console.log(session.user.role)
 
-    // const slug = "fdzsf"
-
-    // await store.dispatch(getSingleCourse(req.headers.cookie, req, params.slug))
-    await store.dispatch(instructorCourse(req.headers.cookie, req, slug))
+    await store.dispatch(loadUser(req.headers.cookie, req))
+    await store.dispatch(instructorCourse(req.headers.cookie, req, params.slug))
     await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
+
+    if (!session || !session.user.role.includes("instructor")) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      }
+    }
   }
 )
 

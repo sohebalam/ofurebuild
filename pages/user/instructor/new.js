@@ -9,9 +9,11 @@ import {
 } from "@material-ui/core"
 import { useSelector, useDispatch } from "react-redux"
 import { Container } from "@material-ui/core"
-import { regInstructor } from "../../../redux/actions/userActions"
+import { loadUser, regInstructor } from "../../../redux/actions/userActions"
 import { useRouter } from "next/router"
 import { Alert } from "@material-ui/lab"
+import { wrapper } from "../../../redux/store"
+import { getSession } from "next-auth/client"
 
 const New = () => {
   const dispatch = useDispatch()
@@ -71,5 +73,23 @@ const New = () => {
     </>
   )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req }) => {
+      const session = await getSession({ req })
+
+      store.dispatch(loadUser(req.headers.cookie, req))
+
+      if (!session || !session.user.role.includes("user")) {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        }
+      }
+    }
+)
 
 export default New

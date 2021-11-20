@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
-import InstructorRoute from "../../../components/routes/InstuctorRoute"
 import CourseCreateForm from "../../../components/forms/CourseCreate"
 import Resizer from "react-image-file-resizer"
 import { useRouter } from "next/router"
@@ -13,6 +12,9 @@ import {
 } from "../../../redux/actions/lessonActions"
 import { loadImages } from "../../../redux/actions/imageActions"
 import { useDispatch, useSelector } from "react-redux"
+import { wrapper } from "../../../redux/store"
+import { getSession } from "next-auth/client"
+import { loadUser } from "../../../redux/actions/userActions"
 const CourseCreate = () => {
   // state
   const [values, setValues] = useState({
@@ -106,27 +108,43 @@ const CourseCreate = () => {
   }
 
   return (
-    <InstructorRoute>
-      <Box mt="1rem">
-        <h1 className="jumbotron text-center square">Create Course</h1>
+    <Box mt="1rem">
+      <h1 className="jumbotron text-center square">Create Course</h1>
 
-        <div className="pt-3 pb-3">
-          <CourseCreateForm
-            handleSubmit={handleSubmit}
-            handleChange={handleChange}
-            values={values}
-            setValues={setValues}
-            preview={preview}
-            uploadButtonText={uploadButtonText}
-            loading={loading}
-            handleImageRemove={handleImageRemove}
-            onDropzoneAreaChange={onDropzoneAreaChange}
-            handleSubmit={handleSubmit}
-          />
-        </div>
-      </Box>
-    </InstructorRoute>
+      <div className="pt-3 pb-3">
+        <CourseCreateForm
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          values={values}
+          setValues={setValues}
+          preview={preview}
+          uploadButtonText={uploadButtonText}
+          loading={loading}
+          handleImageRemove={handleImageRemove}
+          onDropzoneAreaChange={onDropzoneAreaChange}
+          handleSubmit={handleSubmit}
+        />
+      </div>
+    </Box>
   )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req }) => {
+      const session = await getSession({ req })
+
+      store.dispatch(loadUser(req.headers.cookie, req))
+
+      if (!session || !session.user.role.includes("instructor")) {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        }
+      }
+    }
+)
 
 export default CourseCreate

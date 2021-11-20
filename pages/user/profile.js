@@ -17,10 +17,10 @@ import { useRouter } from "next/router"
 import { CircularProgress } from "@material-ui/core"
 import { useDispatch, useSelector } from "react-redux"
 import { updateProfile, loadUser } from "../../redux/actions/userActions"
-import { UPDATE_PROFILE_RESET } from "../../redux/constants/userTypes"
 import { getSession } from "next-auth/client"
 
 import { Box } from "@material-ui/core"
+import { wrapper } from "../../redux/store"
 // import UserNav from "../../components/layout/UserNav"
 
 const useStyles = makeStyles((theme) => ({
@@ -215,21 +215,22 @@ const Profile = () => {
   )
 }
 
-export async function getServerSideProps(context) {
-  const session = await getSession({ req: context.req })
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req }) => {
+      const session = await getSession({ req })
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/",
-        permanent: false,
-      },
+      store.dispatch(loadUser(req.headers.cookie, req))
+
+      if (!session || !session.user.role.includes("user")) {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        }
+      }
     }
-  }
-
-  return {
-    props: {},
-  }
-}
+)
 
 export default Profile

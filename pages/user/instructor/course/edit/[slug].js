@@ -29,6 +29,8 @@ import {
 import { useDispatch, useSelector } from "react-redux"
 import { wrapper } from "../../../../../redux/store"
 import InstructorRoute from "../../../../../components/routes/InstuctorRoute"
+import { getSession } from "next-auth/client"
+import { loadUser } from "../../../../../redux/actions/userActions"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -211,12 +213,31 @@ const EditCourse = () => {
   )
 }
 
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) => async (context) => {
+//     const { params, req } = context
+//     // console.log(context)
+//     await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
+//     // await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
+//   }
+// )
+
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
     const { params, req } = context
-    // console.log(context)
+    const session = await getSession({ req })
+
+    await store.dispatch(loadUser(req.headers.cookie, req))
     await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
-    // await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
+
+    if (!session || !session.user.role.includes("instructor")) {
+      return {
+        redirect: {
+          destination: "/",
+          permanent: false,
+        },
+      }
+    }
   }
 )
 

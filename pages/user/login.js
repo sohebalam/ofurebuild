@@ -209,21 +209,21 @@ function Login() {
   )
 }
 
-export async function getServerSideProps(context) {
-  const session = await getSession({ req: context.req })
+// export async function getServerSideProps(context) {
+//   const session = await getSession({ req: context.req })
 
-  if (session) {
-    return {
-      redirect: {
-        destination: "/user/profile",
-        permanent: false,
-      },
-    }
-  }
+//   if (session) {
+//     return {
+//       redirect: {
+//         destination: "/user/profile",
+//         permanent: false,
+//       },
+//     }
+//   }
 
-  return {
-    props: {},
-  }
-}
+//   return {
+//     props: {},
+//   }
+// }
 
 export default Login

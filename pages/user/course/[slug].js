@@ -46,22 +46,20 @@ const Index = () => {
   }, [])
 
   return (
-    <StudentRoute>
-      <Box style={{ marginBottom: "11rem" }}>
-        <Grid
-          container
-          justifyContent="center"
-          style={{ marginBottom: "1rem", marginTop: "0.75rem" }}
-        >
-          <Grid item xs={8}>
-            <VideoDetail />
-          </Grid>
-          <Grid item xs={4}>
-            <VideoList videos={videos} />
-          </Grid>
+    <Box style={{ marginBottom: "11rem" }}>
+      <Grid
+        container
+        justifyContent="center"
+        style={{ marginBottom: "1rem", marginTop: "0.75rem" }}
+      >
+        <Grid item xs={8}>
+          <VideoDetail />
         </Grid>
-      </Box>
-    </StudentRoute>
+        <Grid item xs={4}>
+          <VideoList videos={videos} />
+        </Grid>
+      </Grid>
+    </Box>
   )
 }
 
@@ -70,7 +68,16 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ req }) => {
       const session = await getSession({ req })
 
-      if (!session) await store.dispatch(loadUser(req.headers.cookie, req))
+      store.dispatch(loadUser(req.headers.cookie, req))
+
+      if (!session || !session.user.role.includes("user")) {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        }
+      }
     }
 )
 
