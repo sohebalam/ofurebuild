@@ -60,7 +60,7 @@ const EditCourse = () => {
   })
 
   const [image, setImage] = useState("")
-  const [uploadButtonText, setUploadButtonText] = useState("Upload Video")
+
   const dispatch = useDispatch()
 
   const [files, setFiles] = useState({})
@@ -79,21 +79,6 @@ const EditCourse = () => {
 
   const { slug } = router.query
 
-  const handleImageRemove = async () => {
-    try {
-      // console.log(values);
-      setValues({ ...values, loading: true })
-
-      dispatch(imageDelete(values.image))
-
-      setUploadButtonText("Upload Image")
-      setValues({ ...values, loading: false })
-    } catch (err) {
-      console.log(err)
-      setValues({ ...values, loading: false })
-      // toast("Image upload failed. Try later.")
-    }
-  }
   const handleSubmit = async (e) => {
     e.preventDefault()
 
@@ -109,16 +94,6 @@ const EditCourse = () => {
       dispatch(courseEdit(image, values, slug))
       console.log("here", data)
     } catch (err) {}
-  }
-
-  const handleDelete = async (index) => {
-    const answer = window.confirm("Are you sure you want to delete?")
-    if (!answer) return
-    let allLessons = values.lessons
-    const removed = allLessons.splice(index, 1)
-    setValues({ ...values, lessons: allLessons })
-    const { data } = await axios.delete(`/api/lesson/${slug}`)
-    console.log("lessondeleted", data)
   }
 
   const onDropzoneArea = (files) =>

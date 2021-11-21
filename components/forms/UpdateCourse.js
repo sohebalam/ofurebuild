@@ -77,7 +77,7 @@ const UpdateCourse = ({
 
   return (
     <Container component="main" maxWidth="sm">
-      {/* <CssBaseline />
+      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <MenuBookIcon />
@@ -208,7 +208,7 @@ const UpdateCourse = ({
             <EditList slug={slug} lessons={course?.lessons} />
           </Grid>
         </form>
-      </div> */}
+      </div>
     </Container>
   )
 }

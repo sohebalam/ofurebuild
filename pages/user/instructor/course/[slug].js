@@ -86,7 +86,6 @@ const CourseView = () => {
   return (
     <>
       <Grid container>
-        {/* <Alert severity="success">{fileCreated}</Alert> */}
         {course && (
           <Grid container key={course._id} style={{ marginTop: "2rem" }}>
             <Grid container>
@@ -104,7 +103,7 @@ const CourseView = () => {
                 <Typography variant="h5">{course.category}</Typography>
                 <Box padding="1rem">
                   <Typography variant="h5">
-                    <ReactMarkdown children={course.description || ""} />
+                    <ReactMarkdown>{course.description || ""}</ReactMarkdown>
                   </Typography>
                 </Box>
               </Grid>
@@ -132,10 +131,7 @@ const CourseView = () => {
                       title={`${students?.length} Enrolled`}
                       style={{ marginBottom: "0.5rem", marginRight: "1rem" }}
                     >
-                      <GroupIcon
-                        className="h5 pointer mr-4"
-                        className={classes.iconColor}
-                      />
+                      <GroupIcon className={classes.iconColor} />
                     </Tooltip>
 
                     <Tooltip title="Edit" style={{ marginRight: "1rem" }}>
