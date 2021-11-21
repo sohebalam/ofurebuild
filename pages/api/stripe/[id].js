@@ -1,7 +1,7 @@
 import nc from "next-connect"
 import connectDB from "../../../connectDB"
 
-import { stripeSuccess } from "../../../controllers/courseCont"
+import { stripeSuccess } from "../../../controllers/instructorCont"
 import { isAuthenticated } from "../../../middlewares/auth"
 
 import onError from "../../../middlewares/errors"

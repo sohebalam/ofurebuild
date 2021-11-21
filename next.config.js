@@ -31,6 +31,7 @@ module.exports = {
       "i.ytimg.com",
       "res.cloudinary.com",
       "connect.stripe.com",
+      "https://checkout.stripe.com",
       "https://*.stripe.com",
     ],
     hostname: "ofu-bucket.s3.eu-west-2.amazonaws.com",

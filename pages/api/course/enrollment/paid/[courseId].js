@@ -5,10 +5,9 @@ import NextCors from "nextjs-cors"
 import {
   paidEnrollment,
   removeImage,
-} from "../../../../../controllers/courseCont"
+} from "../../../../../controllers/instructorCont"
 
 import onError from "../../../../../middlewares/errors"
-import next from "next"
 import { isAuthenticated } from "../../../../../middlewares/auth"
 
 const router = nc({ onError })
