@@ -417,7 +417,7 @@ export const paidEnrollment = async (req, res) => {
     // application fee 30%
     const fee = (course.price * 30) / 100
 
-    console.log(course.instructor.stripe_account_id)
+    // console.log(course.instructor.stripe_account_id)
 
     // create stripe session
     const session = await stripe.checkout.sessions.create({
@@ -427,7 +427,7 @@ export const paidEnrollment = async (req, res) => {
         {
           name: course.title,
           amount: Math.round(course.price.toFixed(2) * 100),
-          currency: "usd",
+          currency: "gbp",
           quantity: 1,
         },
       ],
