@@ -28,10 +28,10 @@ const InstructorRevenue = () => {
   }, [])
 
   const sendBalanceRequest = async () => {
-    setLoading(true)
+    // setLoading(true)
     const { data } = await axios.get("/api/instructor/balance")
     setBalance(data)
-    setLoading(false)
+    // setLoading(false)
   }
 
   const handlePayoutSettings = async () => {

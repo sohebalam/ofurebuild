@@ -42,11 +42,6 @@ const Course = () => {
   const courseGet = useSelector((state) => state.courseGet)
   const { loading, error: courseError, course } = courseGet
 
-  // useEffect(() => {
-  //   if (user && course) dispatch(checkEnrollment())
-  // }, [])
-  // console.log(course)
-
   const handelPaidEnroll = async () => {
     try {
       if (!user) {
@@ -82,10 +77,6 @@ const Course = () => {
       console.log(error)
     }
   }
-
-  // useEffect(() => {
-  //   if (user && course) dispatch(checkEnrollment(course))
-  // }, [user, course])
 
   return (
     <>

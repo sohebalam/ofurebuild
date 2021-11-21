@@ -116,7 +116,6 @@ export const lessonOrder = async (req, res) => {
 
 export const deleteFile = async (req, res) => {
   const { slug } = req.query
-  console.log(req.method, req.body, slug)
 
   console.log(`${process.cwd()}\\public\\${req.body.item.name}`)
 
