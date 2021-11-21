@@ -10,7 +10,6 @@ import {
   makeStyles,
   DialogActions,
   IconButton,
-  Alert,
   Typography,
 } from "@material-ui/core"
 import ReactMarkdown from "react-markdown"
@@ -32,6 +31,7 @@ import Publish from "../../../../components/course/Publish"
 import { countStudents } from "../../../../redux/actions/lessonActions"
 import { getSession } from "next-auth/client"
 import { loadUser } from "../../../../redux/actions/userActions"
+import { Alert } from "@material-ui/lab"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -54,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CourseView = () => {
   const [fileVisible, setFileVisible] = useState(false)
+  const [fileCreated, setFileCreated] = useState("")
 
   const [values, setValues] = useState({
     title: "",
@@ -75,6 +76,8 @@ const CourseView = () => {
   const studentCount = useSelector((state) => state.studentCount)
   const { students } = studentCount
 
+  console.log(fileCreated)
+
   useEffect(() => {
     course && dispatch(countStudents(course._id))
     // course && studentCount()
@@ -83,6 +86,7 @@ const CourseView = () => {
   return (
     <>
       <Grid container>
+        {/* <Alert severity="success">{fileCreated}</Alert> */}
         {course && (
           <Grid container key={course._id} style={{ marginTop: "2rem" }}>
             <Grid container>
@@ -117,6 +121,7 @@ const CourseView = () => {
                     Add File
                   </Button>
                 </Box>
+                {fileCreated && <Alert severity="success">{fileCreated}</Alert>}
               </Grid>
 
               <Grid item xs={1}></Grid>
@@ -160,7 +165,11 @@ const CourseView = () => {
           footer={null}
           classes={{ paper: classes.paper }}
         >
-          <CourseForm slug={slug} setFileVisible={setFileVisible} />
+          <CourseForm
+            slug={slug}
+            setFileVisible={setFileVisible}
+            setFileCreated={setFileCreated}
+          />
           <DialogActions>
             <IconButton
               autoFocus

@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const CoursesForm = ({ slug, setFileVisible }) => {
+const CoursesForm = ({ slug, setFileVisible, setFileCreated }) => {
   const classes = useStyles()
   const [productData, setProductData] = useState({
     title: "",
@@ -50,7 +50,6 @@ const CoursesForm = ({ slug, setFileVisible }) => {
   const loading = false
   const newFile = ""
   const clear = () => {
-    setCurrentId(0)
     setProductData({
       title: "",
 
@@ -76,11 +75,6 @@ const CoursesForm = ({ slug, setFileVisible }) => {
     setIsPreviewAvailable(uploadedFile.name.match(/\.(jpeg|jpg|png|pdf|docx)$/))
   }
 
-  // const fileCreate = useSelector((state) => state.fileCreate)
-  // const { loading, error, file: newFile } = fileCreate
-
-  // const { message } = newFile
-
   const updateBorder = (dragState) => {
     if (dragState === "over") {
       dropRef.current.style.border = "2px solid #000"
@@ -91,7 +85,6 @@ const CoursesForm = ({ slug, setFileVisible }) => {
 
   const handleOnSubmit = async (event) => {
     event.preventDefault()
-    console.log("slug", slug)
 
     try {
       const { title, description } = productData
@@ -107,8 +100,7 @@ const CoursesForm = ({ slug, setFileVisible }) => {
           // console.log(formData)
 
           dispatch(createFile(formData, slug))
-
-          // props.history.push("/list")
+          setFileCreated("file created")
         } else {
           setErrorMsg("Please select a file to add.")
         }

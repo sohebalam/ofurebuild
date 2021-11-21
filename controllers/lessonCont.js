@@ -116,13 +116,13 @@ export const lessonOrder = async (req, res) => {
 
 export const deleteFile = async (req, res) => {
   const { slug } = req.query
-  // console.log(req.method, req.body, slug)
+  console.log(req.method, req.body, slug)
 
-  console.log(`${process.cwd()}\\public\\public\\${req.body.item.name}`)
+  console.log(`${process.cwd()}\\public\\${req.body.item.name}`)
 
   await fs.unlinkSync(req.body.item.file_path)
 
-  const updated = await YTList.findOneAndUpdate(
+  const updated = await Course.findOneAndUpdate(
     { slug: slug },
     {
       $pull: { lessons: { _id: req.body.item._id } },
@@ -130,17 +130,6 @@ export const deleteFile = async (req, res) => {
       new: true,
     }
   ).exec()
-
-  const updatedfile = await YTList.findOneAndUpdate(
-    { slug: slug },
-    {
-      $pull: { files: { name: req.body.item.name } },
-
-      new: true,
-    }
-  ).exec()
-
-  // console.log(updated, updatedfile)
 }
 
 export const fileDownload = async (req, res) => {

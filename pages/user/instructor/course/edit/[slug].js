@@ -79,30 +79,6 @@ const EditCourse = () => {
 
   const { slug } = router.query
 
-  // const handleImage = (e) => {
-  //   let file = e.target.files[0]
-  //   setPreview(window.URL.createObjectURL(file))
-  //   setUploadButtonText(file.name)
-  //   setValues({ ...values, loading: true })
-  //   // resize
-  //   Resizer.imageFileResizer(file, 720, 500, "JPEG", 100, 0, async (uri) => {
-  //     try {
-  //       // let { data } = await axios.post("/api/course/image", {
-  //       //   image: uri,
-  //       // })
-  //       setImage(uri)
-  //       // console.log("IMAGE UPLOADED", data)
-  //       // set image in the state
-  //       // setImage(data)
-  //       setValues({ ...values, loading: false })
-  //     } catch (err) {
-  //       console.log(err)
-  //       setValues({ ...values, loading: false })
-  //       // toast("Image upload failed. Try later.")
-  //     }
-  //   })
-  // }
-
   const handleImageRemove = async () => {
     try {
       // console.log(values);
@@ -169,11 +145,6 @@ const EditCourse = () => {
           0,
           async (uri) => {
             try {
-              // let { data } = await axios.post("/api/course/image", {
-              //   image: uri,
-              // })
-
-              // setImage(data)
               setImage(uri)
 
               setValues({ ...values, loading: false })
@@ -211,15 +182,6 @@ const EditCourse = () => {
     </>
   )
 }
-
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   (store) => async (context) => {
-//     const { params, req } = context
-//     // console.log(context)
-//     await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
-//     // await store.dispatch(getlessons(req.headers.cookie, req, params.slug))
-//   }
-// )
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
