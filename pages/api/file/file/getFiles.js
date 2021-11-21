@@ -5,7 +5,7 @@ connectDB()
 
 import onError from "../../../../middlewares/errors"
 import { isAuthenticated, isInstructor } from "../../../../middlewares/auth"
-import { getFiles } from "../../../../controllers/fileCont"
+import { getFiles } from "../../../../controllers/lessonCont"
 
 const router = nc({ onError })
 
