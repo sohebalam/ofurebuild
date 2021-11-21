@@ -19,7 +19,7 @@ const Publish = ({ initCourse, slug, lessons }) => {
         "One you publish your course, it will be live in the marketplace for users to enroll"
       )
       if (!answer) return
-      console.log(courseId)
+
       const { data } = await axios.put(`/api/course/publish/${courseId}`)
       // toast(" course is live")
       console.log(" course is live")

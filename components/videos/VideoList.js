@@ -20,8 +20,6 @@ function VideoList({ videos }) {
 
   // console.log("currentposts", currentPosts)
 
-  console.log("vidoes", videos)
-
   useEffect(() => {
     setPosts(videos)
   }, [videos, currentPosts])

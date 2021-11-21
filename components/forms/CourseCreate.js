@@ -99,10 +99,22 @@ const CourseCreate = ({
             required
             fullWidth
             id="playlistId"
-            label="You Tub Playlist ID"
+            label="You Tube Playlist ID"
             name="playlistId"
             autoFocus
             value={values.playlistId}
+            onChange={handleChange}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="playlistId"
+            label="Category"
+            name="category"
+            autoFocus
+            value={values.category}
             onChange={handleChange}
           />
 
@@ -179,16 +191,8 @@ const CourseCreate = ({
           </Button>
           {values.loading && <CircularProgress />}
           <Grid container>
-            <Grid item xs>
-              {/* <Link href="#" variant="body2">
-              Forgot password?
-            </Link> */}
-            </Grid>
-            <Grid item>
-              {/* <Link href="#" variant="body2">
-              {"Don't have an account? Sign Up"}
-            </Link> */}
-            </Grid>
+            <Grid item xs></Grid>
+            <Grid item></Grid>
           </Grid>
         </form>
       </div>

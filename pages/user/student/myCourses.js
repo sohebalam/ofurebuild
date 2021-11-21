@@ -10,21 +10,29 @@ const studentId = () => {
   const coursesStudent = useSelector((state) => state.coursesStudent)
   const { loading, error, courses } = coursesStudent
 
+  const coursesArray = courses.filter((course) => course?.published)
+
+  // console.log(coursesArray)
+
   const router = useRouter()
 
   const location = router.asPath.split("/")[3]
-
   return (
     <Grid container>
-      {courses.map((course) => (
-        <Grid item key={course._id} xs={4}>
-          <Box
-            style={{ padding: "0.5rem", paddingLeft: "0", paddingRight: "0" }}
-          >
-            <CourseCard course={course} local={location} />
-          </Box>
-        </Grid>
-      ))}
+      {coursesArray &&
+        coursesArray?.map((course) => (
+          <Grid item key={course?._id} xs={4}>
+            <Box
+              style={{
+                padding: "0.5rem",
+                paddingLeft: "0",
+                paddingRight: "0",
+              }}
+            >
+              {coursesArray && <CourseCard course={course} local={location} />}
+            </Box>
+          </Grid>
+        ))}
     </Grid>
   )
 }

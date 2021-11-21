@@ -25,6 +25,7 @@ const CourseCreate = () => {
     paid: false,
     playlistId: "",
     loading: false,
+    category: "",
   })
   const [preview, setPreview] = useState("")
   const [uploadButtonText, setUploadButtonText] = useState("Upload Image")

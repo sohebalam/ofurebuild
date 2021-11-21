@@ -4,22 +4,23 @@ import Image from "next/image"
 import { currencyFormatter } from "../../utils/currency"
 
 const CourseCard = ({ course, local }) => {
-  // console.log(course)
-  const { title, instructor, price, images, slug, paid, category } = course
-
   return (
     <Link
-      href={local === "myCourses" ? `/user/course/${slug}` : `/course/${slug}`}
+      href={
+        local === "myCourses"
+          ? `/user/course/${course?.slug}`
+          : `/course/${course?.slug}`
+      }
     >
       <Card style={{ padding: "1rem", cursor: "pointer" }}>
         <Image
-          src={images ? images[0]?.url : "/course.jpg"}
+          src={course?.images ? course?.images[0]?.url : "/course.jpg"}
           height={200}
           width={400}
         />
         <Box style={{ marginBottom: "0.25rem" }}>
-          <Typography variant="h5">{title} </Typography>
-          <Typography variant="body1">{instructor?.name}</Typography>
+          <Typography variant="h5">{course?.title} </Typography>
+          <Typography variant="body1">{course?.instructor?.name}</Typography>
         </Box>
         {/* <Chip
           label={category}
@@ -28,8 +29,8 @@ const CourseCard = ({ course, local }) => {
         /> */}
         <Chip
           label={
-            paid
-              ? currencyFormatter({ amount: price, currency: "gbp" })
+            course?.paid
+              ? currencyFormatter({ amount: course?.price, currency: "gbp" })
               : "Free"
           }
           color="primary"

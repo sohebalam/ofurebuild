@@ -85,7 +85,7 @@ const SingleCourseJumbotron = ({
             </Typography>
             <Box padding="1rem">
               <Typography variant="body1">
-                {description && description.substring(0, 160)}...
+                {description && description.substring(0, 1000)}...
               </Typography>
               <Badge
                 count={category}
