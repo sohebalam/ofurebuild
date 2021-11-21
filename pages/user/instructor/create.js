@@ -123,7 +123,6 @@ const CourseCreate = () => {
           loading={loading}
           handleImageRemove={handleImageRemove}
           onDropzoneAreaChange={onDropzoneAreaChange}
-          handleSubmit={handleSubmit}
         />
       </div>
     </Box>

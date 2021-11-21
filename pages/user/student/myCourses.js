@@ -6,7 +6,7 @@ import { studentCourses } from "../../../redux/actions/lessonActions"
 import { wrapper } from "../../../redux/store"
 import { useRouter } from "next/router"
 
-const studentId = () => {
+const StudentId = () => {
   const coursesStudent = useSelector((state) => state.coursesStudent)
   const { loading, error, courses } = coursesStudent
 
@@ -43,4 +43,4 @@ export const getServerSideProps = wrapper.getServerSideProps(
   }
 )
 
-export default studentId
+export default StudentId

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import axios from "axios"
 import { currencyFormatter } from "../../utils/currency"
 // import { Badge } from "antd"
-// import ReactPlayer from "react-player"
 import {
   Grid,
   Box,

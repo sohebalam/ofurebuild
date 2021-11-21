@@ -169,8 +169,6 @@ const EditCourse = () => {
               handleChange={handleChange}
               values={values}
               setValues={setValues}
-              // handleImage={handleImage}
-              // handleImageRemove={handleImageRemove}
               handleSubmit={handleSubmit}
               onDropzoneArea={onDropzoneArea}
               slug={slug}
