@@ -10,9 +10,7 @@ const studentId = () => {
   const coursesStudent = useSelector((state) => state.coursesStudent)
   const { loading, error, courses } = coursesStudent
 
-  const coursesArray = courses.filter((course) => course?.published)
-
-  // console.log(coursesArray)
+  const coursesArray = courses.filter((course) => course?.title)
 
   const router = useRouter()
 

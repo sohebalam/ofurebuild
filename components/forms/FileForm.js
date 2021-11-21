@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-const CoursesForm = ({ slug }) => {
+const CoursesForm = ({ slug, setFileVisible }) => {
   const classes = useStyles()
   const [productData, setProductData] = useState({
     title: "",
@@ -185,6 +185,7 @@ const CoursesForm = ({ slug }) => {
           size="large"
           type="submit"
           fullWidth
+          onClick={() => setFileVisible(false)}
         >
           Submit
         </Button>

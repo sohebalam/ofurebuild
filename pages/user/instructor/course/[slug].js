@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
   customizedButton: {
     position: "absolute",
     left: "95%",
-    top: "-9%",
+    top: "-3.5%",
     backgroundColor: "lightgray",
     color: "primary",
   },
@@ -160,7 +160,7 @@ const CourseView = () => {
           footer={null}
           classes={{ paper: classes.paper }}
         >
-          <CourseForm slug={slug} />
+          <CourseForm slug={slug} setFileVisible={setFileVisible} />
           <DialogActions>
             <IconButton
               autoFocus
@@ -179,20 +179,6 @@ const CourseView = () => {
     </>
   )
 }
-
-// export const getServerSideProps = wrapper.getServerSideProps(
-//   (store) => async (context) => {
-//     const { params, req } = context
-
-//     const { slug } = params
-
-//     // const slug = "fdzsf"
-
-//     // await store.dispatch(getSingleCourse(req.headers.cookie, req, params.slug))
-//     await store.dispatch(instructorCourse(req.headers.cookie, req, slug))
-//     await store.dispatch(loadCourse(req.headers.cookie, req, params.slug))
-//   }
-// )
 
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async (context) => {
