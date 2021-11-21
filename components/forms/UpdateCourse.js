@@ -71,16 +71,13 @@ const UpdateCourse = ({
 
   const classes = useStyles()
 
-  // const courseLoad = useSelector((state) => state.courseLoad)
-  // const { loading, error, course } = courseLoad
-
   useEffect(() => {
     setValues(course)
   }, [])
 
   return (
     <Container component="main" maxWidth="sm">
-      <CssBaseline />
+      {/* <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <MenuBookIcon />
@@ -98,7 +95,6 @@ const UpdateCourse = ({
             label="Course Title"
             name="title"
             autoFocus
-            // defaultValue={values[0]?.title || ""}
             value={values?.title || ""}
             onChange={handleChange}
           />
@@ -212,7 +208,7 @@ const UpdateCourse = ({
             <EditList slug={slug} lessons={course?.lessons} />
           </Grid>
         </form>
-      </div>
+      </div> */}
     </Container>
   )
 }
