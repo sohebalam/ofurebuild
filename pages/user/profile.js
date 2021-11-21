@@ -101,8 +101,6 @@ const Profile = () => {
     router.reload()
   }
 
-  // console.log(isUpdated)
-
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value })
   }
