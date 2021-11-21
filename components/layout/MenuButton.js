@@ -26,6 +26,7 @@ const MenuButton = () => {
   const handleSignout = (e) => {
     e.preventDefault()
     signOut({ callbackUrl: `${window.location.origin}` })
+    handleClose()
     // router.push("/user/login")
   }
   useEffect(() => {}, [dbUser])
@@ -86,9 +87,7 @@ const MenuButton = () => {
         </Link>
 
         <Link>
-          <MenuItem onClick={handleClose} onClick={handleSignout}>
-            SignOut
-          </MenuItem>
+          <MenuItem onClick={handleSignout}>SignOut</MenuItem>
         </Link>
       </Menu>
     </div>

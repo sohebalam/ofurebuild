@@ -28,6 +28,7 @@ const InstructorMenu = () => {
   const handleSignout = (e) => {
     e.preventDefault()
     signOut({ callbackUrl: `${window.location.origin}` })
+    handleClose()
     // router.push("/user/login")
   }
   useEffect(() => {}, [dbUser])
@@ -49,19 +50,12 @@ const InstructorMenu = () => {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        {/* {dbUser && dbUser?.role?.includes("instructor") ? ( */}
         <div>
           <Link href="/user/instructor/create">
             <MenuItem onClick={handleClose}>Create Course</MenuItem>
           </Link>
         </div>
-        {/* ) : ( */}
-        <div>
-          {/* <Link href="/user/instructor/dashboard">
-              <MenuItem onClick={handleClose}>Instructor Dashboard</MenuItem>
-            </Link> */}
-        </div>
-        {/* )} */}
+
         {dbUser?.role === "admin" && (
           <div>
             <Link href="/">
@@ -85,9 +79,7 @@ const InstructorMenu = () => {
         </Link>
 
         <Link>
-          <MenuItem onClick={handleClose} onClick={handleSignout}>
-            SignOut
-          </MenuItem>
+          <MenuItem onClick={handleSignout}>SignOut</MenuItem>
         </Link>
       </Menu>
     </div>
