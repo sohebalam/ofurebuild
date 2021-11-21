@@ -3,6 +3,8 @@ import queryString from "query-string"
 
 import Course from "../models/courseModel"
 
+const stripe = require("stripe")(process.env.STRIPE_SECRET)
+
 export const studentCount = async (req, res) => {
   try {
     const users = await User.find({ courses: req.body.courseId })
