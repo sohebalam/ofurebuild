@@ -1,6 +1,6 @@
 import User from "../models/userModel"
 import queryString from "query-string"
-
+import absoluteUrl from "next-absolute-url"
 import Course from "../models/courseModel"
 
 const stripe = require("stripe")(process.env.STRIPE_SECRET)
@@ -33,11 +33,11 @@ export const instructorPayoutSettings = async (req, res) => {
   try {
     const user = await User.findById(req.user._id).exec()
 
-    console.log(user.stripe_seller.id)
+    const { origin } = absoluteUrl(req)
 
     const loginLink = await stripe.accounts.createLoginLink(
       user.stripe_seller.id,
-      { redirect_url: process.env.STRIPE_SETTINGS_REDIRECT }
+      { redirect_url: `${origin}/instructor/revenue` }
     )
 
     // console.log(loginLink)
@@ -143,7 +143,7 @@ export const paidEnrollment = async (req, res) => {
     const fee = (course.price * 30) / 100
 
     // console.log(course.instructor.stripe_account_id)
-
+    const { origin } = absoluteUrl(req)
     // create stripe session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -165,8 +165,9 @@ export const paidEnrollment = async (req, res) => {
         },
       },
       // redirect url after successful payment
-      success_url: `${process.env.STRIPE_SUCCESS_URL}/${course._id}`,
-      cancel_url: process.env.STRIPE_CANCEL_URL,
+
+      success_url: `${origin}/stripe/success/${course._id}`,
+      cancel_url: `${origin}/stripe/cancel`,
     })
     // console.log("SESSION ID => ", session)
 
@@ -225,11 +226,14 @@ export const newInstructor = async (req, res) => {
       user.stripe_account_id = account.id
       user.save()
     }
+    const { origin } = absoluteUrl(req)
     // 3. create account link based on account id (for frontend to complete onboarding)
     let accountLink = await stripe.accountLinks.create({
       account: user.stripe_account_id,
-      refresh_url: process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL,
-      return_url: process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL,
+      // refresh_url: process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL,
+      // return_url: process.env.NEXT_PUBLIC_STRIPE_REDIRECT_URL,
+      refresh_url: `${origin}/stripe/callback`,
+      return_url: `${origin}/stripe/callback`,
       type: "account_onboarding",
     })
     // console.log(accountLink)
