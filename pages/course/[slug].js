@@ -6,7 +6,6 @@ import LessonList from "../../components/course/LessonList"
 import { useRouter } from "next/router"
 // import { Context } from "../../context"
 // import { toast } from "react-toastify"
-import { loadStripe } from "@stripe/stripe-js"
 import { useSelector, useDispatch } from "react-redux"
 import { useSession, signIn, signOut, getSession } from "next-auth/client"
 import {
