@@ -213,7 +213,7 @@ export const newInstructor = async (req, res) => {
 
       req.user._id = user._id
     }
-    // console.log(req.method)
+
     // 1. find user from db
     const user = await User.findById(req.user._id).exec()
     // console.log(user)
