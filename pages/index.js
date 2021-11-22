@@ -17,8 +17,6 @@ const Home = () => {
   const coursePublished = useSelector((state) => state.coursePublished)
   const { loading, error, published } = coursePublished
 
-  // console.log(published)
-
   const courses = published
 
   return (
