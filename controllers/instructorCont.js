@@ -55,7 +55,7 @@ export const currentInstructor = async (req, res) => {
     if (req.user.id) {
       let user = await User.findById(req.user.id).select("-password").exec()
       if (!user.role.includes("instructor")) {
-        return res.sendStatus(403)
+        return res.status(403)
       } else {
         res.send(user)
       }
@@ -64,7 +64,7 @@ export const currentInstructor = async (req, res) => {
     let user = await User.findById(req.user._id).select("-password").exec()
     // console.log("CURRENT INSTRUCTOR => ", user);
     if (!user.role.includes("instructor")) {
-      return res.sendStatus(403)
+      return res.status(403)
     } else {
       res.send(user)
     }
@@ -181,7 +181,7 @@ export const paidEnrollment = async (req, res) => {
 }
 
 export const stripeSuccess = async (req, res) => {
-  console.log(req.method, req.user, req.query.id)
+  // console.log(req.method, req.user, req.query.id)
 
   try {
     const course = await Course.findById(req.query.id).exec()
