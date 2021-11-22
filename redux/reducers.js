@@ -49,7 +49,7 @@ const reducer = combineReducers({
   coursePublished: coursePublishedReducer,
   courseLoad: courseLoadReducer,
   singleCourse: singleCourseReducer,
-  //   paidEnroll: paidEnrollReducer,
+  paidEnroll: paidEnrollReducer,
   enrollmentCheck: enrollmentCheckReducer,
   courseGet: courseGetReducer,
   //   freeEnroll: freeEnrollReducer,
