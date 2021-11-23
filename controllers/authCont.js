@@ -1,6 +1,7 @@
 import catchAsyncErrors from "../middlewares/catchAsyncErrors"
 import User from "../models/userModel"
 // import { Social } from "../socialModel"
+import absoluteUrl from "next-absolute-url"
 
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
@@ -148,7 +149,9 @@ export const forgotPassword = async (req, res) => {
     // console.log(user)
     await user.save()
 
-    const link = `${process.env.API}/user/reset/${token}`
+    const { origin } = absoluteUrl(req)
+
+    const link = `${origin}/user/reset/${token}`
     // HTML Message
     const message = `
       

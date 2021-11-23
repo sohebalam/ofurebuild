@@ -146,41 +146,6 @@ export const postLessons = (items, slug) => async (dispatch) => {
   }
 }
 
-// export const getlessons = (authCookie, req, slug) => async (dispatch) => {
-//   // console.log(slug)
-//   try {
-//     dispatch({ type: GET_LESSONS_REQUEST })
-
-//     const config = {
-//       headers: {
-//         cookie: authCookie,
-//       },
-//     }
-
-//     const { origin } = absoluteUrl(req)
-
-//     const { data } = await axios.get(
-//       `${origin}/api/course/lessons/${slug}`,
-//       config
-//     )
-
-//     console.log(data)
-
-//     dispatch({
-//       type: GET_LESSONS_SUCCESS,
-//       payload: data,
-//     })
-//   } catch (error) {
-//     dispatch({
-//       type: GET_LESSONS_FAIL,
-//       payload:
-//         error.response && error.response.data.message
-//           ? error.response.data.message
-//           : error.message,
-//     })
-//   }
-// }
-
 export const courseEdit = (image, values, slug) => async (dispatch) => {
   console.log("courseedit", image)
 
