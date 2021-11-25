@@ -65,9 +65,9 @@ const Register = () => {
 
   // console.log(register)
 
-  // const profile = useSelector((state) => state.profile)
+  const profile = useSelector((state) => state.profile)
 
-  // const { dbUser } = profile
+  const { dbUser } = profile
 
   useEffect(() => {
     if (success) {
