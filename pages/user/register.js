@@ -125,7 +125,7 @@ const Register = () => {
       email: user.email,
       password: null,
     }
-    console.log(dbUser)
+
     if (!dbUser) {
       if (user.id) {
         dispatch(socialReg(userData))
@@ -261,7 +261,7 @@ const Register = () => {
               <TwitterIcon />
             </Avatar>
             <Typography
-              component="h1"
+              component="h2"
               variant="h5"
               style={{ marginBottom: "1rem" }}
             >

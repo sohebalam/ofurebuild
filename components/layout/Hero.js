@@ -14,26 +14,27 @@ const ComingSoonBadge = () => (
 
 const Hero = ({ title, subtitle }) => {
   return (
-    <Grid container item justifyContent="center" alignItems="center">
-      <Grid container alignItems="center" justifyContent="center">
-        <Box>
-          <Typography
-            style={{ marginTop: "1rem" }}
-            variant="h1"
-            align="center"
-            gutterBottom
-            sx={{
-              color: "secondary.main",
-              fontWeight: 400,
-            }}
-          >
-            {title}
-          </Typography>
-        </Box>
-      </Grid>
+    <Grid container justifyContent="center" alignItems="center">
+      {/* <Grid container item alignItems="center" justifyContent="center"> */}
+      {/* <Box> */}
+      <Typography
+        component="h1"
+        style={{ marginTop: "1rem" }}
+        variant="h2"
+        align="center"
+        gutterBottom
+        sx={{
+          color: "secondary.main",
+          fontWeight: 400,
+        }}
+      >
+        {title}
+      </Typography>
+      {/* </Box> */}
+      {/* </Grid> */}
       <Grid container alignItems="center" justifyContent="center">
         <Typography
-          component="p"
+          component="h3"
           variant="h3"
           align="center"
           color="primary"
