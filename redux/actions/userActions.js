@@ -36,6 +36,7 @@ import {
   USER_DETAILS_SUCCESS,
 } from "../constants/userTypes"
 import axios from "axios"
+import absoluteUrl from "next-absolute-url"
 
 export const userRegister = (userData) => async (dispatch) => {
   try {
@@ -79,9 +80,16 @@ export const clearProfile = () => async (dispatch) => {
 export const loadUser = (authCookie, req) => async (dispatch) => {
   // console.log(authCookie)
   try {
+    const config = {
+      headers: {
+        cookie: authCookie,
+      },
+    }
     dispatch({ type: LOAD_USER_REQUEST })
 
-    const { data } = await axios.get(`/api/user/profile`)
+    const { origin } = absoluteUrl(req)
+
+    const { data } = await axios.get(`${origin} /api/user/profile`, config)
 
     dispatch({
       type: LOAD_USER_SUCCESS,
