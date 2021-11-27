@@ -26,6 +26,7 @@ import { loadUser, socialReg } from "../../redux/actions/userActions"
 import { useDispatch, useSelector } from "react-redux"
 import { useRouter } from "next/router"
 import { Alert } from "@material-ui/lab"
+import { wrapper } from "../../redux/store"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -56,7 +57,7 @@ function Login() {
   const dispatch = useDispatch()
   const router = useRouter()
 
-  // console.log(session)
+  console.log(session, profile)
 
   const profile = useSelector((state) => state.profile)
 
@@ -225,5 +226,25 @@ function Login() {
 //     props: {},
 //   }
 // }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req }) => {
+      const session = await getSession({ req })
+
+      console.log(session)
+
+      store.dispatch(loadUser(req.headers.cookie, req))
+
+      if (!session || !session.user.role.includes("user")) {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        }
+      }
+    }
+)
 
 export default Login

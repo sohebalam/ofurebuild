@@ -8,6 +8,7 @@ import theme from "../theme"
 import { wrapper } from "../redux/store"
 // import Header from "../components/Header"
 import { Container } from "@material-ui/core"
+
 import { getSession, Provider } from "next-auth/client"
 // import Footer from "../components/Footer"
 import Layout from "../components/layout/Layout"

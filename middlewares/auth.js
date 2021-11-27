@@ -24,7 +24,8 @@ export const isAuthenticated = catchAsyncErrors(async (req, res, next) => {
   if (session?.user._id) {
     req.user = session?.user
   }
-  // console.log(req.user._id)
+
+  console.log(req.user._id)
   next()
 })
 
