@@ -47,7 +47,7 @@ export const userRegister = (userData) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.post(`/api/auth/register`, userData, config)
+    const { data } = await axios.post(`/api/user/register`, userData, config)
 
     dispatch({
       type: REGISTER_USER_SUCCESS,
@@ -81,7 +81,7 @@ export const loadUser = (authCookie, req) => async (dispatch) => {
   try {
     dispatch({ type: LOAD_USER_REQUEST })
 
-    const { data } = await axios.get(`/api/auth/profile`)
+    const { data } = await axios.get(`/api/user/profile`)
 
     dispatch({
       type: LOAD_USER_SUCCESS,
@@ -141,7 +141,7 @@ export const passwordForgot = (userData) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     }
-    const { data } = await axios.post(`/api/auth/forgot`, userData, config)
+    const { data } = await axios.post(`/api/user/forgot`, userData, config)
 
     dispatch({
       type: FORGOT_PASSWORD_SUCCESS,
@@ -203,7 +203,7 @@ export const socialReg = (userData) => async (dispatch) => {
       },
     }
 
-    const { data } = await axios.post(`/api/auth/social`, userData, config)
+    const { data } = await axios.post(`/api/user/social`, userData, config)
     // console.log(data)
     dispatch({
       type: SOCIAL_REG_SUCCESS,
@@ -313,7 +313,7 @@ export const regInstructor = () => async (dispatch) => {
   try {
     dispatch({ type: REGISTER_INSTRUCTOR_REQUEST })
 
-    const { data } = await axios.post(`/api/auth/instructor/new`)
+    const { data } = await axios.post(`/api/user/instructor/new`)
 
     // console.log(data)
 
