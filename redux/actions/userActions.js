@@ -171,7 +171,7 @@ export const passwordReset = (userData, resetToken) => async (dispatch) => {
     }
 
     const { data } = await axios.put(
-      `/api/auth/reset/${resetToken}`,
+      `/api/user/reset/${resetToken}`,
       userData,
       config
     )
