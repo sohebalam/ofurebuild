@@ -42,11 +42,11 @@ function Header() {
   const { loading, error, dbUser } = profile
 
   useEffect(() => {
-    if (!dbUser) {
-      // if (session) {
-      dispatch(loadUser())
-      // }
-    }
+    // if (!dbUser) {
+    //   // if (session) {
+    //   dispatch(loadUser())
+    //   // }
+    // }
     if (session) {
       const { user } = session
 
@@ -146,5 +146,23 @@ function Header() {
     </div>
   )
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) =>
+    async ({ req }) => {
+      const session = await getSession({ req })
+
+      store.dispatch(loadUser(req.headers.cookie, req))
+
+      if (!session || !session.user.role.includes("user")) {
+        return {
+          redirect: {
+            destination: "/",
+            permanent: false,
+          },
+        }
+      }
+    }
+)
 
 export default Header
