@@ -352,11 +352,6 @@ export const SocialReg = async (user) => {
 
   if (userExists || userEmail) return
 
-  //   if (user.password) {
-  //     var salt = bcrypt.genSaltSync(10)
-  //     var hashPassword = bcrypt.hashSync(user.password, salt)
-  //   }
-
   const registereduser = await User.create({
     socialId: user.id,
     name: user.name,
