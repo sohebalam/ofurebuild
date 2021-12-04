@@ -1,7 +1,7 @@
 import Head from "next/head"
 import Header from "../../components/layout/Header"
 // import styles from "../styles/Home.module.css"
-import { getSession, signIn, useSession } from "next-auth/client"
+import { getSession, signIn, useSession } from "next-auth/react"
 import {
   GoogleLoginButton,
   GithubLoginButton,
@@ -51,13 +51,11 @@ const useStyles = makeStyles((theme) => ({
 function Login() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [session] = useSession()
+  const { data: session } = useSession()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const dispatch = useDispatch()
   const router = useRouter()
-
-  console.log(session, profile)
 
   const profile = useSelector((state) => state.profile)
 
@@ -227,24 +225,24 @@ function Login() {
 //   }
 // }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) =>
-    async ({ req }) => {
-      const session = await getSession({ req })
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) =>
+//     async ({ req }) => {
+//       const session = await getSession({ req })
 
-      console.log(session)
+//       // console.log(session)
 
-      store.dispatch(loadUser(req.headers.cookie, req))
+//       // store.dispatch(loadUser(req.headers.cookie, req))
 
-      if (!session || !session.user.role.includes("user")) {
-        return {
-          redirect: {
-            destination: "/",
-            permanent: false,
-          },
-        }
-      }
-    }
-)
+//       if (!session) {
+//         return {
+//           redirect: {
+//             destination: "/user/login",
+//             permanent: false,
+//           },
+//         }
+//       }
+//     }
+// )
 
 export default Login

@@ -2,6 +2,7 @@ import catchAsyncErrors from "../middlewares/catchAsyncErrors"
 import User from "../models/userModel"
 // import { Social } from "../socialModel"
 import absoluteUrl from "next-absolute-url"
+import connectDB from "../connectDB"
 
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
@@ -261,6 +262,43 @@ export const socialRegister = catchAsyncErrors(async (req, res) => {
   })
 })
 
+//google
+
+export const registerSocial = catchAsyncErrors(async (req, res) => {
+  console.log(req.method)
+
+  // const { name, email, password, id } = req.body
+
+  // // console.log(req.body)
+  // if (req.body.id) {
+  //   const userExists = await User.findOne({ socialId: req.body.id })
+
+  //   // res.status(403).json({
+  //   //   message: "Email exists please login",
+  //   // })
+
+  //   if (userExists) {
+  //     return
+  //   }
+  // }
+  // if (password) {
+  //   var salt = bcrypt.genSaltSync(10)
+  //   var hashPassword = bcrypt.hashSync(password, salt)
+  // }
+
+  // const user = await User.create({
+  //   socialId: id,
+  //   name,
+  //   email,
+  //   password: hashPassword || "",
+  // })
+
+  // res.status(200).json({
+  //   success: true,
+  //   message: "Account Registered successfully",
+  // })
+})
+
 export const allAdminUsers = catchAsyncErrors(async (req, res) => {
   const users = await User.find()
 
@@ -303,3 +341,26 @@ export const deleteUser = catchAsyncErrors(async (req, res) => {
 //   console.log(req.method)
 //   return
 // }
+
+export const SocialReg = async (user) => {
+  // console.log("cont", user)
+
+  connectDB()
+
+  const userExists = await User.findOne({ socialId: user.id })
+  const userEmail = await User.findOne({ email: user.email })
+
+  if (userExists || userEmail) return
+
+  //   if (user.password) {
+  //     var salt = bcrypt.genSaltSync(10)
+  //     var hashPassword = bcrypt.hashSync(user.password, salt)
+  //   }
+
+  const registereduser = await User.create({
+    socialId: user.id,
+    name: user.name,
+    email: user.email || "",
+    // password: hashPassword || "",
+  })
+}

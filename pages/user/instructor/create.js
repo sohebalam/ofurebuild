@@ -13,7 +13,7 @@ import {
 import { loadImages } from "../../../redux/actions/imageActions"
 import { useDispatch, useSelector } from "react-redux"
 import { wrapper } from "../../../redux/store"
-import { getSession } from "next-auth/client"
+import { getSession } from "next-auth/react"
 import { loadUser } from "../../../redux/actions/userActions"
 const CourseCreate = () => {
   // state

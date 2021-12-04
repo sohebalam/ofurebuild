@@ -7,7 +7,7 @@ import { useRouter } from "next/router"
 // import { Context } from "../../context"
 // import { toast } from "react-toastify"
 import { useSelector, useDispatch } from "react-redux"
-import { useSession, signIn, signOut, getSession } from "next-auth/client"
+import { useSession, signIn, signOut, getSession } from "next-auth/react"
 import {
   checkEnrollment,
   freeEnroll,

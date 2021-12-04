@@ -10,7 +10,7 @@ import { Box } from "@mui/system"
 import { wrapper } from "../redux/store"
 import { publishedCourse } from "../redux/actions/lessonActions"
 import { useSelector } from "react-redux"
-import { getSession } from "next-auth/client"
+import { getSession } from "next-auth/react"
 import { loadUser } from "../redux/actions/userActions"
 
 const Home = () => {
@@ -30,7 +30,7 @@ const Home = () => {
         />
       </Paper>
       <Grid container>
-        {courses.map((course) => (
+        {courses?.map((course) => (
           <Grid item key={course._id} xs={4}>
             <Box
               style={{ padding: "0.5rem", paddingLeft: "0", paddingRight: "0" }}
@@ -49,10 +49,32 @@ export const getServerSideProps = wrapper.getServerSideProps(
     async ({ req }) => {
       const session = await getSession({ req })
 
+      // const userData = session?.user
+
       if (!session) await store.dispatch(loadUser(req.headers.cookie, req))
 
       await store.dispatch(publishedCourse(req))
     }
 )
+
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) =>
+//     async ({ req }) => {
+//       const session = await getSession({ req })
+
+//       // console.log(session)
+
+//       // store.dispatch(loadUser(req.headers.cookie, req))
+
+//       if (!session) {
+//         return {
+//           redirect: {
+//             destination: "/user/login",
+//             permanent: false,
+//           },
+//         }
+//       }
+//     }
+// )
 
 export default Home

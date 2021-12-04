@@ -9,7 +9,7 @@ import { wrapper } from "../redux/store"
 // import Header from "../components/Header"
 import { Container } from "@material-ui/core"
 
-import { getSession, Provider } from "next-auth/client"
+import { SessionProvider as Provider } from "next-auth/react"
 // import Footer from "../components/Footer"
 import Layout from "../components/layout/Layout"
 import { StyledEngineProvider } from "@mui/material/styles"

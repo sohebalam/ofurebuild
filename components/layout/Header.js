@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { useSession, signIn, signOut, getSession } from "next-auth/client"
+import { useSession, signIn, signOut, getSession } from "next-auth/react"
 import {
   AppBar,
   Toolbar,
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Header() {
   const [socialUser, setSocialUser] = useState(false)
-  const [session] = useSession()
+  const { data: session } = useSession()
 
   // console.log(session.user)
 

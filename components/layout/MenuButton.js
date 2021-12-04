@@ -2,17 +2,17 @@ import React, { useEffect } from "react"
 import Button from "@material-ui/core/Button"
 import Menu from "@material-ui/core/Menu"
 import MenuItem from "@material-ui/core/MenuItem"
-import { signOut } from "next-auth/client"
+import { signOut } from "next-auth/react"
 import PersonIcon from "@material-ui/icons/Person"
 // import Link from "next/link"
-import { useSession } from "next-auth/client"
+import { useSession } from "next-auth/react"
 import { Link } from "@material-ui/core"
 import { useSelector } from "react-redux"
 const MenuButton = () => {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const profile = useSelector((state) => state.profile)
   const { loading, error, dbUser } = profile
-  const [session] = useSession()
+  const { data: session } = useSession()
   // console.log(dbUser)
 
   const handleClick = (event) => {
@@ -25,7 +25,7 @@ const MenuButton = () => {
 
   const handleSignout = (e) => {
     e.preventDefault()
-    signOut({ callbackUrl: `${window.location.origin}` })
+    signOut()
     handleClose()
     // router.push("/user/login")
   }

@@ -13,7 +13,7 @@ import { useRouter } from "next/router"
 import { useSelector, useDispatch } from "react-redux"
 import { Box } from "@mui/system"
 import { loadUser } from "../../../redux/actions/userActions"
-import { getSession } from "next-auth/client"
+import { getSession } from "next-auth/react"
 // const YOUTUBE_PLAYLIST_ITEMS_API =
 //   "https://www.googleapis.com/youtube/v3/playlistItems"
 

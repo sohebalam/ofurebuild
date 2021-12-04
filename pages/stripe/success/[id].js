@@ -6,7 +6,7 @@ import axios from "axios"
 import { CircularProgress, Grid } from "@material-ui/core"
 import { loadUser } from "../../../redux/actions/userActions"
 import { wrapper } from "../../../redux/store"
-import { getSession } from "next-auth/client"
+import { getSession } from "next-auth/react"
 
 const StripeSuccess = () => {
   // router

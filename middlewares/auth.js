@@ -1,6 +1,6 @@
 import catchAsyncErrors from "./catchAsyncErrors"
 import ErrorHandler from "../utils/errorHandler"
-import { getSession } from "next-auth/client"
+import { getSession } from "next-auth/react"
 import User from "../models/userModel"
 import Course from "../models/courseModel"
 

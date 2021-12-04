@@ -29,7 +29,7 @@ import {
 import Lessons from "../../../../components/file/DragList"
 import Publish from "../../../../components/course/Publish"
 import { countStudents } from "../../../../redux/actions/lessonActions"
-import { getSession } from "next-auth/client"
+import { getSession } from "next-auth/react"
 import { loadUser } from "../../../../redux/actions/userActions"
 import { Alert } from "@material-ui/lab"
 

@@ -16,7 +16,7 @@ import { useRouter } from "next/router"
 import { passwordReset, userRegister } from "../../../redux/actions/userActions"
 import { CircularProgress } from "@material-ui/core"
 import { Alert } from "@material-ui/lab"
-import { getSession } from "next-auth/client"
+import { getSession } from "next-auth/react"
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),

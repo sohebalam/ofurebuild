@@ -17,7 +17,7 @@ import { useRouter } from "next/router"
 import { CircularProgress } from "@material-ui/core"
 import { useDispatch, useSelector } from "react-redux"
 import { updateProfile, loadUser } from "../../redux/actions/userActions"
-import { getSession } from "next-auth/client"
+import { getSession } from "next-auth/react"
 
 import { Box } from "@material-ui/core"
 import { wrapper } from "../../redux/store"

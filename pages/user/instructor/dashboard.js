@@ -6,7 +6,7 @@ import { useSelector } from "react-redux"
 import { wrapper } from "../../../redux/store"
 import { loadCourses } from "../../../redux/actions/lessonActions"
 import Publish from "../../../components/course/Publish"
-import { getSession } from "next-auth/client"
+import { getSession } from "next-auth/react"
 import { loadUser } from "../../../redux/actions/userActions"
 const InstructorIndex = () => {
   const coursesLoad = useSelector((state) => state.coursesLoad)

@@ -227,6 +227,35 @@ export const socialReg = (userData) => async (dispatch) => {
     })
   }
 }
+
+//google
+export const socialRegiser = (authCookie) => async (dispatch) => {
+  // console.log(userData)
+  try {
+    dispatch({ type: SOCIAL_REG_REQUEST })
+
+    const config = {
+      headers: {
+        cookie: authCookie,
+      },
+    }
+
+    const { data } = await axios.post(`/api/user/regSocial`, config)
+    // console.log(data)
+    dispatch({
+      type: SOCIAL_REG_SUCCESS,
+      payload: data,
+    })
+  } catch (error) {
+    dispatch({
+      type: SOCIAL_REG_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    })
+  }
+}
 export const getAllUsers = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_USERS_REQUEST })

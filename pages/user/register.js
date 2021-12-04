@@ -16,7 +16,7 @@ import { useRouter } from "next/router"
 import { userRegister, socialReg } from "../../redux/actions/userActions"
 import { CircularProgress } from "@material-ui/core"
 import { Alert } from "@material-ui/lab"
-import { getSession, useSession, signIn } from "next-auth/client"
+import { getSession, useSession, signIn } from "next-auth/react"
 import validator from "validator"
 
 import {
@@ -59,7 +59,7 @@ const Register = () => {
   const [password, setPassword] = useState("")
   const [conPassword, setConPassword] = useState("")
   const [name, setName] = useState("")
-  const [session] = useSession()
+  const { data: session } = useSession()
   const register = useSelector((state) => state.register)
   const { loading, error, success, message } = register
 
