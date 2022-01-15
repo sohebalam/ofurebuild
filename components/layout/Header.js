@@ -10,11 +10,9 @@ import {
 import { makeStyles } from "@material-ui/core/styles"
 import PersonIcon from "@material-ui/icons/Person"
 import AssignmentIcon from "@material-ui/icons/Assignment"
-import { loadUser, socialReg } from "../../redux/actions/userActions"
+import { loadUser } from "../../redux/actions/userActions"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect, useState } from "react"
-import MenuButton from "../layout/MenuButton"
-import InstructorMenu from "./InstructorMenu"
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople"
 import { Alert } from "@mui/material"
 import { wrapper } from "../../redux/store"
@@ -31,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 function Header() {
-  const [socialUser, setSocialUser] = useState(false)
   const { data: session } = useSession()
 
   // console.log(session.user)
@@ -42,13 +39,15 @@ function Header() {
   const { loading, error, dbUser } = profile
 
   useEffect(() => {
-    // if (!dbUser) {
-    //   // if (session) {
-    //   dispatch(loadUser())
-    //   // }
-    // }
+    if (!dbUser) {
+      // if (session) {
+      dispatch(loadUser())
+      // }
+    }
     if (session) {
       const { user } = session
+
+      console.log(session)
 
       if (!user.email) {
         setSocialUser(true)
@@ -61,22 +60,12 @@ function Header() {
         password: user?.password,
       }
       // console.log(dbUser)
-      if (!dbUser) {
-        if (user.id) {
-          dispatch(socialReg(userData))
-          // console.log(userData)
-        }
-      }
-    }
-
-    if (dbUser?.email) {
-      setSocialUser(false)
-    } else if (dbUser?.isPassword === false) {
-      setSocialUser(true)
     }
   }, [session])
 
   const AUser = dbUser || session?.user
+
+  console.log(dbUser)
 
   const classes = useStyles()
 
@@ -98,7 +87,8 @@ function Header() {
               (session?.user &&
                 session?.user.role &&
                 session?.user.role.includes("instructor")) ? (
-                <InstructorMenu dbUser={dbUser} />
+                // <InstructorMenu dbUser={dbUser} /><
+                <h1>{dbUser}</h1>
               ) : (
                 AUser &&
                 AUser.isAllowed === true && (
@@ -115,7 +105,8 @@ function Header() {
                 <>
                   <div></div>
 
-                  <MenuButton dbUser={AUser} />
+                  {/* <MenuButton dbUser={AUser} /> */}
+                  <h1>{dbUser}</h1>
                 </>
               ) : (
                 <>
@@ -137,12 +128,6 @@ function Header() {
           </Toolbar>
         </AppBar>
       </div>
-      {socialUser && (
-        <Alert severity="warning">
-          Complete Your Full User Profile click{" "}
-          <Link href="/user/profile">here</Link>
-        </Alert>
-      )}
     </div>
   )
 }

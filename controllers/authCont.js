@@ -6,9 +6,7 @@ import connectDB from "../connectDB"
 
 import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
-import { sendEmail } from "../middlewares/sendMail"
 import validator from "validator"
-import queryString from "query-string"
 
 export const registerUser = catchAsyncErrors(async (req, res) => {
   // console.log(req.method)
