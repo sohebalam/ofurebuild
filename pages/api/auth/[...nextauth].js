@@ -3,11 +3,10 @@ import GithubProvider from "next-auth/providers/github"
 import GoogleProvider from "next-auth/providers/google"
 import TwitterProvider from "next-auth/providers/twitter"
 import LinkedInProvider from "next-auth/providers/linkedin"
-import { SocialReg } from "../../../controllers/authCont"
 import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 import connectDB from "../../../connectDB"
-import User from "../../../models/userModel"
+import NUser from "../../../models/userModel"
 
 export default NextAuth({
   providers: [
@@ -26,7 +25,7 @@ export default NextAuth({
         }
 
         // Find user in the database
-        const user = await User.findOne({ email }).select("+password")
+        const user = await NUser.findOne({ email }).select("+password")
 
         if (!user) {
           throw new Error("Invalid Email or Password")
