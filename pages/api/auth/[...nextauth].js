@@ -7,17 +7,20 @@ import CredentialsProvider from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 import connectDB from "../../../connectDB"
 import NUser from "../../../models/userModel"
+import { MongoDBAdapter } from "@next-auth/mongodb-adapter"
+import clientPromise from "../../../lib/mongodb"
 
 export default NextAuth({
   providers: [
     // OAuth authentication providers
     CredentialsProvider({
       async authorize(credentials) {
-        connectDB()
-
+        // connectDB()
+        const client = await clientPromise
+        const db = client.db("users")
         const { email, password } = credentials
 
-        // console.log(credentials)
+        console.log(credential, email)
 
         // Check if email and password is entered
         if (!email || !password) {
@@ -25,7 +28,8 @@ export default NextAuth({
         }
 
         // Find user in the database
-        const user = await NUser.findOne({ email }).select("+password")
+        // const user = await NUser.findOne({ email }).select("+password")
+        let user = await db.collection("users").find({ email }).toArray()
 
         if (!user) {
           throw new Error("Invalid Email or Password")
@@ -85,4 +89,6 @@ export default NextAuth({
       return session
     },
   },
+  adapter: MongoDBAdapter(clientPromise),
+  database: process.env.DB,
 })
